@@ -2,26 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer base {
+  :root,
+  :root .catppuccin_latte {
+    --color-base: 239 241 245;
+    --color-mantle: 230 233 239;
+    --color-crust: 220 224 232;
+    --color-surface-0: 204 208 218;
+    --color-surface-1: 188 192 204;
+    --color-surface-2: 172 176 190;
+    --color-overlay-0: 156 160 176;
+    --color-overlay-1: 140 143 161;
+    --color-overlay-2: 124 127 147;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --color-text: 76 79 105;
+    --color-title: 32 159 181;
+    --color-subtitle: 92 95 119;
+    --color-success: 64 160 43;
+    --color-info: 23 146 153;
+    --color-warning: 223 142 29;
+    --color-error: 210 15 57;
+
+    --color-selection-bg: 23 146 153;
+    --color-selection-text: 220 224 232;
+
+    --color-link: 30 102 245;
+    --color-followed-link: 114 135 253;
+    --color-hover-link: 4 165 229;
+
+    --color-snippet-bg: 230 233 239;
+    --color-keyword: 136 57 239;
+    --color-string: 64 160 43;
+    --color-regex: 234 118 203;
+    --color-comment: 124 127 147;
+    --color-number: 254 100 11;
+    --color-constant: 254 100 11;
+    --color-operator: 4 165 229;
+    --color-delimiter: 210 15 57;
+    --color-function: 30 102 245;
+    --color-parameter: 230 69 83;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  :root .catppuccin_macchiato {
+    --color-base: 36 39 58;
+    --color-mantle: 30 32 48;
+    --color-crust: 24 25 38;
+    --color-surface-0: 54 58 79;
+    --color-surface-1: 73 77 100;
+    --color-surface-2: 91 96 120;
+    --color-overlay-0: 110 115 141;
+    --color-overlay-1: 128 135 162;
+    --color-overlay-2: 147 154 183;
+
+    --color-text: 202 211 245;
+    --color-title: 125 196 228;
+    --color-subtitle: 184 192 224;
+    --color-success: 66 218 149;
+    --color-info: 139 213 202;
+    --color-warning: 238 212 159;
+    --color-error: 237 135 150;
+
+    --color-selection-bg: 139 213 202;
+    --color-selection-text: 24 25 38;
+
+    --color-link: 138 173 244;
+    --color-followed-link: 183 189 248;
+    --color-hover-link: 145 215 227;
+
+    --color-snippet-bg: 30 32 48;
+    --color-keyword: 198 160 246;
+    --color-string: 66 218 149;
+    --color-regex: 245 189 230;
+    --color-comment: 147 154 183;
+    --color-number: 245 169 127;
+    --color-constant: 245 169 127;
+    --color-operator: 145 215 227;
+    --color-delimiter: 237 135 150;
+    --color-function: 138 173 244;
+    --color-parameter: 238 153 160;
+  }
 }
