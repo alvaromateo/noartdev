@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect, createContext } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { Ubuntu_Mono } from 'next/font/google'
 import { LocalStorageProperties } from '../../global/property-names'
-import { ThemeState } from '../../global/types'
 import settings from '../../global/app-settings'
 
 // TODO: change font
@@ -12,11 +12,8 @@ const ubuntuMono = Ubuntu_Mono({
   subsets: ['latin']
 })
 
-const defaultTheme: ThemeState = {
-  theme: settings.defaultTheme,
-  setTheme: (_) => {}
-}
-export const ThemeContext = createContext(defaultTheme)
+export const ThemeContext = createContext(settings.defaultTheme)
+export const MobileContext = createContext(true)
 
 export default function Body({
   children
@@ -24,10 +21,9 @@ export default function Body({
   children: React.ReactNode
 }) {
   const [theme, setTheme] = useState(settings.defaultTheme)
-  const themeState: ThemeState = {
-    theme: theme,
-    setTheme: setTheme
-  }
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${settings.mobileBreakpoint}px)`
+  })
 
   useEffect(() => {
     const data = localStorage.getItem(LocalStorageProperties.themeProperty);
@@ -38,8 +34,10 @@ export default function Body({
 
   return (
     <body className={`${ubuntuMono.className} ${theme}`}>
-      <ThemeContext.Provider value={themeState}>
-        {children}
+      <ThemeContext.Provider value={theme}>
+        <MobileContext.Provider value={isMobile}>
+          {children}
+        </MobileContext.Provider>
       </ThemeContext.Provider>
     </body>
   )

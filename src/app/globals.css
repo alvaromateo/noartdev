@@ -82,3 +82,18 @@
     --color-parameter: 238 153 160;
   }
 }
+
+:root {
+  --footer-height: 4rem;
+}
+
+.header-and-content {
+  min-height: calc(100vh - var(--footer-height));
+}
+
+.footer {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: var(--footer-height);
+  padding: 0.5rem 1rem
+}

@@ -30,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang={params.lang}>
       <Body>
-        <div className='bg-base min-h-screen'>
-          <Header />
-          {children}
+        <div className='bg-base text-text min-h-screen'>
+          <div className='header-and-content'>
+            <Header lang={params.lang} />
+            {children}
+          </div>
           <Footer />
         </div>
       </Body>
