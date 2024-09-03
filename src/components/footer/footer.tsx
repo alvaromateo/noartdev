@@ -1,17 +1,15 @@
+import SocialIcons from "./social-icons";
+
 export default function Footer() {
     return (
       <footer className={`
-        footer bg-mantle flex justify-between align-middle
-        text-xs/3 md:text-base/4
+        footer bg-mantle flex justify-between align-middle text-xs/4
       `}>
         <div className='my-auto'>
-          <p className='mb-1'>© 2024 Alvaro Mateo</p>
+          <p>© 2024 Alvaro Mateo</p>
           <p>All rights reserved</p>
         </div>
-        <ul className='flex flex-col my-auto'>
-          <li>LinkedIn</li>
-          <li>GitHub</li>
-        </ul>
+        <SocialIcons/>
       </footer>
     )
   }

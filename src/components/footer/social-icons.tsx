@@ -1,0 +1,22 @@
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Link from 'next/link'
+
+export default function SocialIcons() {
+  return (
+    <div className='flex flex-row justify-evenly my-auto'>
+      <div className='px-1 text-2xl'>
+        <Link href={{ pathname: 'https://www.linkedin.com/in/alvaromateoalvarez/' }}
+          target='_blank' rel='noopener noreferrer'>
+          <LinkedInIcon fontSize='inherit'/>
+        </Link>
+      </div>
+      <div className='px-1 text-2xl'>
+        <Link href={{ pathname: 'https://github.com/alvaromateo' }}
+          target='_blank' rel='noopener noreferrer'>
+          <GitHubIcon fontSize='inherit'/>
+        </Link>
+      </div>
+    </div>
+  )
+}
