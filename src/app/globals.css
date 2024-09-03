@@ -4,7 +4,7 @@
 
 @layer base {
   :root,
-  :root .catppuccin_latte {
+  html.catppuccin_latte {
     --color-base: 239 241 245;
     --color-mantle: 230 233 239;
     --color-crust: 220 224 232;
@@ -43,7 +43,7 @@
     --color-parameter: 230 69 83;
   }
 
-  :root .catppuccin_macchiato {
+  html.catppuccin_macchiato {
     --color-base: 36 39 58;
     --color-mantle: 30 32 48;
     --color-crust: 24 25 38;
@@ -85,6 +85,7 @@
 
 :root {
   --footer-height: 4rem;
+  background: rgb(var(--color-mantle));
 }
 
 .header-and-content {

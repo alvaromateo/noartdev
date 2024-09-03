@@ -2,20 +2,13 @@
 
 import { useState, useEffect, createContext } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { Ubuntu_Mono } from 'next/font/google'
 import { LocalStorageProperties } from '../../global/property-names'
 import settings from '../../global/app-settings'
-
-// TODO: change font
-const ubuntuMono = Ubuntu_Mono({
-  weight: ['400', '700'],
-  subsets: ['latin']
-})
 
 export const ThemeContext = createContext(settings.defaultTheme)
 export const MobileContext = createContext(true)
 
-export default function Body({
+export default function Providers({
   children
 } : {
   children: React.ReactNode
@@ -33,12 +26,10 @@ export default function Body({
   }, []);
 
   return (
-    <body className={`${ubuntuMono.className} ${theme}`}>
-      <ThemeContext.Provider value={theme}>
-        <MobileContext.Provider value={isMobile}>
-          {children}
-        </MobileContext.Provider>
-      </ThemeContext.Provider>
-    </body>
+    <ThemeContext.Provider value={theme}>
+      <MobileContext.Provider value={isMobile}>
+        {children}
+      </MobileContext.Provider>
+    </ThemeContext.Provider>
   )
 }

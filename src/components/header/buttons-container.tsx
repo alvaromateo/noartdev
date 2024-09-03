@@ -1,7 +1,7 @@
 'use client'
 
 import { useContext } from 'react'
-import { MobileContext } from '../utils/body'
+import { MobileContext } from '../utils/providers'
 import MenuButton from './menu-button'
 import DarkButton from './dark-button'
 

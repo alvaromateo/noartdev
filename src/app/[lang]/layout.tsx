@@ -4,7 +4,8 @@ import type { Metadata } from 'next'
 import Header from '../../components/header/header'
 import Footer from '../../components/footer/footer'
 import { StaticParams } from '../../global/types'
-import Body from '../../components/utils/body'
+import Providers from '../../components/utils/providers'
+import Html from '../../components/utils/html'
 
 // TODO: redirects to redirect from '/' to '/[lang]/home'
 
@@ -28,16 +29,16 @@ export default function RootLayout({
   params: StaticParams
 }) {
   return (
-    <html lang={params.lang}>
-      <Body>
-        <div className='bg-base text-text min-h-screen'>
+    <Providers>
+      <Html params={params}>
+        <div className='text-text min-h-screen'>
           <div className='header-and-content'>
             <Header lang={params.lang} />
             {children}
           </div>
           <Footer />
         </div>
-      </Body>
-    </html>
+      </Html>
+    </Providers>
   )
 }

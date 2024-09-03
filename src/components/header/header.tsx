@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import dynamic from 'next/dynamic';
 import NavLink from './nav-link'
+import Logo from './logo';
 
-const LogoComponent = dynamic(() => import('./logo'),
-  { ssr: false })
 const LinksComponent = dynamic(() => import('./links-container'),
   { ssr: false })
 const ButtonsComponent = dynamic(() => import('./buttons-container'),
@@ -14,7 +13,7 @@ export default function Header(props: { lang: string }) {
     <header className='p-4'>
       <nav className='flex flex-row justify-between items-center'>
         <Link href={{ pathname: `/${props.lang}/home` }}>
-          <LogoComponent></LogoComponent>
+          <Logo></Logo>
         </Link>
 
         <LinksComponent>
