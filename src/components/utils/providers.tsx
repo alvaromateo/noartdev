@@ -5,7 +5,10 @@ import { useMediaQuery } from 'react-responsive'
 import { LocalStorageProperties } from '../../global/property-names'
 import settings from '../../global/app-settings'
 
-export const ThemeContext = createContext(settings.defaultTheme)
+export const ThemeContext = createContext({
+  theme: settings.defaultTheme,
+  setTheme: (_: string) => {}
+})
 export const MobileContext = createContext(true)
 
 export default function Providers({
@@ -14,6 +17,10 @@ export default function Providers({
   children: React.ReactNode
 }) {
   const [theme, setTheme] = useState(settings.defaultTheme)
+  const themeState = {
+    theme: theme,
+    setTheme: setTheme
+  }
   const isMobile = useMediaQuery({
     query: `(max-width: ${settings.mobileBreakpoint}px)`
   })
@@ -26,7 +33,7 @@ export default function Providers({
   }, []);
 
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeContext.Provider value={themeState}>
       <MobileContext.Provider value={isMobile}>
         {children}
       </MobileContext.Provider>

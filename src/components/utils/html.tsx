@@ -18,9 +18,9 @@ export default function Html({
   children: React.ReactNode
   params: StaticParams
 }) {
-  const theme = useContext(ThemeContext)
+  const themeState = useContext(ThemeContext)
   return (
-    <html lang={params.lang} className={`${theme}`}>
+    <html lang={params.lang} className={`${themeState.theme}`}>
       <body className={`${ubuntuMono.className} bg-base`}>
         {children}
       </body>

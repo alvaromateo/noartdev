@@ -7,11 +7,17 @@ import { ThemeContext } from '../utils/providers'
 import settings from '../../global/app-settings'
 
 export default function DarkButton() {
-  const theme = useContext(ThemeContext)
+  const themeState = useContext(ThemeContext)
   return (
-    <button className='text-xl md:text-3xl'>
+    <button className='text-xl md:text-3xl' onClick={() => {
+      if (themeState.theme === settings.darkTheme) {
+        themeState.setTheme(settings.lightTheme)
+      } else {
+        themeState.setTheme(settings.darkTheme)
+      }
+    }}>
       {
-        theme === settings.darkTheme
+        themeState.theme === settings.darkTheme
           ? <LightModeIcon fontSize='inherit' />
           : <DarkModeIcon fontSize='inherit' />
       }

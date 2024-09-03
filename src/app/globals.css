@@ -55,36 +55,52 @@
     --color-overlay-2: 147 154 183;
 
     --color-text: 202 211 245;
-    --color-title: 125 196 228;
-    --color-subtitle: 184 192 224;
-    --color-success: 66 218 149;
-    --color-info: 139 213 202;
-    --color-warning: 238 212 159;
-    --color-error: 237 135 150;
+    --color-title: 125 196 228; /* Sapphire */
+    --color-subtitle: 184 192 224; /* Subtext1 */
+    --color-success: 166 218 149; /* Green */
+    --color-info: 139 213 202; /* Teal */
+    --color-warning: 238 212 159; /* Yellow */
+    --color-error: 237 135 150; /* Red */
 
-    --color-selection-bg: 139 213 202;
-    --color-selection-text: 24 25 38;
+    --color-selection-bg: 139 213 202; /* Teal */
+    --color-selection-text: 24 25 38; /* Crust */
 
-    --color-link: 138 173 244;
-    --color-followed-link: 183 189 248;
-    --color-hover-link: 145 215 227;
+    --color-link: 138 173 244; /* Blue */
+    --color-followed-link: 183 189 248; /* Lavender */
+    --color-hover-link: 145 215 227; /* Sky */
 
-    --color-snippet-bg: 30 32 48;
-    --color-keyword: 198 160 246;
-    --color-string: 66 218 149;
-    --color-regex: 245 189 230;
-    --color-comment: 147 154 183;
-    --color-number: 245 169 127;
-    --color-constant: 245 169 127;
-    --color-operator: 145 215 227;
-    --color-delimiter: 237 135 150;
-    --color-function: 138 173 244;
-    --color-parameter: 238 153 160;
+    --color-snippet-bg: 30 32 48; /* Mantle */
+    --color-keyword: 198 160 246; /* Mauve */
+    --color-string: 166 218 149; /* Green */
+    --color-regex: 245 189 230; /* Pink */
+    --color-comment: 147 154 183; /* Overlay2 */
+    --color-number: 245 169 127; /* Peach */
+    --color-constant: 245 169 127; /* Peach */
+    --color-operator: 145 215 227; /* Sky */
+    --color-delimiter: 237 135 150; /* Red */
+    --color-function: 138 173 244; /* Blue */
+    --color-parameter: 238 153 160; /* Maroon */
   }
 }
 
 :root {
+  /* Color aliases */
+  --color-subtext-1: var(--color-subtitle);
+  --color-sapphire: var(--color-title);
+  --color-green: var(--color-success);
+  --color-teal: var(--color-info);
+  --color-yellow: var(--color-warning);
+  --color-red: var(--color-error);
+  --color-blue: var(--color-link);
+  --color-lavender: var(--color-followed-link);
+  --color-sky: var(--color-hover-link);
+  --color-mauve: var(--color-keyword);
+  --color-pink: var(--color-regex);
+  --color-peach: var(--color-number);
+  --color-maroon: var(--color-parameter);
+
   --footer-height: 4rem;
+
   background: rgb(var(--color-mantle));
 }
 

@@ -3,7 +3,8 @@ import SocialIcons from "./social-icons";
 export default function Footer() {
     return (
       <footer className={`
-        footer bg-mantle flex justify-between align-middle text-xs/4
+        footer bg-mantle border-t border-crust
+        flex justify-between align-middle text-xs/4
       `}>
         <div className='my-auto'>
           <p>© 2024 Alvaro Mateo</p>

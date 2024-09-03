@@ -41,7 +41,21 @@ const config: Config = {
       'operator': 'rgb(var(--color-operator) / <alpha-value>)',
       'delimiter': 'rgb(var(--color-delimiter) / <alpha-value>)',
       'function': 'rgb(var(--color-function) / <alpha-value>)',
-      'parameter': 'rgb(var(--color-parameter) / <alpha-value>)'
+      'parameter': 'rgb(var(--color-parameter) / <alpha-value>)',
+      // ALIASES
+      'subtext-1': 'rgb(var(--color-subtext-1) / <alpha-value>)',
+      'sapphire': 'rgb(var(--color-sapphire) / <alpha-value>)',
+      'green': 'rgb(var(--color-green) / <alpha-value>)',
+      'teal': 'rgb(var(--color-teal) / <alpha-value>)',
+      'yellow': 'rgb(var(--color-yellow) / <alpha-value>)',
+      'red': 'rgb(var(--color-red) / <alpha-value>)',
+      'blue': 'rgb(var(--color-blue) / <alpha-value>)',
+      'lavender': 'rgb(var(--color-lavender) / <alpha-value>)',
+      'sky': 'rgb(var(--color-sky) / <alpha-value>)',
+      'mauve': 'rgb(var(--color-mauve) / <alpha-value>)',
+      'pink': 'rgb(var(--color-pink) / <alpha-value>)',
+      'peach': 'rgb(var(--color-peach) / <alpha-value>)',
+      'maroon': 'rgb(var(--color-maroon) / <alpha-value>)'
     },
     extend: {
       backgroundImage: {
