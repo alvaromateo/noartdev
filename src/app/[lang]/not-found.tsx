@@ -1,11 +1,14 @@
 'use client'
 
+import Link from "next/link";
+
 export default function NotFound() {
-  // TODO: change reload for a link to the home page
   return (
     <div>
       <h2>This is not the page you were looking for...</h2>
-      <button onClick={() => location.reload()}>Home</button>
+      <Link href={{ pathname: '/' }}>
+        Home
+      </Link>
     </div>
   );
 }

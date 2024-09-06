@@ -2,16 +2,19 @@
 
 import { useContext, useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
-import { MobileContext } from '../utils/providers'
+import { FullScreenModalContext, MobileContext } from '../utils/providers'
 import NavLink from './nav-link';
 
 export default function LinksContainer({
-  links
+  links,
+  desktopNavigation = false
 } : {
   links: Array<{link: string, component: React.ReactNode}>
+  desktopNavigation?: boolean
 }) {
   const isMobile = useContext(MobileContext)
-  const hideForMobile = isMobile ? 'hidden' : ''
+  const { setShowModal } = useContext(FullScreenModalContext)
+  const hideForMobile = isMobile && desktopNavigation ? 'hidden' : ''
 
   const pathname = usePathname()
   const [current, setCurrent] = useState(pathname);
@@ -22,17 +25,19 @@ export default function LinksContainer({
   return (
     <ul className={
         `
-        bg-mantle px-6 rounded-full ${hideForMobile} 
-        ring-1 ring-crust
-        inline-flex justify-center 
-        content-center align-middle flex-row
+        bg-mantle px-6 h-full ${hideForMobile}
+        md:rounded-full md:ring-1 md:ring-crust
+        flex flex-col md:flex-row justify-center 
+        content-center align-middle items-center
         `
     }>
       {
         links.map(linkObj => {
           const selected = current === linkObj.link
           return (
-            <NavLink selected={selected}>
+            <NavLink selected={selected} key={linkObj.link}
+              setShowModal={setShowModal}
+            >
               {linkObj.component}
             </NavLink>
           )

@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 }
 
 export async function generateStaticParams(): Promise<Array<StaticParams>> {
+  // { lang: 'es' }
   return [
     { lang: 'en' },
-    { lang: 'es' }
   ]
 }
 
@@ -33,7 +33,7 @@ export default function RootLayout({
       <Html params={params}>
         <div className='text-text min-h-screen'>
           <div className='header-and-content'>
-            <Header lang={params.lang} />
+            <Header lang={params.lang}/>
             {children}
           </div>
           <Footer />

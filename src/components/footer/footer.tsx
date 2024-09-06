@@ -3,6 +3,7 @@ import SocialIcons from "./social-icons";
 export default function Footer() {
     return (
       <footer className={`
+        my-0 px-3 md:px-8
         footer bg-mantle border-t border-crust
         flex justify-between align-middle text-xs/4
       `}>
@@ -14,4 +15,3 @@ export default function Footer() {
       </footer>
     )
   }
-  // TODO: get the icons for linkedin and github

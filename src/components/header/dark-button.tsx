@@ -9,7 +9,7 @@ import settings from '../../global/app-settings'
 export default function DarkButton() {
   const themeState = useContext(ThemeContext)
   return (
-    <button className='text-xl md:text-3xl' onClick={() => {
+    <button className='text-logo' onClick={() => {
       if (themeState.theme === settings.darkTheme) {
         themeState.setTheme(settings.lightTheme)
       } else {

@@ -5,13 +5,13 @@ import { MobileContext } from '../utils/providers'
 import MenuButton from './menu-button'
 import DarkButton from './dark-button'
 
-export default function ButtonsContainer() {
+export default function ButtonsContainer({ lang } : { lang: string }) {
   const isMobile = useContext(MobileContext)
   return (
     // same font-size as the logo
     <>
       { isMobile
-        ? <MenuButton />
+        ? <MenuButton lang={lang} />
         : <DarkButton />
       }
     </>

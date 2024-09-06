@@ -1,9 +1,27 @@
-import MenuIcon from '@mui/icons-material/Menu'
+'use client'
 
-export default function MenuButton() {
+import { useContext } from 'react'
+import MenuIcon from '@mui/icons-material/Menu'
+import FullScreenModal from '../utils/fullscreen-modal'
+import { FullScreenModalContext } from '../utils/providers'
+import LinksContainer from './links-container'
+import generateNavigation from './navigation'
+
+export default function MenuButton({ lang } : { lang: string }) {
+  const modalState = useContext(FullScreenModalContext)
   return (
-    <button className='text-3xl md:text-5xl'>
-      <MenuIcon fontSize='inherit'/>
-    </button>
-  );
+    <>
+      {
+        !modalState.showModal &&
+        <button className='text-logo' onClick={
+          () => modalState.setShowModal(true)
+        }>
+          <MenuIcon fontSize='inherit'/>
+        </button>
+      }
+      <FullScreenModal modalState={modalState}>
+        <LinksContainer links={generateNavigation(lang)}/>
+      </FullScreenModal>
+    </>
+  )
 }

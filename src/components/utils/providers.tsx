@@ -10,6 +10,10 @@ export const ThemeContext = createContext({
   setTheme: (_: string) => {}
 })
 export const MobileContext = createContext(true)
+export const FullScreenModalContext = createContext({
+  showModal: false,
+  setShowModal: (_: boolean) => {}
+})
 
 export default function Providers({
   children
@@ -24,6 +28,11 @@ export default function Providers({
   const isMobile = useMediaQuery({
     query: `(max-width: ${settings.mobileBreakpoint}px)`
   })
+  const [showModal, setShowModal] = useState(false)
+  const fullscreenModalState = {
+    showModal: showModal,
+    setShowModal: setShowModal
+  }
 
   useEffect(() => {
     const data = localStorage.getItem(LocalStorageProperties.themeProperty);
@@ -35,7 +44,9 @@ export default function Providers({
   return (
     <ThemeContext.Provider value={themeState}>
       <MobileContext.Provider value={isMobile}>
-        {children}
+        <FullScreenModalContext.Provider value={fullscreenModalState}>
+          {children}
+        </FullScreenModalContext.Provider>
       </MobileContext.Provider>
     </ThemeContext.Provider>
   )

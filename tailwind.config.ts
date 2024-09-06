@@ -6,7 +6,7 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      'base': 'rgb(var(--color-base) / <alpha-value>)',
+      'basic': 'rgb(var(--color-base) / <alpha-value>)',
       'mantle': 'rgb(var(--color-mantle) / <alpha-value>)',
       'crust': 'rgb(var(--color-crust) / <alpha-value>)',
       'surface-0': 'rgb(var(--color-surface-0) / <alpha-value>)',
@@ -62,6 +62,10 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      fontSize: {
+        'logo': ['2rem', {lineHeight: '0'}],
+        'md-logo': ['3rem', {lineHeight: '0'}]
       },
     },
   },

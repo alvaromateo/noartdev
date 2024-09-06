@@ -1,10 +1,10 @@
-
-
 export default function NavLink({
   selected,
+  setShowModal,
   children
 } : {
-  selected?: boolean
+  selected?: boolean,
+  setShowModal?: (show: boolean) => void,
   children: React.ReactNode
 }) {
   return (
@@ -12,7 +12,12 @@ export default function NavLink({
       relative block px-4 py-2
       ${selected ? 'text-hover-link' : ''} hover:text-hover-link
     `}>
-      {children}
+      <span onClick={ setShowModal !== undefined
+        ? () => setShowModal(false)
+        : undefined
+      }>
+        {children}
+      </span>
       { selected ?
         <span className={`
           absolute inset-x-1 -bottom-px h-[2px]
