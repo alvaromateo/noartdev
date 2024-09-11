@@ -58,14 +58,9 @@ const config: Config = {
       'maroon': 'rgb(var(--color-maroon) / <alpha-value>)'
     },
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       fontSize: {
-        'logo': ['2rem', {lineHeight: '0'}],
-        'md-logo': ['3rem', {lineHeight: '0'}]
+        'logo': ['2.5rem', {lineHeight: '0'}],
+        'md-logo': ['4rem', {lineHeight: '0'}]
       },
     },
   },

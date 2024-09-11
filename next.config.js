@@ -1,5 +1,6 @@
 // write webpack config to debug/analyze it
 const fs = require('node:fs');
+const createNextIntlPlugin = require('next-intl/plugin');
 
 function writeToFile(obj, fileName) {
   try {
@@ -25,6 +26,17 @@ const nextConfig = {
     writeToFile(options, 'webpack-options.json');
     return config;
   },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
+    ]
+  },
 }
 
-module.exports = nextConfig
+const withNextIntl = createNextIntlPlugin();
+module.exports = withNextIntl(nextConfig);

@@ -10,7 +10,7 @@ export default function NavLink({
   return (
     <div className={`
       relative block px-4 py-2
-      ${selected ? 'text-hover-link' : ''} hover:text-hover-link
+      ${selected ? 'text-hover-link' : 'text-link'} hover:text-hover-link
     `}>
       <span onClick={ setShowModal !== undefined
         ? () => setShowModal(false)

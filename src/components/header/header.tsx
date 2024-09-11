@@ -1,22 +1,22 @@
-import Link from 'next/link'
-import dynamic from 'next/dynamic';
+import { getTranslations } from 'next-intl/server'
+import { Link } from '@/src/i18n/routing'
+
 import Logo from './logo';
-import generateNavigation from './navigation';
+import getNavigation from './navigation';
+import LinksContainer from './links-container';
+import ButtonsContainer from './buttons-container';
 
-const LinksComponent = dynamic(() => import('./links-container'),
-  { ssr: false })
-const ButtonsComponent = dynamic(() => import('./buttons-container'),
-  { ssr: false })
-
-export default function Header(props: { lang: string }) {
+export default async function Header() {
+  const t = await getTranslations('Navigation')
+  const links = getNavigation(t)
   return (
-    <header className='py-2 md:py-4 px-3 md:px-8'>
-      <nav className='flex flex-row justify-between items-center'>
-        <Link href={{ pathname: `/${props.lang}/home` }}>
+    <header className='header flex items-center px-6 md:px-16'>
+      <nav className='w-full flex flex-row justify-between items-center'>
+        <Link href={{ pathname: `/home` }}>
           <Logo></Logo>
         </Link>
-        <LinksComponent links={generateNavigation(props.lang)} desktopNavigation={true}/>
-        <ButtonsComponent lang={props.lang}/>
+        <LinksContainer links={links} desktopNavigation={true}/>
+        <ButtonsContainer />
       </nav>
     </header>
   )

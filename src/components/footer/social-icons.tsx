@@ -1,6 +1,6 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Link from 'next/link'
+import { Link } from '@/src/i18n/routing'
 
 export default function SocialIcons() {
   return (

@@ -1,41 +1,63 @@
 .fullscreen-modal-enter {
   position: fixed;
-  top: -90%;
-  right: -90%;
+  top: 0;
+  left: 100%;
   opacity: 0.2;
 }
 
 .fullscreen-modal-enter-active {
-  opacity: 0.9;
-  transform: translate(-90%, 90%);
-  transition: opacity 150ms ease-in,
+  opacity: 0.95;
+  transform: translateX(-100%);
+  transition: opacity 75ms ease-in,
     transform 150ms ease-in-out;
 }
 
 .fullscreen-modal-enter-done {
   position: fixed;
   top: 0;
-  right: 0;
-  opacity: 0.9;
+  left: 0;
+  opacity: 0.95;
 }
 
 .fullscreen-modal-exit {
   position: fixed;
   top: 0;
-  right: 0;
-  opacity: 0.9;
+  left: 0;
+  opacity: 0.95;
 }
 
 .fullscreen-modal-exit-active {
   opacity: 0.2;
-  transform: translate(90%, -90%);
-  transition: opacity 150ms ease-in,
+  transform: translateX(100%);
+  transition: opacity 75ms ease-in,
     transform 150ms ease-in-out;
 }
 
 .fullscreen-modal-exit-done {
   position: fixed;
-  top: -90%;
-  right: -90%;
+  top: 0;
+  left: 0;
   opacity: 0.2;
 }
+
+/*
+@media (min-width: 768px) {
+  .fullscreen-modal-enter {
+  }
+  
+  .fullscreen-modal-enter-active {
+  }
+  
+  .fullscreen-modal-enter-done {
+  }
+  
+  .fullscreen-modal-exit {
+  }
+  
+  .fullscreen-modal-exit-active {
+  }
+  
+  .fullscreen-modal-exit-done {
+  }
+}
+*/

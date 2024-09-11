@@ -1,13 +1,15 @@
-export type StaticParams = {
-  lang: string
-}
-
 export type ThemeState = {
-  theme: string,
+  themeName: string,
   setTheme: (newTheme: string) => void
 }
 
 export type FullScreenModalState = {
   showModal: boolean,
   setShowModal: (show: boolean) => void
+}
+
+export interface NavigationItem {
+  link: string,
+  messageKey: string,
+  component: JSX.Element,
 }

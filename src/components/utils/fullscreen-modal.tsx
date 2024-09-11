@@ -24,9 +24,9 @@ export default function FullScreenModal({
       mountOnEnter
       unmountOnExit
     >
-      <div ref={node} className='h-screen w-full bg-mantle z-10'>
+      <div ref={node} className='h-screen w-full bg-mantle z-50'>
         <div className='flex flex-col h-full'>
-          <div className='py-2 px-3 flex flex-row justify-end'>
+          <div className='py-4 md:py-8 px-6 md:px-16 flex flex-row justify-end'>
             <button className='text-logo' onClick={
               () => modalState.setShowModal(false)
             }>

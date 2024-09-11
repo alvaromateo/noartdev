@@ -1,8 +1,9 @@
 'use client'
 
 import { useContext, useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation';
-import { FullScreenModalContext, MobileContext } from '../utils/providers'
+import { usePathname } from '@/src/i18n/routing';
+import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
+import { MobileContext } from '@/src/providers/mobile';
 import NavLink from './nav-link';
 
 export default function LinksContainer({

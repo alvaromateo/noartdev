@@ -1,4 +1,11 @@
-export default function Projects() {
+import { unstable_setRequestLocale } from 'next-intl/server'
+
+export default function Projects({
+  params
+} : {
+  params: { locale: string }
+}) {
+  unstable_setRequestLocale(params.locale)
   return (
     <main>
       <p>Hello world!</p>

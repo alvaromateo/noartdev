@@ -1,14 +1,29 @@
 'use client'
 
 import { useContext } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import FullScreenModal from '../utils/fullscreen-modal'
-import { FullScreenModalContext } from '../utils/providers'
-import LinksContainer from './links-container'
-import generateNavigation from './navigation'
+import { useTranslations } from 'next-intl';
+import { Link } from '@/src/i18n/routing';
+import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
 
-export default function MenuButton({ lang } : { lang: string }) {
+import FullScreenModal from '../utils/fullscreen-modal'
+import MenuIcon from '@mui/icons-material/Menu'
+import LinksContainer from './links-container'
+import getNavigation from './navigation'
+
+export default async function MenuButton() {
   const modalState = useContext(FullScreenModalContext)
+  const t = useTranslations('Navigation')
+  const links = [
+    {
+    link: '/home',
+    messageKey: 'home',
+    component: <Link className='text-2xl md:text-lg'
+      href={{ pathname: '/home' }}>
+        {t('home')}
+      </Link>,
+    }, 
+    ...getNavigation(t)
+  ]
   return (
     <>
       {
@@ -20,7 +35,7 @@ export default function MenuButton({ lang } : { lang: string }) {
         </button>
       }
       <FullScreenModal modalState={modalState}>
-        <LinksContainer links={generateNavigation(lang)}/>
+        <LinksContainer links={links}/>
       </FullScreenModal>
     </>
   )

@@ -83,6 +83,15 @@
   }
 }
 
+@layer components {
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+}
+
 :root {
   /* Color aliases */
   --color-subtext-1: var(--color-subtitle);
@@ -100,10 +109,30 @@
   --color-maroon: var(--color-parameter);
 
   --footer-height: 4rem;
+  --header-height-mobile: 4rem;
+  --header-height-desktop: 6rem;
 }
 
 .header-and-content {
   min-height: calc(100vh - var(--footer-height));
+}
+
+.header {
+  height: var(--header-height-mobile);
+}
+
+.content {
+  min-height: calc(100vh - var(--footer-height) - var(--header-height-mobile));
+}
+
+@media (min-width: 768px) {
+  .content {
+    min-height: calc(100vh - var(--footer-height) - var(--header-height-desktop));
+  }
+
+  .header {
+    height: var(--header-height-desktop);
+  }
 }
 
 .footer {

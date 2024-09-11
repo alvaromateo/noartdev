@@ -1,11 +1,11 @@
 import Image from 'next/image'
 
 import logo from '../../../assets/noArtDev-logo.svg'
-import settings from '../../global/app-settings'
+import { AppSettings as settings } from '@/src/global/app-config'
 
 export default function Logo() {
   return (
-    <div className='w-8 md:w-12'>
+    <div className='w-10 md:w-16'>
       <Image
         src={logo}
         width={settings.logoSize}

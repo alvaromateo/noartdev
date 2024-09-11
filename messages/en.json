@@ -1,0 +1,19 @@
+{
+  "Home": {
+    "title": "Hello world!",
+    "imageDisclaimer": {
+      "title": "Disclaimer",
+      "contentP1": "No art was created by me.",
+      "contentP2": "This is the work of Midjourney AI."
+    },
+    "search": "Search",
+    "recent": "Recently visited:"
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "hobbies": "Hobbies"
+  }
+}
