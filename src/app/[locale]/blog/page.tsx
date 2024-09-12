@@ -8,11 +8,12 @@ export default function Blog({
   params: { locale: string }
 }) {
   //unstable_setRequestLocale(params.locale)
+  //throw Error('Error')
   return (
     <main>
       <p>Hello world!</p>
       <p>Blog page</p>
-      <button onClick={() => {throw Error('Error')}}>Error</button>
+      <button onClick={() => {}}>Error</button>
     </main>
   )
 }

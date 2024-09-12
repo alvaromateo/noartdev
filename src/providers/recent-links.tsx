@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, createContext, useCallback } from 'react'
+import { useState, useEffect, createContext, useCallback, useMemo } from 'react'
 import { usePathname } from '@/src/i18n/routing'
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { AppSettings as settings } from '@/src/global/app-config'
+import arrayEqual from 'array-equal'
 
 export const RecentLinksContext = createContext<string[]>([])
 
@@ -29,33 +30,28 @@ export default function RecentLinksProvider({
     return links.slice(0, settings.recentLinksNum)
   }, [])
 
-  const saveLinks = useCallback((links: string[]): void => {
-    localStorage.setItem(LocalStorageProperties.recentLinksProperty, JSON.stringify(links))
-    setRecentLinks(links)
-  }, [])
+  const updatedLinks = addNewLink(pathname, recentLinks)
+  if (!arrayEqual(updatedLinks, recentLinks)) {
+    setRecentLinks(updatedLinks)
+  }
 
   useEffect(() => {
-    // add the current link to the top of the list
-    // and load the recently visited links from local storage
-    let links: string[] = []
     const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
     if (data) {
       const previousLinks = JSON.parse(data)
-      links = addNewLink(pathname, previousLinks)
-    } else {
-      links = [pathname]
+      setRecentLinks(previousLinks)
     }
-    saveLinks(links)
   }, [])
 
   useEffect(() => {
-    // set the newly visited link every time pathname changes
-    let links = addNewLink(pathname, recentLinks)
-    saveLinks(links)
-  }, [pathname])
+    localStorage.setItem(
+      LocalStorageProperties.recentLinksProperty,
+      JSON.stringify(recentLinks)
+    )
+  }, [recentLinks])
 
   return (
-    <RecentLinksContext.Provider value={recentLinks}>
+    <RecentLinksContext.Provider value={updatedLinks}>
       {children}
     </RecentLinksContext.Provider>
   )

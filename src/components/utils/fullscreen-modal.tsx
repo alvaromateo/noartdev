@@ -25,16 +25,18 @@ export default function FullScreenModal({
       unmountOnExit
     >
       <div ref={node} className='h-screen w-full bg-mantle z-50'>
-        <div className='flex flex-col h-full'>
-          <div className='py-4 md:py-8 px-6 md:px-16 flex flex-row justify-end'>
+        <div className='relative h-full'>
+          <div className='absolute w-full py-4 md:py-8 px-6 md:px-16 flex flex-row justify-end'>
             <button className='text-logo' onClick={
               () => modalState.setShowModal(false)
             }>
               <CloseIcon fontSize='inherit'/>
             </button>
           </div>
-          <div className='py-4 h-full'>
-            {children}
+          <div className='py-4 h-full flex items-center justify-center'>
+            <div>
+              {children}
+            </div>
           </div>
         </div>
       </div>

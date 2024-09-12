@@ -1,10 +1,12 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/src/i18n/routing'
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
 
 import Logo from './logo';
 import getNavigation from './navigation';
 import LinksContainer from './links-container';
 import ButtonsContainer from './buttons-container';
+import { Suspense } from 'react';
 
 export default async function Header() {
   const t = await getTranslations('Navigation')
@@ -15,8 +17,12 @@ export default async function Header() {
         <Link href={{ pathname: `/home` }}>
           <Logo></Logo>
         </Link>
-        <LinksContainer links={links} desktopNavigation={true}/>
-        <ButtonsContainer />
+        <LinksContainer links={links} />
+        <Suspense fallback={
+          <HourglassBottomIcon />
+        }>
+          <ButtonsContainer />
+        </Suspense>
       </nav>
     </header>
   )

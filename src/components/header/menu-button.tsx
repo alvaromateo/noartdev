@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import LinksContainer from './links-container'
 import getNavigation from './navigation'
 
-export default async function MenuButton() {
+export default function MenuButton() {
   const modalState = useContext(FullScreenModalContext)
   const t = useTranslations('Navigation')
   const links = [
@@ -35,7 +35,7 @@ export default async function MenuButton() {
         </button>
       }
       <FullScreenModal modalState={modalState}>
-        <LinksContainer links={links}/>
+        <LinksContainer links={links} forceDisplay={true} />
       </FullScreenModal>
     </>
   )

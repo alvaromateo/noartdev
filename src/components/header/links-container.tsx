@@ -3,19 +3,16 @@
 import { useContext, useState, useEffect } from 'react'
 import { usePathname } from '@/src/i18n/routing';
 import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
-import { MobileContext } from '@/src/providers/mobile';
 import NavLink from './nav-link';
 
 export default function LinksContainer({
   links,
-  desktopNavigation = false
+  forceDisplay = false
 } : {
   links: Array<{link: string, component: React.ReactNode}>
-  desktopNavigation?: boolean
+  forceDisplay?: boolean
 }) {
-  const isMobile = useContext(MobileContext)
   const { setShowModal } = useContext(FullScreenModalContext)
-  const hideForMobile = isMobile && desktopNavigation ? 'hidden' : ''
 
   const pathname = usePathname()
   const [current, setCurrent] = useState(pathname);
@@ -24,26 +21,28 @@ export default function LinksContainer({
   }, [pathname])
 
   return (
-    <ul className={
-        `
-        bg-mantle px-6 h-full ${hideForMobile}
-        md:rounded-full md:ring-1 md:ring-crust
-        flex flex-col md:flex-row justify-center 
-        content-center align-middle items-center
-        `
-    }>
-      {
-        links.map(linkObj => {
-          const selected = current === linkObj.link
-          return (
-            <NavLink selected={selected} key={linkObj.link}
-              setShowModal={setShowModal}
-            >
-              {linkObj.component}
-            </NavLink>
-          )
-        })
-      }
-    </ul>
+    <div className={forceDisplay ? 'block' : 'hidden md:block'}>
+      <ul className={
+          `
+          bg-mantle px-6 h-full
+          md:rounded-full md:ring-1 md:ring-crust
+          flex flex-col md:flex-row justify-center 
+          content-center align-middle items-center
+          `
+      }>
+        {
+          links.map(linkObj => {
+            const selected = current === linkObj.link
+            return (
+              <NavLink selected={selected} key={linkObj.link}
+                setShowModal={setShowModal}
+              >
+                {linkObj.component}
+              </NavLink>
+            )
+          })
+        }
+      </ul>
+    </div>
   )
 }
