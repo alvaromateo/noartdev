@@ -9,10 +9,12 @@ import './fullscreen-modal.css';
 
 export default function FullScreenModal({
   children,
-  modalState
+  modalState,
+  topLeftButton,
 } : {
   children: React.ReactNode,
-  modalState: FullScreenModalState
+  modalState: FullScreenModalState,
+  topLeftButton?: React.ReactNode,
 }) {
   const node = useRef(null)
   return (
@@ -26,7 +28,10 @@ export default function FullScreenModal({
     >
       <div ref={node} className='h-screen w-full bg-mantle z-50'>
         <div className='relative h-full'>
-          <div className='absolute w-full py-4 md:py-8 px-6 md:px-16 flex flex-row justify-end'>
+          <div className='absolute w-full header px-6 md:px-16 flex flex-row justify-between'>
+            <div className='flex items-center'>
+              { topLeftButton }
+            </div>
             <button className='text-logo' onClick={
               () => modalState.setShowModal(false)
             }>

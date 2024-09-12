@@ -9,6 +9,7 @@ import FullScreenModal from '../utils/fullscreen-modal'
 import MenuIcon from '@mui/icons-material/Menu'
 import LinksContainer from './links-container'
 import getNavigation from './navigation'
+import DarkButton from './dark-button';
 
 export default function MenuButton() {
   const modalState = useContext(FullScreenModalContext)
@@ -34,8 +35,8 @@ export default function MenuButton() {
           <MenuIcon fontSize='inherit'/>
         </button>
       }
-      <FullScreenModal modalState={modalState}>
-        <LinksContainer links={links} forceDisplay={true} />
+      <FullScreenModal modalState={modalState} topLeftButton={<DarkButton/>}>
+        <LinksContainer links={links} forceDisplay={true}/>
       </FullScreenModal>
     </>
   )
