@@ -18,13 +18,13 @@ export default async function Home({
 
   return (
     <div className={`
-      grid gap-x-8 gap-y-4 grid-cols-1 grid-rows-4
+      grid gap-y-12 grid-cols-1 grid-rows-[auto_auto_auto]
       md:gap-x-16 md:gap-y-16 md:grid-cols-2 md:grid-rows-2
       md:justify-items-stretch md:items-center
     `}>
       <div className={`
         flex flex-col w-full justify-center
-        col-start-3 row-start-3
+        col-start-1 row-start-3
         md:col-start-1 md:row-span-2
       `}>
         <figure>
@@ -42,11 +42,12 @@ export default async function Home({
         </figure>
       </div>
       <div className={`
+        pl-[10%] md:pl-0
         col-start-1 row-start-1
         md:col-start-2 md:row-start-1
         md:self-end
       `}>
-        <h1 className='mb-4 md:mb-8'>
+        <h1 className='mb-12'>
           <span className='block text-title text-4xl'>No art.</span>
           <span className='text-mauve text-6xl'>Dev</span>
         </h1>
@@ -61,7 +62,8 @@ export default async function Home({
         </div>
       </div>
       <div className={`
-        col-start-1 row-start-4
+        pl-[10%] md:pl-0
+        col-start-1 row-start-2
         md:col-start-2 md:row-start-2
         md:self-start
       `}>
