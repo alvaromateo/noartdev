@@ -6,7 +6,7 @@
 }
 
 .fullscreen-modal-enter-active {
-  opacity: 0.95;
+  opacity: 1;
   transform: translateX(-100%);
   transition: opacity 75ms ease-in,
     transform 150ms ease-in-out;
@@ -16,14 +16,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .fullscreen-modal-exit {
   position: fixed;
   top: 0;
   left: 0;
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .fullscreen-modal-exit-active {

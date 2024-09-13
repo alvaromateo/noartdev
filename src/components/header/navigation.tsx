@@ -12,7 +12,7 @@ export default function getNavigation(
       {
         link: '/about',
         messageKey: 'about',
-        component: <Link className='text-2xl md:text-lg'
+        component: <Link className='text-2xl md:text-base'
           href={{ pathname: '/about' }}>
             {t('about')}
           </Link>,
@@ -20,7 +20,7 @@ export default function getNavigation(
       {
         link: '/projects',
         messageKey: 'projects',
-        component: <Link className='text-2xl md:text-lg'
+        component: <Link className='text-2xl md:text-base'
           href={{ pathname: '/projects' }}>
             {t('projects')}
           </Link>,
@@ -28,7 +28,7 @@ export default function getNavigation(
       {
         link: '/blog',
         messageKey: 'blog',
-        component: <Link className='text-2xl md:text-lg'
+        component: <Link className='text-2xl md:text-base'
           href={{ pathname: '/blog' }}>
             {t('blog')}
           </Link>,
@@ -36,7 +36,7 @@ export default function getNavigation(
       {
         link: '/hobbies',
         messageKey: 'hobbies',
-        component: <Link className='text-2xl md:text-lg'
+        component: <Link className='text-2xl md:text-base'
           href={{ pathname: '/hobbies' }}>
             {t('hobbies')}
           </Link>,

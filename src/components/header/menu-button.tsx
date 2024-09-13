@@ -1,15 +1,15 @@
 'use client'
 
 import { useContext } from 'react'
-import { useTranslations } from 'next-intl';
-import { Link } from '@/src/i18n/routing';
+import { useTranslations } from 'next-intl'
+import { Link } from '@/src/i18n/routing'
 import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
 
 import FullScreenModal from '../utils/fullscreen-modal'
 import MenuIcon from '@mui/icons-material/Menu'
 import LinksContainer from './links-container'
 import getNavigation from './navigation'
-import DarkButton from './dark-button';
+import DarkButton from './dark-button'
 
 export default function MenuButton() {
   const modalState = useContext(FullScreenModalContext)
@@ -18,7 +18,7 @@ export default function MenuButton() {
     {
     link: '/home',
     messageKey: 'home',
-    component: <Link className='text-2xl md:text-lg'
+    component: <Link className='text-2xl md:text-base'
       href={{ pathname: '/home' }}>
         {t('home')}
       </Link>,

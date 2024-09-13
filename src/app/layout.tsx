@@ -5,10 +5,9 @@ import Header from '@/src/components/header/header'
 import Footer from '@/src/components/footer/footer'
 import Html from '@/src/components/utils/html'
 import Providers from '@/src/components/utils/providers'
-import { Link, routing } from '@/src/i18n/routing'
+import { routing } from '@/src/i18n/routing'
 
 import './globals.css'
-import Logo from '../components/header/logo'
 
 export const metadata: Metadata = {
   title: 'noart.dev',
@@ -36,7 +35,7 @@ export default async function RootLayout({
         <div className='text-text min-h-screen'>
           <div className='header-and-content z-20'>
             <Header />
-            <main className="px-[10%] pt-8 pb-16 content">
+            <main className='px-[10%] pt-8 pb-16 content'>
               {children}
             </main>
           </div>

@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import { getTranslations } from 'next-intl/server'
-import { unstable_setRequestLocale } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { spaceMono } from '@/src/global/fonts'
 
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import portrait from '/assets/watercolor_portrait.png'
-import RecentLinks from '@/src/components/home/recent-links';
+import RecentLinks from '@/src/components/home/recent-links'
 
-const imageDiameter = 400;
+const imageDiameter = 400
 
 export default async function Home({
   params
@@ -35,7 +35,7 @@ export default async function Home({
             alt='Picture of the author'
             className='rounded-full ring-2 ring-crust mx-auto shadow-md shadow-crust'/>
           <figcaption className='text-xs mt-4 md:mt-8 text-center'>
-            <h4 className='text-sm text-title'>{t('imageDisclaimer.title')}</h4>
+            <h3 className='text-sm text-title'>{t('imageDisclaimer.title')}</h3>
             <p>{t('imageDisclaimer.contentP1')}</p>
             <p>{t('imageDisclaimer.contentP2')}</p>
           </figcaption>
@@ -47,7 +47,7 @@ export default async function Home({
         md:col-start-2 md:row-start-1
         md:self-end
       `}>
-        <h1 className='mb-12'>
+        <h1 className={`${spaceMono.className} mb-12`}>
           <span className='block text-title text-4xl'>No art.</span>
           <span className='text-mauve text-6xl'>Dev</span>
         </h1>
@@ -67,7 +67,7 @@ export default async function Home({
         md:col-start-2 md:row-start-2
         md:self-start
       `}>
-        <h3 className='text-subtitle'>{t('recent')}</h3>
+        <h2 className='text-subtitle'>{t('recent')}</h2>
         <RecentLinks/>
       </div>
     </div>

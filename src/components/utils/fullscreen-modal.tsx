@@ -1,11 +1,11 @@
 'use client'
 
-import { FullScreenModalState } from '@/src/global/types';
-import CloseIcon from '@mui/icons-material/Close';
-import { useRef } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { FullScreenModalState } from '@/src/global/types'
+import CloseIcon from '@mui/icons-material/Close'
+import { useRef } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
-import './fullscreen-modal.css';
+import './fullscreen-modal.css'
 
 export default function FullScreenModal({
   children,

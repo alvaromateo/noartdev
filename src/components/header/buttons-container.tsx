@@ -7,11 +7,11 @@ import DarkButton from './dark-button'
 
 export default function ButtonsContainer() {
   const isMobile = useContext(MobileContext)
-  const [domLoaded, setDomLoaded] = useState(false);
+  const [domLoaded, setDomLoaded] = useState(false)
 
   useEffect(() => {
-    setDomLoaded(true);
-  }, []);
+    setDomLoaded(true)
+  }, [])
 
   return (
     <>

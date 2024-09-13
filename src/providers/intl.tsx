@@ -6,10 +6,10 @@ export default async function IntlProvider({
 } : {
   children: React.ReactNode
 }) {
-  const locale = await getLocale() ?? 'en';
-  const now = await getNow();
-  const timeZone = await getTimeZone();
-  const messages = await getMessages();
+  const locale = await getLocale() ?? 'en'
+  const now = await getNow()
+  const timeZone = await getTimeZone()
+  const messages = await getMessages()
 
   return (
     <NextIntlClientProvider

@@ -10,9 +10,9 @@ export default function Logo() {
         src={logo}
         width={settings.logoSize}
         height={settings.logoSize}
-        alt="No Art Dev logo"
+        alt='No Art Dev logo'
         priority
       />
     </div>
-  );
+  )
 }

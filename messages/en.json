@@ -1,6 +1,6 @@
 {
   "Home": {
-    "title": "Hello world!",
+    "title": "Home",
     "imageDisclaimer": {
       "title": "Disclaimer",
       "contentP1": "No art was created by me.",
@@ -8,6 +8,13 @@
     },
     "search": "Search",
     "recent": "Recently visited:"
+  },
+  "About": {
+    "title": "About me",
+    "fullName": "Alvaro Mateo Alvarez",
+    "bioIntro": "Hello there!",
+    "bioP1": "I'm a Software Engineer from Barcelona specialized in web and mobile development.",
+    "bioP2": "I enjoy all kind of coding challenges and when not working I'm always geeking out on something!"
   },
   "Navigation": {
     "home": "Home",

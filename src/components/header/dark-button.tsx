@@ -22,5 +22,5 @@ export default function DarkButton() {
           : <DarkModeIcon fontSize='inherit' />
       }
     </button>
-  );
+  )
 }

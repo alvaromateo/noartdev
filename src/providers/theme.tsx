@@ -30,7 +30,7 @@ export default function ThemeProvider({
     if (storedTheme) {
       setThemeState(storedTheme)
     }
-  }, []);
+  }, [])
 
   return (
     <ThemeContext.Provider value={themeState}>

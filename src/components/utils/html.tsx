@@ -1,15 +1,9 @@
 'use client'
 
 import { useContext } from 'react'
-import { Ubuntu_Mono } from 'next/font/google'
-
+import { ubuntuMono } from '@/src/global/fonts'
 import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
 import { ThemeContext } from '@/src/providers/theme'
-
-const ubuntuMono = Ubuntu_Mono({
-  weight: ['400', '700'],
-  subsets: ['latin']
-})
 
 export default function Html({
   children,

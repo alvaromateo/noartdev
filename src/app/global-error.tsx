@@ -1,8 +1,8 @@
 'use client'
 
 import { Link, useRouter } from '@/src/i18n/routing'
-import Logo from '@/src/components/header/logo';
-import Footer from '@/src/components/footer/footer';
+import Logo from '@/src/components/header/logo'
+import Footer from '@/src/components/footer/footer'
  
 export default function GlobalError({
   error,
@@ -11,11 +11,11 @@ export default function GlobalError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  let errorDescription : React.ReactNode;
+  let errorDescription : React.ReactNode
   if (!!error.digest) {
     errorDescription = (
       <p>{ error.digest }</p>
-    );
+    )
   }
   const router = useRouter()
 

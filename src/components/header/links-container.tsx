@@ -1,9 +1,9 @@
 'use client'
 
 import { useContext, useState, useEffect } from 'react'
-import { usePathname } from '@/src/i18n/routing';
+import { usePathname } from '@/src/i18n/routing'
 import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
-import NavLink from './nav-link';
+import NavLink from './nav-link'
 
 export default function LinksContainer({
   links,
@@ -15,7 +15,7 @@ export default function LinksContainer({
   const { setShowModal } = useContext(FullScreenModalContext)
 
   const pathname = usePathname()
-  const [current, setCurrent] = useState(pathname);
+  const [current, setCurrent] = useState(pathname)
   useEffect ( () => {
     setCurrent(pathname)
   }, [pathname])
