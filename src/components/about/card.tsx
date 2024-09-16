@@ -10,13 +10,15 @@ export default function Card({
   className?: string,
 }) {
   const defaultBackground = getDefaultValue(className, /bg-/g, 'bg-surface-0')
-  const defaultPadding = getDefaultValue(className, /p[xytrbl]-/g, 'px-10 py-6')
+  const defaultPadding = getDefaultValue(className, /p[xytrbl]?-/g, 'px-10 py-6')
+  const defaultMargin = getDefaultValue(className, /m[xytrbl]?-/g, 'mt-8')
 
   return (
     <div className={`
-      mt-8 w-3/4 rounded-xl
+      rounded-xl
       ${defaultBackground}
       ${defaultPadding}
+      ${defaultMargin}
       ${className}
     `}>
       <h2 className={`

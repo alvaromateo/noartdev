@@ -1,13 +1,16 @@
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { getTranslations, getMessages, unstable_setRequestLocale } from 'next-intl/server'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
-import portrait from '/assets/photo-linkedin.jpg'
-import Card from '@/src/components/about/card'
-import SocialIcons from '@/src/components/utils/social-icons'
 import { skills, langs } from '@/src/global/icons'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import { spaceMono } from '@/src/global/fonts'
 import { languageProficiencyLevels } from '@/src/global/app-config'
+import Experience from '@/src/components/about/experience'
+import Card from '@/src/components/about/card'
+import SocialIcons from '@/src/components/utils/social-icons'
+
+import portrait from '/assets/photo-linkedin.jpg'
+import { WithStartAndEnd } from '@/src/global/types'
 
 const imageDiameter = 300
 const skillsLogoSize = 32
@@ -20,20 +23,15 @@ export default async function About({
 }) {
   unstable_setRequestLocale(params.locale)
   const t = await getTranslations('About')
+  const messages = (await getMessages() as unknown) as IntlMessages
 
   // TODO: add mobile and 'lg' (1024px) breakpoint
-  /*
-    Border left of skills by drawing a <div>
-    <div className={`
-      absolute left-0 ml-16 h-5/6 self-end w-1 bg-overlay-0
-      rounded-lg shadow-md
-    `}></div>
-  */
+
   return (
     <main className='lg:max-w-[1024px] mx-auto pt-8 pb-16 content'>
       <div className={`
         grid gap-y-12 grid-cols-1 grid-rows-[auto_auto_auto]
-        md:gap-x-16 md:gap-y-16 md:grid-cols-2 md:grid-rows-2
+        md:gap-x-16 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_auto]
         md:justify-items-stretch md:items-center
       `}>
         <div className={`
@@ -77,14 +75,12 @@ export default async function About({
               </div>
             </div>
           </Card>
-          <div className='relative flex flex-row justify-end'>
-            <Card title={t('skills.title')}
-              className='bg-basic pl-16 border-l-4 border-solid box-content border-overlay-0'>
-              { createIconsRow(Object.entries(skills.langs)) }
-              { createIconsRow(Object.entries(skills.techs)) }
-              { createIconsRow(Object.entries(skills.tools)) }
-            </Card>
-          </div>
+          <Card title={t('skills.title')}
+            className='bg-basic pl-16 border-l-4 border-solid box-content border-overlay-0'>
+            { createIconsRow(Object.entries(skills.langs)) }
+            { createIconsRow(Object.entries(skills.techs)) }
+            { createIconsRow(Object.entries(skills.tools)) }
+          </Card>
           <Card title={t('langs.title')} className=''>
             <div className='flex flex-col'>
               { createLanguageEntries(t) }
@@ -97,22 +93,55 @@ export default async function About({
           md:col-span-2 md:row-start-2
           md:self-start
         `}>
-          <h2 className={`
-            text-2xl text-title mb-4
-            ${spaceMono.className}
-          `}>
-            Experience
-          </h2>
-          <h2 className={`
-            text-2xl text-title mb-4
-            ${spaceMono.className}
-          `}>
-            Education
-          </h2>
+          <Card title={t('experience.title')} className='bg-basic mt-0 p-0'>
+            <div className='border-l-2 border-solid border-overlay-0'>
+              <div className='mt-8'>
+                {
+                  Object.entries(messages.About.experience)
+                    .sort(compareDataByKey)
+                    .reverse()
+                    .map(([key, value]) => {
+                      if (typeof value === 'string') {
+                        return null
+                      } else {
+                        return <Experience key={key} data={value} />
+                      }
+                    })
+                }
+              </div>
+            </div>
+          </Card>
+          <Card title={t('education.title')} className='bg-basic mt-16 p-0'>
+            <div className='border-l-2 border-solid border-overlay-0'>
+              <div className='mt-8'>
+                {
+                  Object.entries(messages.About.education)
+                    .sort(compareDataByKey)
+                    .reverse()
+                    .map(([key, value]) => {
+                      if (typeof value === 'string') {
+                        return null
+                      } else {
+                        return <Experience key={key} data={value} />
+                      }
+                    })
+                }
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </main>
   )
+}
+
+function compareDataByKey([keyA]: [string, any], [keyB]: [string, any]) {
+  if (keyA === 'title') {
+    return -1
+  } else if (keyB === 'title') {
+    return -1
+  }
+  return keyA.localeCompare(keyB)
 }
 
 function createIconsRow(icons: [string, StaticImport][]) {
@@ -137,7 +166,7 @@ function createIconsRow(icons: [string, StaticImport][]) {
   )
 }
 
-function createLanguageEntries(t: (key: string) => string) {
+function createLanguageEntries(t: (key: any) => string) {
   return (
     Object.entries(langs).map(([key, value]) => {
       return <div key={key} className='flex flex-row'>
@@ -149,7 +178,7 @@ function createLanguageEntries(t: (key: string) => string) {
             style={{
               borderRadius: '9999px',
               marginBottom: '0.5rem',
-              marginRight: '0.5rem'
+              marginRight: '0.75rem'
             }}
           />
           <p className='text-sm'>
