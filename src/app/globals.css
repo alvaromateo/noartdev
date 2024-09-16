@@ -17,7 +17,7 @@
 
     --color-text: 76 79 105;
     --color-title: 32 159 181;
-    --color-subtitle: 92 95 119;
+    --color-subtext: 92 95 119;
     --color-success: 64 160 43;
     --color-info: 23 146 153;
     --color-warning: 223 142 29;
@@ -56,7 +56,7 @@
 
     --color-text: 202 211 245;
     --color-title: 125 196 228; /* Sapphire */
-    --color-subtitle: 184 192 224; /* Subtext1 */
+    --color-subtext: 184 192 224; /* Subtext1 */
     --color-success: 166 218 149; /* Green */
     --color-info: 139 213 202; /* Teal */
     --color-warning: 238 212 159; /* Yellow */
@@ -94,7 +94,7 @@
 
 :root {
   /* Color aliases */
-  --color-subtext-1: var(--color-subtitle);
+  --color-subtitle: var(--color-keyword); /* Mauve */
   --color-sapphire: var(--color-title);
   --color-green: var(--color-success);
   --color-teal: var(--color-info);

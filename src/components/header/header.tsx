@@ -15,7 +15,7 @@ export default async function Header() {
   return (
     <header className={`
       ${spaceMono.className}
-      header flex items-center px-6 md:px-16
+      header flex items-center px-6 md:px-12
     `}>
       <nav className='w-full flex flex-row justify-between items-center'>
         <Link href={{ pathname: `/home` }}>

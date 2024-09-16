@@ -14,7 +14,23 @@
     "fullName": "Alvaro Mateo Alvarez",
     "bioIntro": "Hello there!",
     "bioP1": "I'm a Software Engineer from Barcelona specialized in web and mobile development.",
-    "bioP2": "I enjoy all kind of coding challenges and when not working I'm always geeking out on something!"
+    "bioP2": "I enjoy all kind of coding challenges and when not working I'm always geeking out on something!",
+    "contact": "Contact",
+    "skills": {
+      "title": "Skills"
+    },
+    "langs": {
+      "title": "Languages",
+      "native": "Native",
+      "proficient": "Proficient",
+      "intermediate": "Intermediate",
+      "beginner": "Beginner",
+      "es": "Spanish",
+      "cat": "Catalan",
+      "gb": "English",
+      "it": "Italian",
+      "fr": "French"
+    }
   },
   "Navigation": {
     "home": "Home",

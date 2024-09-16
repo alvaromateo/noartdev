@@ -18,6 +18,7 @@ const config: Config = {
       // text over previous surfaces (except overlays)
       'text': 'rgb(var(--color-text) / <alpha-value>)',
       'title': 'rgb(var(--color-title) / <alpha-value>)',
+      'subtext': 'rgb(var(--color-subtext) / <alpha-value>)',
       'subtitle': 'rgb(var(--color-subtitle) / <alpha-value>)',
       'success': 'rgb(var(--color-success) / <alpha-value>)',
       'info': 'rgb(var(--color-info) / <alpha-value>)',

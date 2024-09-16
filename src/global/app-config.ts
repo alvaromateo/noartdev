@@ -9,6 +9,14 @@ export class AppSettings {
   public static recentLinksNum = 5
 }
 
+export const languageProficiencyLevels: { [key: string]: string } = {
+  'es': 'native',
+  'cat': 'native',
+  'gb': 'proficient',
+  'it': 'intermediate',
+  'fr': 'beginner'
+}
+
 export function linkToMessageKey(link: string) {
   switch (link) {
     case '/home':

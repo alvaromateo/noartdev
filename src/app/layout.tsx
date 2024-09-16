@@ -33,11 +33,9 @@ export default async function RootLayout({
     <Providers>
       <Html locale={locale}>
         <div className='text-text min-h-screen'>
-          <div className='header-and-content z-20'>
+          <div className='header-and-content'>
             <Header />
-            <main className='px-[10%] pt-8 pb-16 content'>
-              {children}
-            </main>
+            {children}
           </div>
           <Footer />
         </div>
