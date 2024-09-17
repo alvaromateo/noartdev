@@ -1,0 +1,126 @@
+{
+  "Home": {
+    "title": "Home",
+    "imageDisclaimer": {
+      "title": "Disclaimer",
+      "contentP1": "No art was created by me.",
+      "contentP2": "This is the work of Midjourney AI."
+    },
+    "search": "Search",
+    "recent": "Recently visited:"
+  },
+  "About": {
+    "title": "About me",
+    "fullName": "Alvaro Mateo Alvarez",
+    "bioIntro": "Hello there!",
+    "bioP1": "I'm a Software Engineer from Barcelona specialized in web and mobile development.",
+    "bioP2": "I enjoy all kind of coding challenges and when not working I'm always geeking out on something!",
+    "contact": "Contact",
+    "skills": {
+      "title": "Skills"
+    },
+    "langs": {
+      "title": "Languages",
+      "native": "Native",
+      "proficient": "Proficient",
+      "intermediate": "Intermediate",
+      "beginner": "Beginner",
+      "es": "Spanish",
+      "cat": "Catalan",
+      "gb": "English",
+      "it": "Italian",
+      "fr": "French"
+    },
+    "experience": {
+      "title": "Experience",
+      "1": {
+        "dateStart": "June, 2015",
+        "dateEnd": "December, 2016",
+        "title": "Software Engineer",
+        "companyName": "Netcentric",
+        "description": [
+          "I developed web components, dialogs and widgets using Java and AEM framework (Adobe).",
+          "On the Front End side I used HTML5, SASS, Javascript, Backbone and jQuery.",
+          "International and Agile environment."
+        ]
+      },
+      "2": {
+        "dateStart": "January, 2017",
+        "dateEnd": "December, 2017",
+        "title": "C++ Software Engineer",
+        "companyName": "Zitro",
+        "description": [
+          "I developed digital gambling games using C++ and a game engine called Irrlicht.",
+          "I worked on some physics components for the games (collisions and movement).",
+          "Scrum environment."
+        ]
+      },
+      "3": {
+        "dateStart": "January, 2018",
+        "dateEnd": "August, 2021",
+        "title": "Java Software Engineer",
+        "companyName": "Richemont",
+        "description": [
+          "I developed Java services and worked on a base CMS framework that other teams would use to create websites.",
+          "I took care of the code reviews of the external team and the management of the releases for our framework.",
+          "I wrote technical specifications and documentation for the services I developed.",
+          "I developed all the Jenkins CI/CD infrastructure for the team and to automatize the releases.",
+          "I did presentations, workshops and training about Jenkins for the rest of the team.",
+          "Agile environment with Kanban methodology."
+        ]
+      },
+      "4": {
+        "dateStart": "April, 2022",
+        "dateEnd": "October, 2023",
+        "title": "Software Engineer",
+        "companyName": "Swissquote",
+        "description": [
+          "I developed REST applications with Spring to retrieve data from the DBs.",
+          "On the FE side I used React to display the information on the company's website.",
+          "I used Redis on the BE to cache and speed up the retrieval of data.",
+          "I took care of upgrading the old polling system to display real time prices of the stock market, using WebSockets to stream the data.",
+          "I created a fake prices simulator using docker to aid on the debugging and testing of the data streaming.",
+          "I did load testing of the new system using Gatling.",
+          "Agile and Kanban methodology."
+        ]
+      },
+      "5": {
+        "dateStart": "January, 2024",
+        "dateEnd": "Present",
+        "title": "Software Engineer",
+        "companyName": "Freelance",
+        "description": [
+          "I developed mobile applications using Dart and Flutter.",
+          "I took some trainings on iOS (Swift) and Android (Kotlin).",
+          "I developed my own portfolio website using NextJS and React."
+        ]
+      }
+    },
+    "education": {
+      "title": "Education",
+      "1": {
+        "dateStart": "2009",
+        "dateEnd": "2012",
+        "universityName": "Universitat Politecnica de Catalunya (UPC)",
+        "description": [
+          "Bachelor's degree in Aerospace Engineering (not finished)"
+        ]
+      },
+      "2": {
+        "dateStart": "2012",
+        "dateEnd": "2016",
+        "universityName": "Universitat Politecnica de Catalunya (UPC)",
+        "description": [
+          "Bachelor's degree in Software Engineering"
+        ]
+      }
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "hobbies": "Hobbies"
+  }
+}

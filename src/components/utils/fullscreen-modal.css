@@ -1,0 +1,63 @@
+.fullscreen-modal-enter {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  opacity: 0.2;
+}
+
+.fullscreen-modal-enter-active {
+  opacity: 1;
+  transform: translateX(-100%);
+  transition: opacity 75ms ease-in,
+    transform 150ms ease-in-out;
+}
+
+.fullscreen-modal-enter-done {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+.fullscreen-modal-exit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+.fullscreen-modal-exit-active {
+  opacity: 0.2;
+  transform: translateX(100%);
+  transition: opacity 75ms ease-in,
+    transform 150ms ease-in-out;
+}
+
+.fullscreen-modal-exit-done {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+}
+
+/*
+@media (min-width: 768px) {
+  .fullscreen-modal-enter {
+  }
+  
+  .fullscreen-modal-enter-active {
+  }
+  
+  .fullscreen-modal-enter-done {
+  }
+  
+  .fullscreen-modal-exit {
+  }
+  
+  .fullscreen-modal-exit-active {
+  }
+  
+  .fullscreen-modal-exit-done {
+  }
+}
+*/

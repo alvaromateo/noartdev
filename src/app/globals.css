@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  html.catppuccin_latte {
+    --color-base: 239 241 245;
+    --color-mantle: 230 233 239;
+    --color-crust: 220 224 232;
+    --color-surface-0: 204 208 218;
+    --color-surface-1: 188 192 204;
+    --color-surface-2: 172 176 190;
+    --color-overlay-0: 156 160 176;
+    --color-overlay-1: 140 143 161;
+    --color-overlay-2: 124 127 147;
+
+    --color-text: 76 79 105;
+    --color-title: 32 159 181;
+    --color-subtext: 92 95 119;
+    --color-success: 64 160 43;
+    --color-info: 23 146 153;
+    --color-warning: 223 142 29;
+    --color-error: 210 15 57;
+
+    --color-selection-bg: 23 146 153;
+    --color-selection-text: 220 224 232;
+
+    --color-link: 30 102 245;
+    --color-followed-link: 114 135 253;
+    --color-hover-link: 4 165 229;
+
+    --color-snippet-bg: 230 233 239;
+    --color-keyword: 136 57 239;
+    --color-string: 64 160 43;
+    --color-regex: 234 118 203;
+    --color-comment: 124 127 147;
+    --color-number: 254 100 11;
+    --color-constant: 254 100 11;
+    --color-operator: 4 165 229;
+    --color-delimiter: 210 15 57;
+    --color-function: 30 102 245;
+    --color-parameter: 230 69 83;
+  }
+
+  html.catppuccin_macchiato {
+    --color-base: 36 39 58;
+    --color-mantle: 30 32 48;
+    --color-crust: 24 25 38;
+    --color-surface-0: 54 58 79;
+    --color-surface-1: 73 77 100;
+    --color-surface-2: 91 96 120;
+    --color-overlay-0: 110 115 141;
+    --color-overlay-1: 128 135 162;
+    --color-overlay-2: 147 154 183;
+
+    --color-text: 202 211 245;
+    --color-title: 125 196 228; /* Sapphire */
+    --color-subtext: 184 192 224; /* Subtext1 */
+    --color-success: 166 218 149; /* Green */
+    --color-info: 139 213 202; /* Teal */
+    --color-warning: 238 212 159; /* Yellow */
+    --color-error: 237 135 150; /* Red */
+
+    --color-selection-bg: 139 213 202; /* Teal */
+    --color-selection-text: 24 25 38; /* Crust */
+
+    --color-link: 138 173 244; /* Blue */
+    --color-followed-link: 183 189 248; /* Lavender */
+    --color-hover-link: 145 215 227; /* Sky */
+
+    --color-snippet-bg: 30 32 48; /* Mantle */
+    --color-keyword: 198 160 246; /* Mauve */
+    --color-string: 166 218 149; /* Green */
+    --color-regex: 245 189 230; /* Pink */
+    --color-comment: 147 154 183; /* Overlay2 */
+    --color-number: 245 169 127; /* Peach */
+    --color-constant: 245 169 127; /* Peach */
+    --color-operator: 145 215 227; /* Sky */
+    --color-delimiter: 237 135 150; /* Red */
+    --color-function: 138 173 244; /* Blue */
+    --color-parameter: 238 153 160; /* Maroon */
+  }
+}
+
+@layer components {
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+}
+
+:root {
+  /* Color aliases */
+  --color-subtitle: var(--color-keyword); /* Mauve */
+  --color-sapphire: var(--color-title);
+  --color-green: var(--color-success);
+  --color-teal: var(--color-info);
+  --color-yellow: var(--color-warning);
+  --color-red: var(--color-error);
+  --color-blue: var(--color-link);
+  --color-lavender: var(--color-followed-link);
+  --color-sky: var(--color-hover-link);
+  --color-mauve: var(--color-keyword);
+  --color-pink: var(--color-regex);
+  --color-peach: var(--color-number);
+  --color-maroon: var(--color-parameter);
+
+  --footer-height: 4rem;
+  --header-height-mobile: 4rem;
+  --header-height-desktop: 6rem;
+}
+
+.header-and-content {
+  min-height: calc(100vh - var(--footer-height));
+}
+
+.header {
+  height: var(--header-height-mobile);
+}
+
+.content {
+  min-height: calc(100vh - var(--footer-height) - var(--header-height-mobile));
+}
+
+@media (min-width: 768px) {
+  .content {
+    min-height: calc(100vh - var(--footer-height) - var(--header-height-desktop));
+  }
+
+  .header {
+    height: var(--header-height-desktop);
+  }
+}
+
+.footer {
+  height: var(--footer-height);
+}
