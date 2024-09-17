@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import logo from '../../../assets/noArtDev-logo.svg'
+import logo from '@/assets/images/noArtDev-logo.svg'
 import { AppSettings as settings } from '@/src/global/app-config'
 
 export default function Logo() {

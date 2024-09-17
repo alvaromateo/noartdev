@@ -9,8 +9,7 @@ import Experience from '@/src/components/about/experience'
 import Card from '@/src/components/about/card'
 import SocialIcons from '@/src/components/utils/social-icons'
 
-import portrait from '/assets/photo-linkedin.jpg'
-
+import portrait from '/assets/images/photo-linkedin.jpg'
 
 const imageDiameter = 300
 const skillsLogoSize = 32
@@ -24,8 +23,6 @@ export default async function About({
   unstable_setRequestLocale(params.locale)
   const t = await getTranslations('About')
   const messages = (await getMessages() as unknown) as IntlMessages
-
-  // TODO: add mobile and 'lg' (1024px) breakpoint
 
   return (
     <main className='px-[8%] lg:max-w-[1024px] lg:px-12 lg:mx-auto pt-8 pb-16 content'>

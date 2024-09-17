@@ -3,7 +3,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { spaceMono } from '@/src/global/fonts'
 
 import SearchIcon from '@mui/icons-material/Search'
-import portrait from '/assets/watercolor_portrait.png'
+import portrait from '/assets/images/watercolor_portrait.png'
 import RecentLinks from '@/src/components/home/recent-links'
 
 const imageDiameter = 400
@@ -34,6 +34,7 @@ export default async function Home({
               width={imageDiameter}
               height={imageDiameter}
               alt='Picture of the author'
+              priority
               className='rounded-full ring-2 ring-crust mx-auto shadow-md shadow-crust'/>
             <figcaption className='text-xs mt-4 md:mt-8 text-center'>
               <h3 className='text-sm text-title'>{t('imageDisclaimer.title')}</h3>
@@ -49,8 +50,8 @@ export default async function Home({
           md:self-end
         `}>
           <h1 className={`${spaceMono.className} mb-12`}>
-            <span className='block text-title text-4xl'>No art.</span>
-            <span className='text-subtitle text-6xl'>Dev</span>
+            <span className='block text-subtitle text-4xl'>No art.</span>
+            <span className='text-title text-6xl'>Dev</span>
           </h1>
           <div className='relative'>
             <input type='text' placeholder='Search'
