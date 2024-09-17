@@ -11,7 +11,7 @@ import ButtonsContainer from './buttons-container'
 
 export default async function Header() {
   const t = await getTranslations('Navigation')
-  const links = getNavigation(t)
+  const links = getNavigation(t as (key: string) => string)
   return (
     <header className={`
       ${spaceMono.className}

@@ -23,7 +23,7 @@ export default function MenuButton() {
         {t('home')}
       </Link>,
     }, 
-    ...getNavigation(t)
+    ...getNavigation(t as (key: string) => string)
   ]
   return (
     <>

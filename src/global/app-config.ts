@@ -27,9 +27,9 @@ export function linkToMessageKey(link: string) {
       return 'projects'
     case '/blog': 
       return 'blog'
-    case '/hobbies': 
+    case '/hobbies':
       return 'hobbies'
     default:
-      return 'NOT FOUND'
+      return 'home'
   }
 }
