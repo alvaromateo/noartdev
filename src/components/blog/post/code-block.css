@@ -1,0 +1,89 @@
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1rem 2rem;
+  background: rgb(var(--color-snippet-bg));
+  color: rgb(var(--color-text));
+}
+
+.hljs-keyword {
+  color: rgb(var(--color-keyword));
+  font-weight: bold;
+}
+
+.hljs-selector-tag {
+  color: rgb(var(--color-lavender));
+  font-weight: bold;
+}
+
+.hljs-literal {
+  color: rgb(var(--color-constant));
+  font-weight: bold;
+}
+
+.hljs-link {
+  color: rgb(var(--color-link));
+}
+
+.hljs-string {
+  color: rgb(var(--color-string));
+}
+
+.hljs-number {
+  color: rgb(var(--color-number));
+}
+
+.hljs-title,
+.hljs-name,
+.hljs-type {
+  color: rgb(var(--color-function));
+  font-weight: bold;
+}
+
+.hljs-attribute {
+  color: rgb(var(--color-parameter));
+}
+
+.hljs-symbol,
+.hljs-built_in {
+  color: rgb(var(--color-lavender));
+}
+
+.hljs-regexp {
+  color: rgb(var(--color-regex));
+}
+
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable {
+  color: rgb(var(--color-delimiter));
+}
+
+.hljs-comment {
+  color: rgb(var(--color-comment));
+}
+
+.hljs-doctag,
+.hljs-strong {
+  font-weight: bold
+}
+
+.hljs-emphasis {
+  font-style: italic
+}
+
+/* Not sure what these styles are for... */
+
+.hljs-section {
+  color: rgb(var(--color-text));
+  font-weight: bold
+}
+
+.hljs-subst,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-meta,
+.hljs-quote,
+.hljs-deletion {
+  color: rgb(var(--color-text));
+}

@@ -90,6 +90,13 @@
   button:focus {
       outline: none;
   }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: inherit;
+  }
 }
 
 :root {

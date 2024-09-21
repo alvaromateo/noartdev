@@ -1,8 +1,9 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
 
+import { spaceMono } from '@/src/global/fonts'
 import PublishDate from '@/src/components/blog/post/publish-date'
 import Tag from '@/src/components/blog/post/tag'
-import CodeBlock from '@/src/components/blog/code-block/code-block'
+import CodeBlock from '@/src/components/blog/post/code-block'
 
 export default function Blog({
   params
@@ -12,9 +13,9 @@ export default function Blog({
   unstable_setRequestLocale(params.locale)
 
   return (
-    <>
+    <div>
       <section id='post-intro'>
-        <h1 className='text-title text-4xl text-center mt-4 mb-8'>
+        <h1 className={`${spaceMono.className} text-title text-4xl text-center mt-4 mb-8`}>
           How to train a caique
         </h1>
         <PublishDate year={2024} month={9} day={20}/>
@@ -30,7 +31,7 @@ export default function Blog({
         <></>
       </section>
       <section id='post-content'>
-        <h2 className='text-subtitle text-2xl my-8'>Training</h2>
+        <h2 className={`${spaceMono.className} text-subtitle text-2xl my-8`}>Training</h2>
         <p className='mb-4'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
           magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -48,7 +49,7 @@ export default function Blog({
           ullamcorper, a facilisis risus ullamcorper.
         </p>
 
-        <h2 className='text-subtitle text-2xl my-8'>Food</h2>
+        <h2 className={`${spaceMono.className} text-subtitle text-2xl my-8`}>Food</h2>
         <p className='mb-4'>
           Suspendisse eu nibh lacus. Aliquam congue nulla magna, vitae gravida tortor eleifend non.
           Proin fermentum lacus eu tincidunt auctor. Maecenas eget finibus purus. Sed pretium sodales quam.
@@ -60,14 +61,14 @@ export default function Blog({
           sit amet semper lorem eleifend. Pellentesque iaculis sagittis lorem non pharetra.
           Sed laoreet nibh vitae velit volutpat, eu placerat diam maximus.
         </p>
-        <h3 className='text-lavender text-lg font-bold my-8'>What to give</h3>
+        <h3 className={`${spaceMono.className} text-lavender text-lg font-bold my-8`}>What to give</h3>
         <p className='mb-4'>
           Aenean felis mi, posuere nec pretium eget, pretium vitae nisi.
           Integer dignissim varius sem, eget convallis erat auctor id. In hac habitasse platea dictumst.
           Ut ut enim venenatis, elementum risus id, malesuada dolor.
           Nulla pharetra odio sed volutpat commodo. Curabitur vitae diam orci.
         </p>
-        <h3 className='text-lavender text-lg font-bold my-8'>What to avoid</h3>
+        <h3 className={`${spaceMono.className} text-lavender text-lg font-bold my-8`}>What to avoid</h3>
         <p className='mb-4'>
           Donec tellus dui, volutpat vitae finibus in, condimentum vel odio.
           In id magna id velit congue lacinia. Cras vel quam non ipsum vestibulum euismod sed eget elit.
@@ -77,8 +78,20 @@ export default function Blog({
           Integer eu semper metus, et iaculis enim. Maecenas leo sem, sollicitudin sed mauris at, semper porta massa.
           Fusce non volutpat libero, vitae egestas mi. Phasellus molestie bibendum auctor. Vivamus non vehicula orci.
         </p>
-        <CodeBlock language='js'>Example</CodeBlock>
+        <CodeBlock language='javascript'>
+          {`
+import Image from 'next/image'
+
+import logo from '@/assets/images/noArtDev-logo.svg'
+import { AppSettings as settings } from '@/src/global/app-config'
+
+export default function Logo() {
+  const test = /ab+c/
+  return 1 + 1
+}
+          `}
+        </CodeBlock>
       </section>
-    </>
+    </div>
   )
 }
