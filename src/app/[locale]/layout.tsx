@@ -15,8 +15,11 @@ export default async function LocaleLayout({
   unstable_setRequestLocale(params.locale)
  
   return (
-    <>
+    <main className={`
+      px-[8%] lg:max-w-[1024px] lg:px-12 lg:mx-auto
+      pt-8 pb-16 content
+    `}>
       {children}
-    </>
+    </main>
   )
 }

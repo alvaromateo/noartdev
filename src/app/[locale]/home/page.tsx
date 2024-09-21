@@ -17,7 +17,7 @@ export default async function Home({
   const t = await getTranslations('Home')
 
   return (
-    <main className='px-[10%] pt-8 pb-16 content'>
+    <>
       <div className={`
         grid gap-y-12 grid-cols-1 grid-rows-[auto_auto_auto]
         md:gap-x-16 md:gap-y-16 md:grid-cols-2 md:grid-rows-2
@@ -73,6 +73,6 @@ export default async function Home({
           <RecentLinks/>
         </div>
       </div>
-    </main>
+    </>
   )
 }

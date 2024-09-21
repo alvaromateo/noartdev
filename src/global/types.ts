@@ -33,3 +33,10 @@ export interface EducationData extends WithStartAndEnd {
 export function isExperience(data: ExperienceData | EducationData): data is ExperienceData {
   return (data as ExperienceData).title !== undefined
 }
+
+export interface Section {
+  id: string,
+  title: string,
+  subSections: Section[]
+}
+export type ContentTable = Section[]

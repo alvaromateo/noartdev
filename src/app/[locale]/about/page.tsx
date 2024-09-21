@@ -25,7 +25,7 @@ export default async function About({
   const messages = (await getMessages() as unknown) as IntlMessages
 
   return (
-    <main className='px-[8%] lg:max-w-[1024px] lg:px-12 lg:mx-auto pt-8 pb-16 content'>
+    <>
       <div className={`
         grid gap-y-12 grid-cols-1 grid-rows-[auto_auto_auto]
         md:gap-x-16 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_auto]
@@ -130,7 +130,7 @@ export default async function About({
           </Card>
         </div>
       </div>
-    </main>
+    </>
   )
 }
 

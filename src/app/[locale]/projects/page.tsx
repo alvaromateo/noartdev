@@ -7,7 +7,7 @@ export default function Projects({
 }) {
   unstable_setRequestLocale(params.locale)
   return (
-    <main>
+    <>
       <p>Hello world!</p>
       <p>Projects page</p>
 
@@ -150,6 +150,6 @@ export default function Projects({
           </ol>
         </li>
       </ol>
-    </main>
+    </>
   )
 }
