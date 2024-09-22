@@ -1,6 +1,7 @@
 // write webpack config to debug/analyze it
 const fs = require('node:fs');
 const createNextIntlPlugin = require('next-intl/plugin');
+const createMDX = require('@next/mdx');
 
 function writeToFile(obj, fileName) {
   try {
@@ -29,6 +30,8 @@ webpack: function (config, options) {
 
 // @type { import('next').NextConfig }
 const nextConfig = {
+  // Configure `pageExtensions` to include markdown and MDX files
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   experimental: {
     typedRoutes: true,
   },
@@ -44,5 +47,11 @@ const nextConfig = {
   },
 }
 
+const withMDX = createMDX({
+  // Add markdown plugins here, as desired
+})
 const withNextIntl = createNextIntlPlugin();
-module.exports = withNextIntl(nextConfig);
+
+module.exports = withMDX(
+  withNextIntl(nextConfig)
+);
