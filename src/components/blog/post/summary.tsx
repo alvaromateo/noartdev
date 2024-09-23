@@ -4,7 +4,7 @@ export default function Summary({
   children: React.ReactNode
 }) {
   return (
-    <div className='text-comment text-center mb-16'>
+    <div className='text-comment text-center mb-8'>
       {children}
     </div>
   )

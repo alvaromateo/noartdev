@@ -4,6 +4,13 @@ const config: Config = {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'pl-0',
+    'pl-4',
+    'pl-8',
+    'pl-12',
+    'pl-16',
+  ],
   theme: {
     colors: {
       'basic': 'rgb(var(--color-base) / <alpha-value>)',

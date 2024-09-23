@@ -37,6 +37,6 @@ export function isExperience(data: ExperienceData | EducationData): data is Expe
 export interface Section {
   id: string,
   title: string,
+  level: number,
   subSections: Section[]
 }
-export type ContentTable = Section[]
