@@ -1,5 +1,5 @@
-import en from '../../messages/en.json'
-import { ExperienceData, EducationData } from './types'
+import en from '../../../messages/en.json'
+import { ExperienceData, EducationData } from './custom'
  
 type Messages = typeof en
  

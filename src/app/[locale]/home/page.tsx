@@ -2,9 +2,9 @@ import Image from 'next/image'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { spaceMono } from '@/src/global/fonts'
 
-import SearchIcon from '@mui/icons-material/Search'
 import portrait from '/assets/images/watercolor_portrait.png'
 import RecentLinks from '@/src/components/home/recent-links'
+import Search from '@/src/components/search/search'
 
 const imageDiameter = 400
 
@@ -53,15 +53,7 @@ export default async function Home({
             <span className='block text-subtitle text-4xl'>No art.</span>
             <span className='text-title text-6xl'>Dev</span>
           </h1>
-          <div className='relative'>
-            <input type='text' placeholder='Search'
-              className={`
-                pl-4 py-2 rounded-full ring-1 ring-surface-1 w-4/5 bg-surface-0 text-overlay-2
-                focus:outline focus:outline-2 focus:outline-title
-                active:outline active:outline-2 active:outline-title
-              `}/>
-            <SearchIcon className='text-2xl text-overlay-2 absolute right-[22.5%] top-2' fontSize='inherit'/>
-          </div>
+          <Search/>
         </div>
         <div className={`
           pl-[10%] md:pl-0

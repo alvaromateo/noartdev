@@ -1,4 +1,4 @@
-import { EducationData, ExperienceData, isExperience } from "@/src/global/types"
+import { EducationData, ExperienceData, isExperience } from '@/src/global/types/custom'
 
 export default function Experience({
   data,

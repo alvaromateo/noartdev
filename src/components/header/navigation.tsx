@@ -1,5 +1,5 @@
 import { Link } from '@/src/i18n/routing'
-import { NavigationItem } from '@/src/global/types'
+import { NavigationItem } from '@/src/global/types/custom'
 
 let navigation: NavigationItem[] | undefined
 type translateFunction = (key: string) => string

@@ -1,6 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import { spaceMono } from './global/fonts'
-import idFromTitle from './global/id-from-title'
+import idFromTitle from './global/functions/id-from-title'
  
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {

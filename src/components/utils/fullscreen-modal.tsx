@@ -1,6 +1,6 @@
 'use client'
 
-import { FullScreenModalState } from '@/src/global/types'
+import { FullScreenModalState } from '@/src/global/types/custom'
 import CloseIcon from '@mui/icons-material/Close'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'

@@ -1,7 +1,7 @@
 import { Link } from '@/src/i18n/routing'
 
-import idFromTitle from '@/src/global/id-from-title'
-import { Section } from '@/src/global/types'
+import idFromTitle from '@/src/global/functions/id-from-title'
+import { Section } from '@/src/global/types/custom'
 
 class SectionImpl implements Section {
   readonly id: string;
@@ -88,7 +88,8 @@ const countHashes = (title: string) => {
   return count
 }
 
-const findParentHeading = (level: number, lastHeading: SectionImpl | null) => {
+const findParentHeading = (level: number, lastHeading: SectionImpl | null)
+  : SectionImpl | null => {
   if (lastHeading === null) {
     return null
   }

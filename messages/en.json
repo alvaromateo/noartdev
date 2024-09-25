@@ -6,7 +6,6 @@
       "contentP1": "No art was created by me.",
       "contentP2": "This is the work of Midjourney AI."
     },
-    "search": "Search",
     "recent": "Recently visited:"
   },
   "About": {
@@ -116,11 +115,17 @@
       }
     }
   },
+  "Blog": {
+    "tags": "Tags"
+  },
   "Navigation": {
     "home": "Home",
     "about": "About",
     "projects": "Projects",
     "blog": "Blog",
     "hobbies": "Hobbies"
+  },
+  "Common": {
+    "search": "Search"
   }
 }

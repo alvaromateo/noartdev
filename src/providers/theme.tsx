@@ -3,7 +3,7 @@
 import { useState, useEffect, createContext } from 'react'
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { AppSettings as settings } from '@/src/global/app-config'
-import { ThemeState } from '../global/types'
+import { ThemeState } from '../global/types/custom'
 
 
 export const ThemeContext = createContext<ThemeState>({
