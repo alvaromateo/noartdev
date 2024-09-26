@@ -40,3 +40,17 @@ export interface Section {
   level: number,
   subSections: Section[]
 }
+
+export interface SimpleDate {
+  year: number,
+  month: number,
+  day: number,
+}
+
+export interface Post {
+  path: string,
+  content: string,
+  title: string,
+  tags: string[],
+  publishDate: SimpleDate,
+}

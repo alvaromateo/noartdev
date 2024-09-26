@@ -5,11 +5,13 @@ import { useEffect, useState } from "react"
 export default function PublishDate({
   year,
   month,
-  day
+  day,
+  className,
 } : {
   year: number,
   month: number,
-  day: number
+  day: number,
+  className?: string,
 }) {
   const [navigatorAPI, setNavigatorAPI] = useState<Navigator>()
   useEffect(() => {
@@ -32,11 +34,12 @@ export default function PublishDate({
   }
 
   const date = new Date()
-  date.setFullYear(year, month, day)
+  // month field is 0 based
+  date.setFullYear(year, month - 1, day)
   const formattedDate = formatter.format(date)
 
   return ( navigatorAPI &&
-    <p className='text-comment text-center mb-4'>
+    <p className={ className ? className : 'text-comment text-center mb-4' }>
       {formattedDate}
     </p>
   )

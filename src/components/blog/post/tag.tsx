@@ -14,6 +14,9 @@ export default function Tag({
       break
     case TagsType.Wrapped:
       classes = `${classes} mx-1 mb-2`
+      break
+    case TagsType.Card:
+      classes = `px-2 text-link hover:text-hover-link text-sm`
   }
 
   return (

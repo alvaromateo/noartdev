@@ -3,6 +3,7 @@ import Tag from "./tag";
 export enum TagsType {
   Wrapped,
   Centered,
+  Card,
 }
 
 export default function Tags({
@@ -18,7 +19,9 @@ export default function Tags({
       classes = 'flex flex-row justify-center mb-8'
       break
     case TagsType.Wrapped:
+    case TagsType.Card:
       classes = 'flex flex-row flex-wrap'
+      break
   }
 
   return (
