@@ -37,7 +37,9 @@ export default function Tag({
   const addURLSearchParam = useCallback(
     (search: URLSearchParams, name: string, value: string) => {
       const params = new URLSearchParams(search.toString())
-      params.append(name, value)
+      if (!params.has(name, value)) {
+        params.append(name, value)
+      }
       return params
     },
     []
@@ -81,7 +83,7 @@ export default function Tag({
       <li className={classes}>
         <span>{children}</span>
         { hasCloseButton &&
-          <CloseIcon fontSize='inherit' />
+          <CloseIcon fontSize='inherit' className='ml-4' />
         }
       </li>
     </button>

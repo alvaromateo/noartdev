@@ -1,0 +1,75 @@
+import { Post } from '@/src/global/types/custom'
+import path from 'path'
+import { promises as fs } from 'fs'
+import { AppSettings } from '@/src/global/app-config'
+import { SimpleDate } from '@/src/global/types/custom'
+
+export default async function findPosts(locale: string) : Promise<Post[]> {
+  const basePath = process.cwd()
+  const postsPath = path.join(basePath, 'assets', 'posts', locale)
+  return loadPosts(postsPath)
+}
+
+async function loadPosts(dirPath: string) : Promise<Post[]> {
+  const result: Post[] = []
+  const dir = await fs.opendir(dirPath)
+  for await (const dirEntry of dir) {
+    const newPath = path.join(dirPath, dirEntry.name)
+    if (dirEntry.isDirectory()) {
+      result.push(... await loadPosts(newPath))
+    } else if (dirEntry.isFile()) {
+      const content = await fs.readFile(newPath, { encoding: 'utf8' })
+      result.push(createPost(dirEntry.name, content))
+    }
+  }
+  return result
+}
+
+function createPost(postName: string, content: string) : Post {
+  return {
+    path: `${AppSettings.blogURL}/${postName}`.replace('.mdx', ''),
+    content: content,
+    title: findTitle(content, postName),
+    tags: findTags(content),
+    publishDate: findDate(content, postName),
+  }
+}
+
+function findTags(postContent: string) : string[] {
+  const tagElementMatch = postContent.match(/<Tags list=\{(.*)\}\s?\/>/)
+  if (tagElementMatch) {
+    const tagsMatch = tagElementMatch[1].match(/['"](\w)*['"]/g)
+    if (tagsMatch) {
+      return tagsMatch.map((tagMatch) => 
+        tagMatch.replaceAll('"', '').replaceAll("'", ''))
+    }
+  }
+  return []
+}
+
+function findTitle(postContent: string, postName: string) : string {
+  const titleMatch = postContent.match(/[^#]#[^#](.*)/)
+  if (titleMatch) {
+    return titleMatch[1].trim()
+  }
+  throw Error(`Title not found in post [${postName}]`)
+}
+
+function findDate(postContent: string, postName: string) 
+  : SimpleDate
+{
+  const dateMatch = postContent.match(/<PublishDate.*/)
+  if (dateMatch) {
+    const yearMatch = dateMatch[0].match(/year=\{([0-9]+)\}/)
+    const monthMatch = dateMatch[0].match(/month=\{([0-9]+)\}/)
+    const dayMatch = dateMatch[0].match(/day=\{([0-9]+)\}/)
+    if (yearMatch && monthMatch && dayMatch) {
+      return {
+        year: Number(yearMatch[1]),
+        month: Number(monthMatch[1]),
+        day: Number(dayMatch[1]),
+      }
+    }
+  }
+  throw Error(`Date not found in post [${postName}]`)
+}
