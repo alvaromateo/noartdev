@@ -25,6 +25,7 @@ export default async function Blog({
   // TODO: add reading progress indicator sticky at the bottom
   // TODO: add Read mark at the end of the article and check that it marks automatically
   // when the scroll reaches the end of the post
+  // TODO: check recent links after visiting post
 
   return (
     <LoremIpsum components={{

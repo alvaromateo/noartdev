@@ -12,12 +12,12 @@ export default function PostCard({
   post: Post
 }) {
   return (
-    <li className='bg-mantle flex flex-row justify-between my-6 p-4 rounded-full'>
+    <li className='bg-mantle flex flex-row justify-between my-6 p-4 rounded-full hover:bg-crust'>
       <div className='flex flex-col flex-wrap mx-6'>
-        <h3 className='text-xl text-subtitle ml-2'>
+        <h3 className='text-xl text-subtitle ml-6'>
           { post.title }
         </h3>
-        <PublishDate className='my-2 text-comment ml-2'
+        <PublishDate className='my-2 text-comment ml-6'
           year={post.publishDate.year}
           month={post.publishDate.month}
           day={post.publishDate.day}/>

@@ -1,15 +1,19 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { promises as fs } from 'fs'
 import path from 'path'
+import { Suspense } from 'react'
 
 import { spaceMono } from '@/src/global/fonts'
 import uniq from '@/src/global/functions/uniq'
 import { Post } from '@/src/global/types/custom'
+import { AppSettings } from '@/src/global/app-config'
 
 import { findDate, findTags, findTitle } from '@/src/components/blog/post-utils'
 import PostCard from '@/src/components/blog/post-card'
 import Tags, { TagsType } from '@/src/components/blog/post/tags'
 import Search from '@/src/components/search/search'
+import Filters from '@/src/components/blog/filters'
+import SearchSectionTitle from '@/src/components/blog/search-section-title'
 
 // TODO: create a 'Filters' section under tags
 // TODO: add links to all tags in the post-card, in the tags section
@@ -53,19 +57,11 @@ export default async function Blog({
         <Search/>
         <SearchSectionTitle title={tBlog('tags')}/>
         <Tags list={tags} type={TagsType.Wrapped}/>
+        <Suspense fallback={<></>}>
+          <Filters/>
+        </Suspense>
       </section>
     </div>
-  )
-}
-
-function SearchSectionTitle({title} : {title: string}) {
-  return (
-    <h2 className={`
-      text-2xl text-title my-8
-      ${spaceMono.className}
-    `}>
-      {title}
-    </h2>
   )
 }
 
@@ -92,7 +88,7 @@ async function loadPosts(dirPath: string) : Promise<Post[]> {
 
 function createPost(postName: string, content: string) : Post {
   return {
-    path: `/blog/${postName}`.replace('.mdx', ''),
+    path: `${AppSettings.blogURL}/${postName}`.replace('.mdx', ''),
     content: content,
     title: findTitle(content, postName),
     tags: findTags(content),

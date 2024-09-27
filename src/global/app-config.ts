@@ -7,6 +7,7 @@ export class AppSettings {
   public static darkTheme = this.defaultTheme
   public static lightTheme = 'catppuccin_latte'
   public static recentLinksNum = 5
+  public static blogURL = '/blog'
 }
 
 export const languageProficiencyLevels: { [key: string]: string } = {

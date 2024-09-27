@@ -117,7 +117,8 @@
   },
   "Blog": {
     "tags": "Tags",
-    "posts": "Posts"
+    "posts": "Posts",
+    "filters": "Filters"
   },
   "Navigation": {
     "home": "Home",
