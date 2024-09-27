@@ -2,7 +2,7 @@ import type { MDXComponents } from 'mdx/types'
 import { spaceMono } from './global/fonts'
 import idFromTitle from './global/functions/id-from-title'
  
-export function useMDXComponents(components: MDXComponents): MDXComponents {
+export function useMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) =>
       <h1 className={`${spaceMono.className} text-title text-4xl text-center mt-4 mb-8`}>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { TagsType } from './post/tags'
+import { wrappedTagLiClasses } from './post/tags'
 import Tag from './post/tag'
 import SearchSectionTitle from './search-section-title'
 import { useSearchParams } from 'next/navigation'
@@ -21,8 +21,8 @@ export default function Filters() {
             {
               appliedFilters.map((tag) => {
                 return (
-                  <li key={tag}>
-                    <Tag type={TagsType.Wrapped} hasCloseButton>
+                  <li key={tag} className={wrappedTagLiClasses}>
+                    <Tag hasCloseButton>
                       {tag}
                     </Tag>
                   </li>

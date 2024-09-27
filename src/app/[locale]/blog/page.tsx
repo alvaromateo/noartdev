@@ -10,10 +10,9 @@ import Tags, { TagsType } from '@/src/components/blog/post/tags'
 import Search from '@/src/components/search/search'
 import Filters from '@/src/components/blog/filters'
 import SearchSectionTitle from '@/src/components/blog/search-section-title'
-import findPosts from '@/src/components/blog/post-loader'
+import { findPosts } from '@/src/components/blog/post-loader'
 
-// TODO: sort the posts by date
-// TODO: add links to each post page
+// TODO: filter posts when there's some filters applied
 // TODO: styles for mobile
 
 export default async function Blog({
@@ -42,8 +41,12 @@ export default async function Blog({
           {tBlog('posts')}
         </h1>
         <ul>
-          { posts.map((post) =>
-              <PostCard key={post.path} post={post}/>)}
+          { 
+            posts.sort(compareByMostRecentDate)
+              .map((post) =>
+                <PostCard key={post.path} post={post}/>
+              )
+          }
         </ul>
       </section>
       <section id='search' className='w-80 sticky top-0 left-0'>
@@ -63,4 +66,12 @@ function getTagsFromPosts(posts: Post[]) : string[] {
   const tags = posts
     .flatMap((post) => post.tags)
   return uniq(tags)
+}
+
+function compareByMostRecentDate(postA: Post, postB: Post) : number {
+  const dateA = postA.publishDate
+  const dateB = postB.publishDate
+  return (dateB.year - dateA.year) * 1000
+    + (dateB.month - dateA.month) * 100
+    + (dateB.day - dateA.day)
 }

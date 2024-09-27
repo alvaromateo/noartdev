@@ -4,10 +4,34 @@ import { promises as fs } from 'fs'
 import { AppSettings } from '@/src/global/app-config'
 import { SimpleDate } from '@/src/global/types/custom'
 
-export default async function findPosts(locale: string) : Promise<Post[]> {
-  const basePath = process.cwd()
-  const postsPath = path.join(basePath, 'assets', 'posts', locale)
+export async function findPosts(locale: string) : Promise<Post[]> {
+  const postsPath = getPostsPathForLocale(locale)
   return loadPosts(postsPath)
+}
+
+export async function findRelativePostPath(locale: string, name: string) : Promise<string | null> {
+  const basePath: string | null = getPostsPathForLocale(locale)
+  const postPath = await loadPostPath(basePath, name)
+  if (postPath) {
+    return postPath.slice(postPath.indexOf(locale))
+  }
+  return null
+}
+
+export async function findPost(locale: string, name: string) : Promise<Post | null> {
+  let postPath = getPostsPathForLocale(locale)
+  return loadPost(postPath, name)
+}
+
+export function transformPathToImport(modulePath: string) : string {
+  const basePath = process.cwd()
+  return modulePath.slice(0, modulePath.lastIndexOf('.'))
+    .replace(basePath, '')
+}
+
+function getPostsPathForLocale(locale: string) : string {
+  const basePath = process.cwd()
+  return path.join(basePath, 'assets', 'posts', locale)
 }
 
 async function loadPosts(dirPath: string) : Promise<Post[]> {
@@ -23,6 +47,41 @@ async function loadPosts(dirPath: string) : Promise<Post[]> {
     }
   }
   return result
+}
+
+async function loadPostPath(dirPath: string, name: string) : Promise<string | null> {
+  let result: string | null = null
+  const dir = await fs.opendir(dirPath)
+  for await (const dirEntry of dir) {
+    const newPath = path.join(dirPath, dirEntry.name)
+    if (dirEntry.isDirectory()) {
+      const pathToPost = await loadPostPath(newPath, name)
+      if (pathToPost) {
+        result = pathToPost
+      }
+    } else if (dirEntry.isFile() && dirEntry.name === `${name}.mdx`) {
+      return path.join(dirPath, dirEntry.name)
+    }
+  }
+  return result
+}
+
+async function loadPost(dirPath: string, name: string) : Promise<Post | null> {
+  let result: Post | null = null
+  const dir = await fs.opendir(dirPath)
+  for await (const dirEntry of dir) {
+    const newPath = path.join(dirPath, dirEntry.name)
+    if (dirEntry.isDirectory()) {
+      result = await loadPost(newPath, name)
+      if (result) {
+        return result
+      }
+    } else if (dirEntry.isFile() && dirEntry.name === `${name}.mdx`) {
+      const content = await fs.readFile(newPath, { encoding: 'utf8' })
+      return createPost(dirEntry.name, content)
+    }
+  }
+  return null
 }
 
 function createPost(postName: string, content: string) : Post {

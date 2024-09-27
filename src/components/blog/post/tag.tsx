@@ -12,24 +12,10 @@ import { useCallback } from 'react'
 export default function Tag({
   children,
   hasCloseButton = false,
-  type = TagsType.Centered,
 } : {
   children: string,
   hasCloseButton?: boolean,
-  type?: TagsType
 }) {
-  let classes = 'px-4 rounded-full bg-info text-crust hover:bg-hover-link'
-  switch (type) {
-    case TagsType.Centered:
-      classes = `${classes} mx-4`
-      break
-    case TagsType.Wrapped:
-      classes = `${classes} mx-1 mb-2`
-      break
-    case TagsType.Card:
-      classes = `px-2 text-link hover:text-hover-link text-sm`
-  }
-
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -64,7 +50,7 @@ export default function Tag({
   }, [pathname, router])
 
   return (
-    <button className="ml-4" onClick={(event) => {
+    <button onClick={(event) => {
       event.preventDefault()
       event.stopPropagation()
       let newSearchParams: URLSearchParams
@@ -80,12 +66,10 @@ export default function Tag({
       }
       goToFilteredPosts(newSearchParams)
     }}>
-      <li className={classes}>
-        <span>{children}</span>
-        { hasCloseButton &&
-          <CloseIcon fontSize='inherit' className='ml-4' />
-        }
-      </li>
+      <span>{children}</span>
+      { hasCloseButton &&
+        <CloseIcon fontSize='inherit' className='ml-4' />
+      }
     </button>
   )
 }
