@@ -1,7 +1,6 @@
 'use client'
 
 import CloseIcon from '@mui/icons-material/Close'
-import { TagsType } from './tags'
 import { usePathname, useRouter } from '@/src/i18n/routing'
 import { AppSettings } from '@/src/global/app-config'
 import { useSearchParams } from 'next/navigation'
@@ -43,9 +42,9 @@ export default function Tag({
   const goToFilteredPosts = useCallback((searchParams: URLSearchParams) => {
     const newUrl = `${AppSettings.blogURL}?${searchParams}`
     if (pathname.endsWith(AppSettings.blogURL)) {
-      router.replace(newUrl)
+      router.replace(newUrl, { scroll: false })
     } else {
-      router.push(newUrl)
+      router.push(newUrl, { scroll: false })
     }
   }, [pathname, router])
 

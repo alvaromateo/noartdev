@@ -7,8 +7,10 @@ export enum TagsType {
   Card,
 }
 
-export const wrappedTagLiClasses =
-  'px-4 rounded-full bg-info text-crust hover:bg-hover-link mx-1 mb-2'
+export const wrappedTagLiClasses = `
+  text-xs md:text-base px-2 md:px-4
+  rounded-full bg-info text-crust hover:bg-hover-link mx-1 mb-2
+`
 
 export default function Tags({
   list,

@@ -1,0 +1,27 @@
+@media (width < 768px) {
+  .search-enter {
+    height: 0;
+  }
+  
+  .search-enter-active {
+    height: 100%;
+    transition: height 150ms ease-in-out;
+  }
+  
+  .search-enter-done {
+    height: 100%;
+  }
+  
+  .search-exit {
+    height: 100%;
+  }
+  
+  .search-exit-active {
+    height: 0;
+    transition: height 150ms ease-in-out;
+  }
+  
+  .search-exit-done {
+    height: 0;
+  }
+}

@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 
 import { SearchParamNames } from '@/src/global/property-names'
-import { spaceMono } from '@/src/global/fonts'
 import { Post } from '@/src/global/types/custom'
 import PostsSearch from './posts-search'
 import PostCard from './post-card'
@@ -45,13 +44,7 @@ export default function Posts({
 
   return (
     <>
-      <section id='posts' className='w-[544px]'>
-        <h1 className={`
-          text-3xl/[2rem] font-bold text-title mt-8 mb-12 ml-16
-          ${spaceMono.className}
-        `}>
-          {tBlog('posts')}
-        </h1>
+      <section id='posts' className='lg:w-[544px] row-start-2 md:row-start-1'>
         <ul>
           { displayedPosts.length > 0
             ? displayedPosts

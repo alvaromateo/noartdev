@@ -7,7 +7,7 @@ export default function SearchSectionTitle({
 }) {
   return (
     <h2 className={`
-      text-2xl text-title my-8
+      text-base md:text-2xl text-title my-4 md:my-8
       ${spaceMono.className}
     `}>
       {title}
