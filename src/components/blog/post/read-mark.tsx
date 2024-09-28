@@ -2,7 +2,7 @@
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { usePathname } from '@/src/i18n/routing'
@@ -115,12 +115,16 @@ export default function ReadMark({
     }
   }, [pageState, readMarkPagePath])
 
-  const toggleRead = () => setPageState(
-    (previous) => new PageState(
-      previous?.scrollTop || 0,
-      !(previous?.read)
+  const toggleRead = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setPageState(
+      (previous) => new PageState(
+        previous?.scrollTop || 0,
+        !(previous?.read)
+      )
     )
-  )
+  }
 
   return (
     <button onClick={toggleRead}>

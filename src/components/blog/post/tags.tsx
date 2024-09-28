@@ -32,7 +32,7 @@ export default function Tags({
       break
     case TagsType.Card:
       ulClasses = `${ulClasses} flex-wrap`
-      liClasses = `px-2 text-link hover:text-hover-link text-sm`
+      liClasses = `pr-2 md:pr-4 text-link hover:text-hover-link text-[10px] md:text-sm`
       break
   }
 

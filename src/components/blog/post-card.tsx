@@ -14,18 +14,22 @@ export default function PostCard({
 }) {
   return (
     <Link href={{ pathname: post.path }}>
-      <li className='bg-mantle flex flex-row justify-between my-6 p-4 rounded-full hover:bg-crust'>
-        <div className='flex flex-col flex-wrap mx-10'>
-          <h3 className='text-xl text-subtitle ml-2'>
+      <li className={`
+        bg-mantle flex flex-row justify-between hover:bg-crust
+        my-4 p-2 rounded-2xl
+        md:my-6 md:p-4 md:rounded-full
+      `}>
+        <div className='flex flex-col flex-wrap mx-4 md:mx-10'>
+          <h3 className='text-sm md:text-xl text-subtitle'>
             { post.title }
           </h3>
-          <PublishDate className='my-2 text-comment ml-2'
+          <PublishDate className='text-xs md:text-base my-2 text-comment'
             year={post.publishDate.year}
             month={post.publishDate.month}
             day={post.publishDate.day}/>
           <Tags list={post.tags} type={TagsType.Card}/>
         </div>
-        <div className='flex flex-col mx-6 justify-center text-logo'>
+        <div className='flex flex-col justify-center mx-4 text-2xl/[0px] md:mx-6 md:text-logo'>
           <Suspense fallback={
             <RadioButtonUncheckedIcon/>
           }>
