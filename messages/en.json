@@ -118,7 +118,9 @@
   "Blog": {
     "tags": "Tags",
     "posts": "Posts",
-    "filters": "Filters"
+    "filters": "Filters",
+    "loading": "Loading posts...",
+    "notFound": "No posts found"
   },
   "Navigation": {
     "home": "Home",

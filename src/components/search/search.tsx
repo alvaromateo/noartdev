@@ -1,8 +1,10 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
+
+import { useTranslations } from 'next-intl'
 import SearchIcon from '@mui/icons-material/Search'
 
-export default async function Search() {
-  const t = await getTranslations('Common')
+export default function Search() {
+  const t = useTranslations('Common')
   return (
     <div className='relative'>
       <input type='text' placeholder={t('search')}

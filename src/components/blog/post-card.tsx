@@ -6,7 +6,6 @@ import Tags, { TagsType } from "./post/tags"
 import { Suspense } from 'react'
 import ReadMark from './post/read-mark'
 import { Link } from '@/src/i18n/routing'
-import { AppSettings } from '@/src/global/app-config'
 
 export default function PostCard({
   post
@@ -16,11 +15,11 @@ export default function PostCard({
   return (
     <Link href={{ pathname: post.path }}>
       <li className='bg-mantle flex flex-row justify-between my-6 p-4 rounded-full hover:bg-crust'>
-        <div className='flex flex-col flex-wrap mx-6'>
-          <h3 className='text-xl text-subtitle ml-6'>
+        <div className='flex flex-col flex-wrap mx-10'>
+          <h3 className='text-xl text-subtitle ml-2'>
             { post.title }
           </h3>
-          <PublishDate className='my-2 text-comment ml-6'
+          <PublishDate className='my-2 text-comment ml-2'
             year={post.publishDate.year}
             month={post.publishDate.month}
             day={post.publishDate.day}/>

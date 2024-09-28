@@ -4,20 +4,20 @@ import { useTranslations } from 'next-intl'
 import { wrappedTagLiClasses } from './post/tags'
 import Tag from './post/tag'
 import SearchSectionTitle from './search-section-title'
-import { useSearchParams } from 'next/navigation'
-import { SearchParamNames } from '@/src/global/property-names'
 
-export default function Filters() {
+export default function Filters({
+  appliedFilters,
+} : {
+  appliedFilters: string[],
+}) {
   const tBlog = useTranslations('Blog')
-  const searchParams = useSearchParams()
-  const appliedFilters = searchParams.getAll(SearchParamNames.filter)
 
   return (
     <>
       { appliedFilters.length > 0 &&
         <div>
           <SearchSectionTitle title={tBlog('filters')}/>
-          <ul>
+          <ul className='flex flex-col items-start'>
             {
               appliedFilters.map((tag) => {
                 return (
