@@ -1,8 +1,7 @@
 'use client'
 
-import { RefObject, Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { CSSTransition } from 'react-transition-group'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
@@ -11,8 +10,8 @@ import SearchSectionTitle from '@/src/components/blog/search-section-title'
 import Search from '@/src/components/search/search'
 import Tags, { TagsType } from '@/src/components/blog/post/tags'
 
-import './posts-search.css'
 import { MobileContext } from '@/src/providers/mobile'
+import Accordion from '../utils/accordion'
 
 export default function PostsSearch({
   tags,
@@ -24,7 +23,6 @@ export default function PostsSearch({
   const tBlog = useTranslations('Blog')
   const tCommon = useTranslations('Common')
   const [searchDisplayed, setSearchDisplayed] = useState(false)
-  const node = useRef<HTMLDivElement>(null)
   const isMobile = useContext(MobileContext)
   const [domLoaded, setDomLoaded] = useState(false)
 
@@ -36,24 +34,20 @@ export default function PostsSearch({
     setSearchDisplayed((previous) => !previous)
   }, [])
 
-  const hasTransitionClass = useCallback((node: RefObject<HTMLDivElement>) => {
-    if (node.current) {
-      const divClasses = Array.from(node.current.classList.values())
-      return divClasses.filter((cssClass) => {
-        const classMatch = cssClass.match(/search-.*/)
-        if (classMatch) {
-          return true
-        }
-        return false
-      }).length > 0
-    }
-    return false
-  }, [])
-
-  let searchDisplayClasses = ''
-  if (isMobile && !hasTransitionClass(node)) {
-    searchDisplayClasses = 'h-0'
-  }
+  const searchComponents = (
+    <div className={`
+      p-4 rounded-2xl w-full
+      md:p-0 md:block md:w-auto
+      ${isMobile ? 'bg-surface-0' : ''}
+    `}>
+      <Search/>
+      <SearchSectionTitle title={tBlog('tags')}/>
+      <Tags list={tags} type={TagsType.Wrapped}/>
+      <Suspense fallback={<></>}>
+        <Filters appliedFilters={appliedFilters}/>
+      </Suspense>
+    </div>
+  )
 
   return (
     <section id='search' className='lg:w-80 md:sticky md:top-0 md:left-0'>
@@ -66,26 +60,13 @@ export default function PostsSearch({
           }
         </button>
       </div>
-      { domLoaded &&
-        <CSSTransition
-          nodeRef={node}
-          in={searchDisplayed}
-          timeout={150}
-          classNames='search'
-        >
-          <div ref={node} className={`
-            md:block overflow-hidden
-            ${searchDisplayClasses}
-          `}>
-            <Search/>
-            <SearchSectionTitle title={tBlog('tags')}/>
-            <Tags list={tags} type={TagsType.Wrapped}/>
-            <Suspense fallback={<></>}>
-              <Filters appliedFilters={appliedFilters}/>
-            </Suspense>
-          </div>
-        </CSSTransition>
+      { domLoaded && isMobile &&
+        <Accordion accordionDisplayed={searchDisplayed} timeout={150}>
+          {searchComponents}
+        </Accordion>
       }
+      { domLoaded && !isMobile && searchComponents }
     </section>
   )
 }
+

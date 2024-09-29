@@ -7,9 +7,6 @@ import { spaceMono } from '@/src/global/fonts'
 import { findPosts } from '@/src/components/blog/post-loader'
 import Posts from '@/src/components/blog/posts'
 
-
-// TODO: styles for mobile
-
 export default async function Blog({
   params
 } : {
@@ -21,7 +18,7 @@ export default async function Blog({
   const tags = getTagsFromPosts(posts)
 
   return (
-    <div className='flex flex-col mx-auto'>
+    <div className='flex flex-col w-full'>
       <h1 className={`
         text-2xl font-bold text-title mb-4
         md:text-3xl/[2rem] md:ml-16

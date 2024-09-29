@@ -10,6 +10,9 @@ const config: Config = {
     'pl-8',
     'pl-12',
     'pl-16',
+    'absolute',
+    'invisible',
+    'hidden',
   ],
   theme: {
     colors: {

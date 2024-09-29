@@ -2,6 +2,7 @@ import { unstable_setRequestLocale } from 'next-intl/server'
 
 import { findPosts, findPost } from '@/src/components/blog/post-loader'
 import { routing } from '@/src/i18n/routing'
+import { useMDXComponents } from '@/src/mdx-components'
 
 import { compile, Jsx, run } from '@mdx-js/mdx'
 import * as runtime from 'react/jsx-runtime'
@@ -12,7 +13,7 @@ import PublishDate from '@/src/components/blog/post/publish-date'
 import CodeBlock from '@/src/components/blog/post/code-block'
 import Summary from '@/src/components/blog/post/summary'
 import Tags from '@/src/components/blog/post/tags'
-import { useMDXComponents } from '@/src/mdx-components'
+import BottomDrawer from '@/src/components/blog/post/bottom-drawer'
 
 export default async function Blog({
   params
@@ -48,6 +49,7 @@ export default async function Blog({
   // TODO: add reading progress indicator sticky at the bottom
   // TODO: add Read mark at the end of the article and check that it marks automatically
   // when the scroll reaches the end of the post
+
   // TODO: check recent links after visiting post
 
   return (
@@ -75,6 +77,7 @@ export default async function Blog({
           }
         }
       )}/>
+      <BottomDrawer />
     </>
   )
 }
