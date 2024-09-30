@@ -70,8 +70,9 @@ const config: Config = {
     },
     extend: {
       fontSize: {
+        'sm-logo': ['2rem', {lineHeight: '0'}],
         'logo': ['2.5rem', {lineHeight: '0'}],
-        'md-logo': ['4rem', {lineHeight: '0'}]
+        'md-logo': ['3rem', {lineHeight: '0'}]
       },
     },
   },

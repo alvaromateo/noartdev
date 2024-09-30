@@ -53,7 +53,7 @@ export default async function Blog({
   // TODO: check recent links after visiting post
 
   return (
-    <>
+    <div className='flex flex-col'>
       <MDXContent source={post.content} components={
         useMDXComponents({
           ContentTable() {
@@ -78,7 +78,7 @@ export default async function Blog({
         }
       )}/>
       <BottomDrawer />
-    </>
+    </div>
   )
 }
 

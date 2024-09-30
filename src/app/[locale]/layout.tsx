@@ -17,7 +17,7 @@ export default async function LocaleLayout({
   return (
     <main className={`
       px-[8%] lg:w-[1024px] lg:px-12 lg:mx-auto
-      pt-4 pb-8 md:pt-8 md:pb-16 content flex
+      py-4 md:py-8 content flex
     `}>
       {children}
     </main>
