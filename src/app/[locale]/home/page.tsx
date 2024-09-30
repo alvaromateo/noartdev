@@ -4,7 +4,7 @@ import { spaceMono } from '@/src/global/fonts'
 
 import portrait from '/assets/images/watercolor_portrait.png'
 import RecentLinks from '@/src/components/home/recent-links'
-import Search from '@/src/components/search/search'
+import Search from '@/src/components/utils/search'
 
 const imageDiameter = 400
 

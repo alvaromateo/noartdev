@@ -1,9 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-export default function Accordion({
+function Accordion({
   children,
   accordionDisplayed,
   timeout,
@@ -33,23 +33,27 @@ export default function Accordion({
     return () => clearTimeout(timeoutId)
   }, [animationPlaying, timeout])
 
-  const onRefChange = useCallback((node: HTMLDivElement | null) => {
+  useLayoutEffect(() => {
+    const node = nodeRef.current
     if (node) {
-      const childNodes = node.getElementsByTagName('div')
-      if (childNodes.length > 0) {
-        console.log(childNodes[0].clientHeight)
-        setContentHeight(childNodes[0].clientHeight)
+      const elements = node.getElementsByTagName('div')
+      if (elements.length > 0) {
+        const contentWrapper = elements[0]
+        const rect = contentWrapper.getBoundingClientRect()
+        if (rect.height !== 0 && rect.height !== contentHeight) {
+          setContentHeight(rect.height)
+          node.style.height = `${rect.height}px`
+        }
       }
     }
-  }, [])
+  }, [children, contentHeight])
 
   let displayClasses = ''
-  if (!accordionDisplayed) {
-    if (!animationPlaying) {
+  if (!accordionDisplayed && !animationPlaying) {
+    // if contentHeight is still not set we don't want to hide the contents
+    // otherwise when useLayoutEffect runs, we will have a height of 0
+    if (contentHeight) {
       displayClasses = 'hidden'
-    }
-    if (!contentHeight) {
-      displayClasses = 'absolute invisible'
     }
   }
 
@@ -92,11 +96,15 @@ export default function Accordion({
         }
       }}
     >
-      <div className='relative' aria-hidden={!accordionDisplayed} ref={onRefChange}>
-        <div className={`${displayClasses} overflow-hidden`} ref={nodeRef}>
-          {children}
-        </div>
+      <div className={`${displayClasses} overflow-hidden`}
+        aria-hidden={!accordionDisplayed} ref={nodeRef}>
+          <div>
+            {children}
+          </div>
       </div>
     </CSSTransition>
   )
 }
+
+const memoizedAccordion = memo(Accordion)
+export default memoizedAccordion

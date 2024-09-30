@@ -24,7 +24,8 @@ export default async function About({
   const t = await getTranslations('About')
   const messages = (await getMessages() as unknown) as IntlMessages
 
-  // TODO: add links to the skills icons that relate in a pop-up to the relevant experience
+  // Possible improvement:
+  // add links to the skills icons that relate in a pop-up to the relevant experience
 
   return (
     <div className={`

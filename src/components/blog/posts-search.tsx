@@ -7,7 +7,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 import Filters from '@/src/components/blog/filters'
 import SearchSectionTitle from '@/src/components/blog/search-section-title'
-import Search from '@/src/components/search/search'
+import Search from '@/src/components/utils/search'
 import Tags, { TagsType } from '@/src/components/blog/post/tags'
 
 import { MobileContext } from '@/src/providers/mobile'
