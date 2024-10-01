@@ -13,7 +13,7 @@ export default function PostCard({
   post: Post
 }) {
   return (
-    <Link href={{ pathname: post.path }}>
+    <Link href={{ pathname: post.path }} scroll={false}>
       <li className={`
         bg-mantle flex flex-row justify-between hover:bg-crust
         my-4 p-2 rounded-2xl

@@ -129,6 +129,9 @@
     "blog": "Blog",
     "hobbies": "Hobbies"
   },
+  "Hobbies": {
+    "comingSoon": "Coming soon..."
+  },
   "Common": {
     "search": "Search"
   }
