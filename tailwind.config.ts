@@ -72,7 +72,8 @@ const config: Config = {
       fontSize: {
         'sm-logo': ['2rem', {lineHeight: '0'}],
         'logo': ['2.5rem', {lineHeight: '0'}],
-        'md-logo': ['3rem', {lineHeight: '0'}]
+        'md-logo': ['3rem', {lineHeight: '0'}],
+        'xl-logo': ['4em', {lineHeight: '0'}],
       },
     },
   },

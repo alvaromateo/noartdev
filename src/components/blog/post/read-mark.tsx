@@ -6,20 +6,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { usePathname } from '@/src/i18n/routing'
-
-class PageState {
-  scrollTop: number
-  read: boolean
-
-  constructor(scrollTop: number, read: boolean) {
-    this.scrollTop = scrollTop
-    this.read = read
-  }
-}
-
-type ReadingState = {
-  [path: string]: PageState
-}
+import { ReadingState, PageState } from '@/src/global/types/custom'
 
 export default function ReadMark(props:
 { 
@@ -27,14 +14,16 @@ export default function ReadMark(props:
 } | {
   blogPageScroll: number,
   calculateScrollPercentage: (scroll: number) => number,
+  updatePageScroll: (readingState: PageState) => void,
 }) {
   let pagePath: string | undefined
   let blogPageScroll: number | undefined
   let calculateScrollPercentage: ((scroll: number) => number) | undefined
+  let updatePageScroll: ((readingState: PageState) => void) | undefined
   if ('pagePath' in props) {
     ({pagePath} = props)
   } else {
-    ({blogPageScroll, calculateScrollPercentage} = props)
+    ({blogPageScroll, calculateScrollPercentage, updatePageScroll} = props)
   }
 
   const [domLoaded, setDomLoaded] = useState(false)
@@ -44,16 +33,6 @@ export default function ReadMark(props:
   // only the posts pages sets the pagePath for each of the blog posts
   // for the individual post page the path is taken from usePathname
   const isPostPage = pagePath === undefined
-
-  const updatePageScroll = useCallback((readingState: PageState) => {
-    if (readingState && window) {
-      window.scroll({
-        top: readingState.scrollTop,
-        left: 0,
-        behavior: 'smooth'
-      })
-    }
-  }, [])
 
   const toggleRead = useCallback((event: React.MouseEvent) => {
     event.preventDefault()
@@ -80,7 +59,7 @@ export default function ReadMark(props:
 
     setDomLoaded(true)
     setPageState(currentPage)
-    if (isPostPage) {
+    if (isPostPage && updatePageScroll) {
       updatePageScroll(currentPage)
     }
   }, [readMarkPagePath, isPostPage, updatePageScroll])
@@ -101,15 +80,25 @@ export default function ReadMark(props:
     }
   }, [blogPageScroll, readMarkPagePath])
 
+  const currentPercentageRead = calculateScrollPercentage
+    ? calculateScrollPercentage(pageState?.scrollTop || 0)
+    : 0
   return isPostPage
     ?
-      <>
-        {
-          domLoaded && (pageState?.read
-          ? <CheckCircleIcon fontSize='inherit'/>
-          : <RadioButtonUncheckedIcon  fontSize='inherit'/>)
-        }
-      </>
+      <div className='flex justify-center items-center'>
+        <div className='text-xl-logo'>
+          {
+            domLoaded && (pageState?.read
+            ? <CheckCircleIcon fontSize='inherit'/>
+            : <RadioButtonUncheckedIcon  fontSize='inherit'/>)
+          }
+        </div>
+        <p className='ml-4 text-xl'>
+          { pageState?.read
+            ? 'Article read'
+            : `${currentPercentageRead}%` }
+        </p>
+      </div>
     :
       <button className='z-10' onClick={toggleRead}>
       {

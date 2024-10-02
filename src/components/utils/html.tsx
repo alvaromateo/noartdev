@@ -16,7 +16,7 @@ export default function Html({
   const fullScreenModalState = useContext(FullScreenModalContext)
 
   return (
-    <html lang={locale} className={`${themeState.themeName} bg-mantle`}>
+    <html lang={locale} className={`${themeState.themeName} bg-mantle scroll-smooth`}>
       <body className={`
         ${ubuntuMono.className} bg-basic
         ${fullScreenModalState.showModal ? 'overflow-hidden' : ''}

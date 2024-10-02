@@ -7,6 +7,7 @@ import BackToTop from '@/src/components/utils/back-to-top'
 import Progress from './progress'
 import ReadMark from './read-mark'
 import { MobileContext } from '@/src/providers/mobile'
+import { PageState } from '@/src/global/types/custom'
 
 const windowPercentScroll = 0.25
 const mobileFooterHeight = 80
@@ -58,6 +59,16 @@ export default function BottomDrawer() {
     lastScroll.current = scroll
   }, [windowHeight])
 
+  const updatePageScroll = useCallback((readingState: PageState) => {
+    if (readingState && window) {
+      window.scroll({
+        top: readingState.scrollTop,
+        left: 0,
+        behavior: 'smooth'
+      })
+    }
+  }, [])
+
   useEffect(() => {
     const viewportHeight = window.innerHeight || 0
     const scroll = document.documentElement.scrollTop
@@ -90,7 +101,8 @@ export default function BottomDrawer() {
   return (
     <div>
       <ReadMark blogPageScroll={currentScroll}
-        calculateScrollPercentage={calculateScrollPercentage}/>
+        calculateScrollPercentage={calculateScrollPercentage}
+        updatePageScroll={updatePageScroll}/>
       { windowHeight &&
         createPortal(
           <div className='flex flex-row justify-between items-center sticky bottom-[5%] px-10'>

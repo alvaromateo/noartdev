@@ -54,3 +54,17 @@ export interface Post {
   tags: string[],
   publishDate: SimpleDate,
 }
+
+export class PageState {
+  scrollTop: number
+  read: boolean
+
+  constructor(scrollTop: number, read: boolean) {
+    this.scrollTop = scrollTop
+    this.read = read
+  }
+}
+
+export type ReadingState = {
+  [path: string]: PageState
+}
