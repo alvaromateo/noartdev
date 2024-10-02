@@ -2,7 +2,8 @@
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { debounce } from '@mui/material'
 
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { usePathname } from '@/src/i18n/routing'
@@ -48,6 +49,8 @@ export default function ReadMark(props:
     }
   }, [readMarkPagePath, pageState])
 
+  const debouncedSave = useMemo(() => debounce(saveData, 100), [])
+
   useEffect(() => {
     // load when page loads for the first time
     const data = localStorage.getItem(LocalStorageProperties.readStatusProperty)
@@ -66,19 +69,22 @@ export default function ReadMark(props:
 
   useEffect(() => {
     // if we are in a blog page restore the user's last reading point
-    if (blogPageScroll && blogPageScroll > 0) {
+    if (isPostPage) {
+      let scroll = blogPageScroll || 0
+      scroll = scroll < 0 ? 0 : scroll
       const pagesReadingState = getReadingState()
       const isBlogRead = calculateScrollPercentage
-        ? calculateScrollPercentage(blogPageScroll) > 95
+        ? calculateScrollPercentage(scroll) > 95
         : false
       let currentPage = new PageState(
-        blogPageScroll,
+        scroll,
         isBlogRead || pagesReadingState[readMarkPagePath]?.read)
 
       setPageState(currentPage)
-      saveData(readMarkPagePath, currentPage, pagesReadingState)
+      debouncedSave(readMarkPagePath, currentPage, pagesReadingState)
+      return () => debouncedSave.clear()
     }
-  }, [blogPageScroll, readMarkPagePath])
+  }, [blogPageScroll, readMarkPagePath, debouncedSave])
 
   const currentPercentageRead = calculateScrollPercentage
     ? calculateScrollPercentage(pageState?.scrollTop || 0)
