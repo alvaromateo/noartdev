@@ -27,8 +27,8 @@ export default function ContentTable({
   const headings = getHeadings(post)
 
   return (
-    <nav className='mb-16 flex justify-center'>
-      <ul className='bg-mantle py-6 px-12 rounded-2xl'>
+    <nav className='mb-8 md:mb-16 flex justify-center text-sm md:text-base'>
+      <ul className='bg-mantle py-3 px-6 md:py-6 md:px-12 rounded-2xl'>
         {
           headings.map((heading) => {
             return (

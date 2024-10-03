@@ -96,7 +96,7 @@ export default function BottomDrawer() {
     }
   }, [windowResizeListener, scrollListener])
 
-  const placeholder = <div className='w-16 h-16'/>
+  const placeholder = <div className='w-8 h-8 md:w-16 md:h-16'/>
 
   return (
     <div>
@@ -106,7 +106,7 @@ export default function BottomDrawer() {
       { windowHeight &&
         createPortal(
           <div className='flex flex-row justify-between items-center sticky bottom-[5%] px-10'>
-            { placeholder }
+            { !isMobile && placeholder }
             <Progress percentage={calculateScrollPercentage(currentScroll)}
               display={display}/>
             <BackToTop displayButton={display} placeholder={placeholder}/>

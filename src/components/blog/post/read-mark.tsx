@@ -74,7 +74,7 @@ export default function ReadMark(props:
       scroll = scroll < 0 ? 0 : scroll
       const pagesReadingState = getReadingState()
       const isBlogRead = calculateScrollPercentage
-        ? calculateScrollPercentage(scroll) > 95
+        ? calculateScrollPercentage(scroll) > 97.5
         : false
       let currentPage = new PageState(
         scroll,
@@ -92,17 +92,17 @@ export default function ReadMark(props:
   return isPostPage
     ?
       <div className='flex justify-center items-center'>
-        <div className='text-xl-logo'>
+        <div className='text-logo md:text-xl-logo'>
           {
             domLoaded && (pageState?.read
             ? <CheckCircleIcon fontSize='inherit'/>
             : <RadioButtonUncheckedIcon  fontSize='inherit'/>)
           }
         </div>
-        <p className='ml-4 text-xl'>
+        <p className='ml-2 md:ml-4 text-sm md:text-xl'>
           { pageState?.read
             ? 'Article read'
-            : `${currentPercentageRead}%` }
+            : `${currentPercentageRead.toFixed(0)} %` }
         </p>
       </div>
     :

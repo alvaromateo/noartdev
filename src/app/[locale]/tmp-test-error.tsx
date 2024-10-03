@@ -26,3 +26,16 @@ export default function Error({
     </main>
   )
 }
+
+/*
+TODO: set correct metadata
+<meta property="og:title" content="Site Title" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://my.website.com" />
+<meta property="og:image:url" content="http://my.website.com/images/thumb.png" />
+<meta property="og:description" content="Site description" />
+<title>
+description
+
+https://htmlhead.dev/#table-of-contents
+*/

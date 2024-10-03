@@ -19,19 +19,21 @@ export default function Tags({
   list: string[],
   type?: TagsType
 }) {
-  let ulClasses = 'flex flex-row '
+  let ulClasses = 'flex '
   let liClasses: string
   switch (type) {
     case TagsType.Centered:
-      ulClasses = `${ulClasses} justify-center mb-8`
-      liClasses = 'px-4 rounded-full bg-info text-crust hover:bg-hover-link mx-4'
+      ulClasses = `${ulClasses} flex-col items-center justify-center
+        text-xs mb-4
+        md:flex-row md:text-base md:mb-8`
+      liClasses = 'mb-2 md:mb-0 px-4 rounded-full bg-info text-crust hover:bg-hover-link mx-4'
       break
     case TagsType.Wrapped:
-      ulClasses = `${ulClasses} flex-wrap`
+      ulClasses = `${ulClasses} flex-row flex-wrap`
       liClasses = wrappedTagLiClasses
       break
     case TagsType.Card:
-      ulClasses = `${ulClasses} flex-wrap`
+      ulClasses = `${ulClasses} flex-row flex-wrap`
       liClasses = `pr-2 md:pr-4 text-link hover:text-hover-link text-[10px] md:text-sm`
       break
   }

@@ -43,12 +43,10 @@ export default function CodeBlock({
 function getFormattedCode(language: keyof typeof languageMap, children: string) {
   SyntaxHighlighter.registerLanguage(language, languageMap[language])
   return (
-    <div className={`${spaceMono.className} my-8`}>
-      <SyntaxHighlighter language={language} wrapLines
-        lineNumberContainerStyle={{
-          'paddingRight': '1rem',
-          'paddingLeft': '0.5rem',
-        }}
+    <div className={`${spaceMono.className} text-[10px] leading-4
+      md:leading-6 md:text-base my-4 md:my-8
+    `}>
+      <SyntaxHighlighter language={language} wrapLines wrapLongLines
         codeTagProps={{
           'className': 'hljs',
         }}>
@@ -57,3 +55,11 @@ function getFormattedCode(language: keyof typeof languageMap, children: string) 
     </div>
   )
 }
+/*
+showLineNumbers
+        showInlineLineNumbers
+        lineNumberContainerStyle={{
+          'paddingRight': '1rem',
+          'paddingLeft': '0.5rem',
+        }}
+          */

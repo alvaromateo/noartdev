@@ -44,8 +44,6 @@ export default async function Blog({
     baseUrl: import.meta.url,
   })
 
-  // TODO: fix the styles of the post for all screen sizes
-
   // TODO: check recent links after visiting post
 
   return (
