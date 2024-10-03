@@ -19,10 +19,11 @@ export default function ReadMark(props:
 }) {
   let pagePath: string | undefined
   let blogPageScroll: number | undefined
-  let calculateScrollPercentage: ((scroll: number) => number) | undefined
+  let calculateScrollPercentage: ((scroll: number) => number)
   let updatePageScroll: ((readingState: PageState) => void) | undefined
   if ('pagePath' in props) {
     ({pagePath} = props)
+    calculateScrollPercentage = (_: number) => 0
   } else {
     ({blogPageScroll, calculateScrollPercentage, updatePageScroll} = props)
   }
@@ -73,9 +74,7 @@ export default function ReadMark(props:
       let scroll = blogPageScroll || 0
       scroll = scroll < 0 ? 0 : scroll
       const pagesReadingState = getReadingState()
-      const isBlogRead = calculateScrollPercentage
-        ? calculateScrollPercentage(scroll) > 97.5
-        : false
+      const isBlogRead = calculateScrollPercentage(scroll) > 97.5
       let currentPage = new PageState(
         scroll,
         isBlogRead || pagesReadingState[readMarkPagePath]?.read)
@@ -84,11 +83,10 @@ export default function ReadMark(props:
       debouncedSave(readMarkPagePath, currentPage, pagesReadingState)
       return () => debouncedSave.clear()
     }
-  }, [blogPageScroll, readMarkPagePath, debouncedSave])
+  }, [blogPageScroll, readMarkPagePath, debouncedSave, calculateScrollPercentage, isPostPage])
 
-  const currentPercentageRead = calculateScrollPercentage
-    ? calculateScrollPercentage(pageState?.scrollTop || 0)
-    : 0
+  const currentPercentageRead = calculateScrollPercentage(pageState?.scrollTop || 0)
+
   return isPostPage
     ?
       <div className='flex justify-center items-center'>

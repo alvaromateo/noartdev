@@ -25,11 +25,12 @@ export default async function LocaleLayout({
   )
 }
 
-export const webpageDescription = 'noArt.dev is my personal page and blog about development \
+const webpageDescription = 'noArt.dev is my personal page and blog about development \
 where I can post my projects and any useful writings I want to share'
 
 export async function generateMetadata() : Promise<Metadata> {
   return {
+    metadataBase: new URL('https://noart.dev'),
     title: 'noArt.dev',
     description: webpageDescription,
     authors: [{

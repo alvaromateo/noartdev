@@ -111,6 +111,7 @@ export async function generateMetadata(
   }
 
   return {
+    metadataBase: parentMetadata.metadataBase,
     title: post.title,
     description: post.description,
     keywords: [...keywords, ...post.tags],

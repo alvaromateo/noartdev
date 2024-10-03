@@ -68,6 +68,7 @@ export async function generateMetadata(
   const openGraph = parentMetadata.openGraph as OpenGraph
 
   return {
+    metadataBase: parentMetadata.metadataBase,
     title: t('blog'),
     description: t('blogDescription'),
     keywords: [...keywords, 'blog', 'posts'],
