@@ -56,6 +56,11 @@ export interface Post {
   description: string,
 }
 
+export interface RecentLink {
+  link: string,
+  title: string,
+}
+
 export class PageState {
   scrollTop: number
   read: boolean

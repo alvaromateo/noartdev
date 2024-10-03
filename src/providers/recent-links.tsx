@@ -4,8 +4,9 @@ import { useState, useEffect, createContext, useCallback } from 'react'
 import { usePathname } from '@/src/i18n/routing'
 import { LocalStorageProperties } from '@/src/global/property-names'
 import { AppSettings as settings } from '@/src/global/app-config'
+import { RecentLink } from '@/src/global/types/custom'
 
-export const RecentLinksContext = createContext<string[]>([])
+export const RecentLinksContext = createContext<RecentLink[]>([])
 
 export default function RecentLinksProvider({
   children
@@ -13,31 +14,38 @@ export default function RecentLinksProvider({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const [recentLinks, setRecentLinks] = useState<string[]>([])
+  const [recentLinks, setRecentLinks] = useState<RecentLink[]>([])
+  const [pageTitle, setPageTitle] = useState('')
 
-  const addNewLink = useCallback((link: string, currentLinks: string[]): string[] => {
-    let links: string[] = []
-    if (currentLinks.includes(link)) {
-      // move the already present link to the beginning of the array
-      links = currentLinks.filter(l => l !== link)
-      links = [link, ...links]
-    } else {
-      // add the link to the beginning of the array
-      links = [link, ...currentLinks]
-    }
+  const addNewLink = useCallback(
+    (link: string, title: string, currentLinks: RecentLink[]): RecentLink[] => {
+      let links: RecentLink[] = []
+      const foundLink = currentLinks.find(value => value.link === link)
 
-    return links.slice(0, settings.recentLinksNum)
+      if (foundLink) {
+        // move the already present link to the beginning of the array
+        links = currentLinks.filter(value => value.link !== link)
+        links = [foundLink, ...links]
+      } else {
+        // add the link to the beginning of the array
+        links = [{link: link, title: title}, ...currentLinks]
+      }
+
+      return links.slice(0, settings.recentLinksNum)
   }, [])
 
   useEffect(() => {
-    const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
-    let storedLinks: string[] = []
-    if (data) {
-      storedLinks = JSON.parse(data)
+    // ignore /home link cause the recent-links is only present in the home page
+    if (pathname !== '/home') {
+      const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
+      let storedLinks: RecentLink[] = []
+      if (data) {
+        storedLinks = JSON.parse(data)
+      }
+      const updatedLinks = addNewLink(pathname, document.title, storedLinks)
+      setRecentLinks(updatedLinks)
     }
-    const updatedLinks = addNewLink(pathname, storedLinks)
-    setRecentLinks(updatedLinks)
-  }, [pathname, addNewLink])
+  }, [pathname, pageTitle, addNewLink])
 
   useEffect(() => {
     if (recentLinks.length > 0) {

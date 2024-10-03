@@ -17,20 +17,3 @@ export const languageProficiencyLevels: { [key: string]: string } = {
   'it': 'intermediate',
   'fr': 'beginner'
 }
-
-export function linkToMessageKey(link: string) {
-  switch (link) {
-    case '/home':
-      return 'home'
-    case '/about':
-      return 'about'
-    case '/projects':
-      return 'projects'
-    case '/blog': 
-      return 'blog'
-    case '/hobbies':
-      return 'hobbies'
-    default:
-      return null
-  }
-}

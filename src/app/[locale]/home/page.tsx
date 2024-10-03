@@ -64,7 +64,7 @@ export default async function Home({
           md:col-start-2 md:row-start-2
           md:self-start
         `}>
-          <h2 className='text-subtext'>{t('recent')}</h2>
+          <h2 className='mb-1 md:mb-2 text-base md:text-lg text-subtext'>{t('recent')}</h2>
           <RecentLinks/>
         </div>
       </div>
