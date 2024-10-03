@@ -2,9 +2,12 @@ import Image from 'next/image'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { spaceMono } from '@/src/global/fonts'
 
-import portrait from '/assets/images/watercolor_portrait.png'
+import portrait from '/public/images/watercolor_portrait.png'
 import RecentLinks from '@/src/components/home/recent-links'
 import Search from '@/src/components/utils/search'
+import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
+import { Props } from '@/src/global/types/custom'
+import { Metadata, ResolvingMetadata } from 'next'
 
 const imageDiameter = 400
 
@@ -67,4 +70,31 @@ export default async function Home({
       </div>
     </>
   )
+}
+
+export async function generateMetadata(
+  { params } : Props,
+  parent: ResolvingMetadata
+) : Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'Navigation'
+  });
+  const parentMetadata = await parent
+  const keywords = parentMetadata.keywords || []
+  const openGraph = parentMetadata.openGraph as OpenGraph
+
+  return {
+    title: t('home'),
+    description: t('homeDescription'),
+    keywords: [...keywords, 'landing', 'home'],
+    authors: parentMetadata.authors,
+    generator: parentMetadata.generator,
+    openGraph: {
+      ...openGraph,
+      title: t('home'),
+      description: t('homeDescription'),
+      url: 'https://noart.dev/home',
+    }
+  };
 }

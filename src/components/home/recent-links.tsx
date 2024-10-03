@@ -19,7 +19,7 @@ export default function RecentLinks() {
             <li key={link}>
               <Link className='text-link text-sm md:text-base' href={{ pathname: link }}>
                   <span><KeyboardArrowRightOutlinedIcon fontSize='inherit'/></span>
-                  {t(linkToMessageKey(link))}
+                  {t(linkToMessageKey(link) || 'home')}
               </Link>
             </li>
           )

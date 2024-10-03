@@ -9,7 +9,10 @@ import Experience from '@/src/components/about/experience'
 import Card from '@/src/components/about/card'
 import SocialIcons from '@/src/components/utils/social-icons'
 
-import portrait from '/assets/images/photo-linkedin.jpg'
+import portrait from '/public/images/photo-linkedin.jpg'
+import { Props } from '@/src/global/types/custom'
+import { Metadata, ResolvingMetadata } from 'next'
+import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
 const imageDiameter = 300
 const skillsLogoSize = 32
@@ -184,4 +187,31 @@ function createLanguageEntries(t: (key: any) => string) {
         </div>
     })
   )
+}
+
+export async function generateMetadata(
+  { params } : Props,
+  parent: ResolvingMetadata
+) : Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'Navigation'
+  });
+  const parentMetadata = await parent
+  const keywords = parentMetadata.keywords || []
+  const openGraph = parentMetadata.openGraph as OpenGraph
+
+  return {
+    title: t('about'),
+    description: t('aboutDescription'),
+    keywords: [...keywords, 'about', 'contact', 'cv'],
+    authors: parentMetadata.authors,
+    generator: parentMetadata.generator,
+    openGraph: {
+      ...openGraph,
+      title: t('about'),
+      description: t('aboutDescription'),
+      url: 'https://noart.dev/about',
+    }
+  };
 }

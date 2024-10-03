@@ -31,6 +31,6 @@ export function linkToMessageKey(link: string) {
     case '/hobbies':
       return 'hobbies'
     default:
-      return 'home'
+      return null
   }
 }

@@ -2,10 +2,12 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { Suspense } from 'react'
 
 import uniq from '@/src/global/functions/uniq'
-import { Post } from '@/src/global/types/custom'
+import { Post, Props } from '@/src/global/types/custom'
 import { spaceMono } from '@/src/global/fonts'
 import { findPosts } from '@/src/components/blog/post-loader'
 import Posts from '@/src/components/blog/posts'
+import { Metadata, ResolvingMetadata } from 'next'
+import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
 export default async function Blog({
   params
@@ -51,4 +53,31 @@ function getTagsFromPosts(posts: Post[]) : string[] {
   const tags = posts
     .flatMap((post) => post.tags)
   return uniq(tags)
+}
+
+export async function generateMetadata(
+  { params } : Props,
+  parent: ResolvingMetadata
+) : Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'Navigation'
+  });
+  const parentMetadata = await parent
+  const keywords = parentMetadata.keywords || []
+  const openGraph = parentMetadata.openGraph as OpenGraph
+
+  return {
+    title: t('blog'),
+    description: t('blogDescription'),
+    keywords: [...keywords, 'blog', 'posts'],
+    authors: parentMetadata.authors,
+    generator: parentMetadata.generator,
+    openGraph: {
+      ...openGraph,
+      title: t('blog'),
+      description: t('blogDescription'),
+      url: 'https://noart.dev/blog',
+    }
+  };
 }

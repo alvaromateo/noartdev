@@ -91,6 +91,7 @@ function createPost(postName: string, content: string) : Post {
     title: findTitle(content, postName),
     tags: findTags(content),
     publishDate: findDate(content, postName),
+    description: findDescription(content, postName),
   }
 }
 
@@ -131,4 +132,13 @@ function findDate(postContent: string, postName: string)
     }
   }
   throw Error(`Date not found in post [${postName}]`)
+}
+
+function findDescription(postContent: string, postName: string) : string {
+  const start = postContent.indexOf('<Summary>') + "<Summary>".length
+  const end = postContent.indexOf('</Summary>')
+  if (start < 0 || end < 0 || end < start) {
+    throw Error(`Description/Summary not found in post [${postName}]`)
+  }
+  return postContent.substring(start,end).trim()
 }

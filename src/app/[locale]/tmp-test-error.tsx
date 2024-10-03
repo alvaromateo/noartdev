@@ -27,6 +27,8 @@ export default function Error({
   )
 }
 
+// TODO: check recent links after visiting post
+
 /*
 TODO: set correct metadata
 <meta property="og:title" content="Site Title" />

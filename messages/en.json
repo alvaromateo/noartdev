@@ -124,10 +124,15 @@
   },
   "Navigation": {
     "home": "Home",
+    "homeDescription": "Landing page for the noArt.dev blog",
     "about": "About",
+    "aboutDescription": "Contact information and my full CV",
     "projects": "Projects",
+    "projectsDescription": "Software projects that I have worked on",
     "blog": "Blog",
-    "hobbies": "Hobbies"
+    "blogDescription": "List of all the blog posts that are published",
+    "hobbies": "Hobbies",
+    "hobbiesDescription": "Random posts about some of my hobbies"
   },
   "Hobbies": {
     "comingSoon": "Coming soon..."

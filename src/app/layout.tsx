@@ -9,11 +9,6 @@ import { routing } from '@/src/i18n/routing'
 
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: 'noart.dev',
-  description: 'Personal page and blog about development',
-}
-
 // We need this function to statically generate all the different routes
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}))

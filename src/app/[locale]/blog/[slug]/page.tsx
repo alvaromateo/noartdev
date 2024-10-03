@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 import { findPosts, findPost } from '@/src/components/blog/post-loader'
 import { routing } from '@/src/i18n/routing'
@@ -14,6 +14,9 @@ import CodeBlock from '@/src/components/blog/post/code-block'
 import Summary from '@/src/components/blog/post/summary'
 import Tags from '@/src/components/blog/post/tags'
 import BottomDrawer from '@/src/components/blog/post/bottom-drawer'
+import { Props } from '@/src/global/types/custom'
+import { Metadata, ResolvingMetadata } from 'next'
+import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
 export default async function Blog({
   params
@@ -43,8 +46,6 @@ export default async function Blog({
     jsxs: runtime.jsxs as Jsx,
     baseUrl: import.meta.url,
   })
-
-  // TODO: check recent links after visiting post
 
   return (
     <div className='flex flex-col'>
@@ -86,4 +87,40 @@ export async function generateStaticParams() {
       }
     })
   })
+}
+
+export async function generateMetadata(
+  { params } : Props,
+  parent: ResolvingMetadata
+) : Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'Navigation'
+  });
+  const parentMetadata = await parent
+  const keywords = parentMetadata.keywords || []
+  const openGraph = parentMetadata.openGraph as OpenGraph
+
+  if (!params.slug) {
+    throw Error('Can not retrieve post if [slug] is missing')
+  }
+
+  const post = await findPost(params.locale, params.slug)
+  if (!post) {
+    throw Error(`Could not retrieve post [${params.slug}]`)
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    keywords: [...keywords, ...post.tags],
+    authors: parentMetadata.authors,
+    generator: parentMetadata.generator,
+    openGraph: {
+      ...openGraph,
+      title: post.title,
+      description: post.description,
+      url: `https://noart.dev/blog/${params.slug}`,
+    }
+  };
 }

@@ -53,6 +53,7 @@ export interface Post {
   title: string,
   tags: string[],
   publishDate: SimpleDate,
+  description: string,
 }
 
 export class PageState {
@@ -67,4 +68,11 @@ export class PageState {
 
 export type ReadingState = {
   [path: string]: PageState
+}
+
+export type Props = {
+  params: {
+    locale: string,
+    slug?: string
+  }
 }
