@@ -133,7 +133,13 @@
     "blog": "Blog",
     "blogDescription": "List of all the blog posts that are published",
     "hobbies": "Hobbies",
-    "hobbiesDescription": "Random posts about some of my hobbies"
+    "hobbiesDescription": "Random posts about some of my hobbies",
+    "legal": "Legal",
+    "legalDescription": "List with all the legal texts that apply to this website",
+    "terms": "Terms and Conditions",
+    "termsDescription": "Terms and Conditions applicable to the noart.dev website",
+    "privacy": "Privacy",
+    "privacyDescription": "Privacy text to inform what data is collected by this website and for what purpose"
   },
   "Hobbies": {
     "comingSoon": "Coming soon..."
@@ -143,6 +149,157 @@
     "noart": {
       "title": "noart.dev website",
       "summary": "The code for this same website you're browsing, available on GitHub."
+    }
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "intro": [
+      "Alvaro Mateo (referenced as the \"author\") operates noart.dev blog (referenced as the \"website\"). ",
+      "The use of any webpage on the website implies the full acceptance of these terms of service."
+    ],
+    "license": {
+      "title": "License",
+      "p1": [
+        "The content of the website is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). ",
+        "You can copy and redistribute the material in any medium or format but you must give ",
+        "appropriate credit, provide a link to the license, and indicate if changes were made. ",
+        "You may do so in any reasonable manner, but not in any way that suggests the author ",
+        "endorses you or your use."
+      ]
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "p1": [
+        "The materials on the website are provided \"as is\". ",
+        "The author makes no warranties, expressed or implied, and hereby disclaims and negates ",
+        "all other warranties, including but without limitation: ",
+        "implied warranties or conditions of merchantability, fitness for a particular purpose, ",
+        "non-infringement of intellectual property or other violation of rights."
+      ],
+      "p2": [
+        "Further, the author does not warrant or make any representations concerning the accuracy, ",
+        "likely results, or reliability of the use of the materials on the website, ",
+        "relating to such materials or on any sites linked to this website."
+      ]
+    },
+    "links": {
+      "title": "Links",
+      "p1": [
+        "The author has not reviewed all of the other sites linked to the website and is not ",
+        "responsible for the contents of any such linked site. ",
+        "The inclusion of any link does not imply endorsement by the author of the other site. ",
+        "The use of any such linked site is at your own risk."
+      ]
+    },
+    "affiliateLinks": {
+      "title": "Affiliate Links",
+      "p1": [
+        "The author may, from time to time, post affiliate links to third party sites on the website. ",
+        "The author earns a commission on qualifying purchases through these affiliate links."
+      ]
+    },
+    "limitations": {
+      "title": "Limitations",
+      "p1": [
+        "In no event shall the author be liable for any damages ",
+        "(including, without limitation, damages for loss of data or profit or due to business interruption) ",
+        "arising out of the use or inability to use the materials on the website, ",
+        "even if the author or the author's authorized representative has been notified orally ",
+        "or in writing of the possibility of such damage. ",
+        "Because some jurisdictions do not allow limitations on implied warranties, ",
+        "or limitations of liability for consequential or incidental damages, these limitations may not apply to you."
+      ]
+    },
+    "revisions": {
+      "title": "Revisions and Errata",
+      "p1": [
+        "The materials appearing on the website could include technical, typographical, or photographic errors. ",
+        "The author does not warrant that any of the materials on the website are accurate, complete, or current. ",
+        "The author may make changes to the materials contained on the website at any time without notice. ",
+        "The author does not, however, make any commitment to update the materials."
+      ]
+    },
+    "modifications": {
+      "title": "Terms of Service Modifications",
+      "p1": [
+        "The author may revise these terms of use for the website at any time without notice. ",
+        "By using the website you are agreeing to be bound by the then current version of these terms of service."
+      ]
+    },
+    "contact": {
+      "title": "Contact Information",
+      "p1": [
+        "For any questions or concerns regarding the terms of service, ",
+        "please send the author an email at [alvaromateo9@gmail.com](mailto:alvaromateo9@gmail.com)."
+      ]
+    }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "intro": [
+      "Alvaro Mateo (referenced as the \"author\") operates noart.dev blog (referenced as the \"website\"). ",
+      "The author takes your privacy seriously. To better protect your privacy, ",
+      "the author provides this privacy policy notice explaining the way your personal information ",
+      "is collected and used."
+    ],
+    "collection": {
+      "title": "Collection of Routine Information",
+      "p1": [
+        "This website tracks basic information about its visitors. ",
+        "This information includes, but is not limited to, browser details, ",
+        "timestamps and referring pages. None of this information can personally ",
+        "identify specific visitors to this website. The information is tracked ",
+        "for routine administration and maintenance purposes."
+      ]
+    },
+    "cookies": {
+      "title": "Cookies",
+      "p1": [
+        "Where necessary, this website uses cookies to store information about a visitor's ",
+        "preferences and history to better serve the visitor and/or present the visitor with customized content."
+      ]
+    },
+    "advertisement": {
+      "title": "Advertisement and Other Third Parties",
+      "p1": [
+        "Advertising partners and other third parties may use cookies, scripts and/or web beacons ",
+        "to track visitor activities on this website to display advertisements and other useful information. ",
+        "Such tracking is done directly by the third parties through their servers and is subject to their ",
+        "privacy policies. This website has no access or control over these cookies, scripts and/or web ",
+        "beacons that may be used by third parties."
+      ],
+      "p2": [
+        "The author has included links on this website for your use and reference. ",
+        "The author is not responsible for the privacy policies on these websites. ",
+        "You should be aware that the privacy policies of these websites may differ from this website."
+      ],
+      "google": "[Google Analytics](https://policies.google.com/privacy)",
+      "github": "[GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)"
+    },
+    "security": {
+      "title": "Security",
+      "p1": [
+        "The security of your personal information is important to the author, ",
+        "but remember that no method of transmission over the Internet, or method of electronic ",
+        "storage, is 100% secure. While the author strives to use commercially acceptable means ",
+        "to protect your personal information, the author cannot guarantee its absolute security."
+      ]
+    },
+    "modifications": {
+      "title": "Privacy Policy Modifications",
+      "p1": [
+        "This Privacy Policy is effective as of 2024-10-04 (yyyy-mm-dd) and will remain in effect. ",
+        "Concerning changes in its provisions in the future, they will be in effect immediately after ",
+        "being posted on this page. The author reserves the right to update or change this Privacy Policy ",
+        "at any time and you should check this Privacy Policy periodically."
+      ]
+    },
+    "contact": {
+      "title": "Contact Information",
+      "p1": [
+        "For any questions or concerns regarding the privacy policy, please send the author ",
+        "an email at [alvaromateo9@gmail.com](mailto:alvaromateo9@gmail.com)."
+      ]
     }
   },
   "Common": {

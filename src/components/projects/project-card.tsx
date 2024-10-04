@@ -35,7 +35,7 @@ export default function ProjectCard({
           bg-mantle flex flex-col justify-start hover:bg-crust
           overflow-hidden border-[1px] border-crust shadow-lg shadow-crust
           rounded-2xl w-[200px] h-[320px]
-          md:w-[275px] md:h-[440px]
+          md:w-[275px] md:h-[436px]
         `}>
           <div className='w-full'>
             <Image
