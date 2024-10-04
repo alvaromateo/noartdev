@@ -138,6 +138,13 @@
   "Hobbies": {
     "comingSoon": "Coming soon..."
   },
+  "Projects": {
+    "title": "Projects",
+    "noart": {
+      "title": "noart.dev website",
+      "summary": "The code for this same website you're browsing, available on GitHub."
+    }
+  },
   "Common": {
     "search": "Search"
   }

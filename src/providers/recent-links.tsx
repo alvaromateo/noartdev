@@ -36,7 +36,7 @@ export default function RecentLinksProvider({
 
   useEffect(() => {
     // ignore /home link cause the recent-links is only present in the home page
-    if (pathname !== '/home') {
+    if (pathname !== '/home' && pathname !== '/') {
       const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
       let storedLinks: RecentLink[] = []
       if (data) {
