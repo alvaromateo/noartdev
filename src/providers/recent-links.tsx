@@ -35,16 +35,17 @@ export default function RecentLinksProvider({
   }, [])
 
   useEffect(() => {
+    const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
+    let storedLinks: RecentLink[] = []
+    if (data) {
+      storedLinks = JSON.parse(data)
+    }
+    let updatedLinks = storedLinks
     // ignore /home link cause the recent-links is only present in the home page
     if (pathname !== '/home' && pathname !== '/') {
-      const data = localStorage.getItem(LocalStorageProperties.recentLinksProperty)
-      let storedLinks: RecentLink[] = []
-      if (data) {
-        storedLinks = JSON.parse(data)
-      }
-      const updatedLinks = addNewLink(pathname, document.title, storedLinks)
-      setRecentLinks(updatedLinks)
+      updatedLinks = addNewLink(pathname, document.title, storedLinks)
     }
+    setRecentLinks(updatedLinks)
   }, [pathname, pageTitle, addNewLink])
 
   useEffect(() => {

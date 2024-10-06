@@ -1,11 +1,12 @@
 import assert from 'assert'
+import { AbstractIntlMessages } from 'next-intl'
 
 export default function MessageParagraph({
   messages,
   messageKey,
   className,
 } : {
-  messages: IntlMessages,
+  messages: IntlMessages | AbstractIntlMessages,
   messageKey: string,
   className?: string
 }) {
@@ -42,7 +43,7 @@ const transformLinks = (content: string[]) : string[] => {
   return lines
 }
 
-const getMessageLines = (key: string, messages: IntlMessages) : string[] => {
+const getMessageLines = (key: string, messages: IntlMessages | AbstractIntlMessages) : string[] => {
   const nestedKeys = key.split('.')
   let obj: any = messages
   for (let nestedKey of nestedKeys) {

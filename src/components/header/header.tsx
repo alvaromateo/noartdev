@@ -3,7 +3,6 @@ import { Link } from '@/src/i18n/routing'
 import { Suspense } from 'react'
 import { spaceMono } from '@/src/global/fonts'
 
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
 import Logo from './logo'
 import getNavigation from './navigation'
 import LinksContainer from './links-container'
@@ -22,11 +21,7 @@ export default async function Header() {
           <Logo></Logo>
         </Link>
         <LinksContainer links={links} />
-        <Suspense fallback={
-          <HourglassBottomIcon />
-        }>
-          <ButtonsContainer />
-        </Suspense>
+        <ButtonsContainer />
       </nav>
     </header>
   )

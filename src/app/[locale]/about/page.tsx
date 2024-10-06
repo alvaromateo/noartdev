@@ -70,7 +70,6 @@ export default async function About({
           <div className='flex flex-row flex-wrap justify-between items-center'>
             <div className='mr-8'>
               <p>alvaromateo9@gmail.com</p>
-              <p>+41 79 846 08 61</p>
             </div>
             <div>
               <SocialIcons/>

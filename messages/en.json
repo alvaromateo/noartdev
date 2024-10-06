@@ -297,6 +297,14 @@
     }
   },
   "Common": {
-    "search": "Search"
+    "search": "Search",
+    "cookieBanner": {
+      "title": "Notice",
+      "text": [
+        "I use cookies to enhance your browsing experience. ",
+        "By clicking 'Okay' or continuing to browse this website you consent to the use of such technology."
+      ],
+      "okay": "Okay"
+    }
   }
 }

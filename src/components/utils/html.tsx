@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { ubuntuMono } from '@/src/global/fonts'
 import { FullScreenModalContext } from '@/src/providers/fullscreen-modal'
 import { ThemeContext } from '@/src/providers/theme'
+import CookieBanner from '../legal/cookie-banner'
 
 export default function Html({
   children,
@@ -21,7 +22,10 @@ export default function Html({
         ${ubuntuMono.className} bg-basic
         ${fullScreenModalState.showModal ? 'overflow-hidden' : ''}
       `}>
-        {children}
+        <>
+          {children}
+          <CookieBanner/>
+        </>
       </body>
     </html>
   )
