@@ -31,7 +31,7 @@ export function transformPathToImport(modulePath: string) : string {
 
 function getPostsPathForLocale(locale: string) : string {
   const basePath = process.cwd()
-  return path.join(basePath, 'assets', 'posts', locale)
+  return path.join(basePath, process.env.POSTS_PATH!, locale)
 }
 
 async function loadPosts(dirPath: string) : Promise<Post[]> {
