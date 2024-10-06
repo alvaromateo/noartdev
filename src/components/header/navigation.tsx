@@ -34,14 +34,6 @@ export default function getNavigation(
           </Link>,
       },
       {
-        link: '/hobbies',
-        messageKey: 'hobbies',
-        component: <Link className='text-2xl md:text-sm'
-          href={{ pathname: '/hobbies' }}>
-            {t('hobbies')}
-          </Link>,
-      },
-      {
         link: '/legal',
         messageKey: 'legal',
         component: <Link className='text-2xl md:text-sm'

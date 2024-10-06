@@ -1,10 +1,11 @@
+import { spaceMono } from '@/src/global/fonts'
 import { Props } from '@/src/global/types/custom'
 import { Link } from '@/src/i18n/routing'
 import { Metadata, ResolvingMetadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
-export default async function Hobbies({
+export default async function Legal({
   params
 } : {
   params: { locale: string }
@@ -14,7 +15,14 @@ export default async function Hobbies({
 
   return (
     <div className='flex w-full justify-center'>
-      <div className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-center items-start'>
+        <h1 className={`
+          text-2xl font-bold text-title mb-4
+          md:text-3xl/[2rem] text-center md:mb-8
+          ${spaceMono.className}
+        `}>
+          {t('legal')}
+        </h1>
         <Link href={{ pathname: '/legal/terms'}}
           className='text-lg md:text-2xl text-link hover:text-hover-link'>
           {t('terms')}

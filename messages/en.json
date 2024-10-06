@@ -91,7 +91,6 @@
         "companyName": "Freelance",
         "description": [
           "I developed mobile applications using Dart and Flutter.",
-          "I took some trainings on iOS (Swift) and Android (Kotlin).",
           "I developed my own portfolio website using NextJS and React."
         ]
       }
@@ -132,17 +131,12 @@
     "projectsDescription": "Software projects that I have worked on",
     "blog": "Blog",
     "blogDescription": "List of all the blog posts that are published",
-    "hobbies": "Hobbies",
-    "hobbiesDescription": "Random posts about some of my hobbies",
     "legal": "Legal",
     "legalDescription": "List with all the legal texts that apply to this website",
-    "terms": "Terms and Conditions",
-    "termsDescription": "Terms and Conditions applicable to the noart.dev website",
+    "terms": "Terms of Service",
+    "termsDescription": "Terms and conditions applicable to the noart.dev website",
     "privacy": "Privacy",
     "privacyDescription": "Privacy text to inform what data is collected by this website and for what purpose"
-  },
-  "Hobbies": {
-    "comingSoon": "Coming soon..."
   },
   "Projects": {
     "title": "Projects",
