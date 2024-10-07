@@ -5,6 +5,7 @@ import { spaceMono } from '@/src/global/fonts';
 // languages
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
 import ts from 'react-syntax-highlighter/dist/esm/languages/hljs/typescript'
+import css from 'react-syntax-highlighter/dist/esm/languages/hljs/css'
 
 // style
 import './code-block.css'
@@ -12,6 +13,7 @@ import './code-block.css'
 const languageMap = {
   'javascript': js,
   'typescript': ts,
+  'css': css,
 }
 
 const isSupportedLanguage =
@@ -19,17 +21,25 @@ const isSupportedLanguage =
 
 export default function CodeBlock({
   language,
+  inline = false,
   children
 } : {
   language: string,
+  inline?: boolean,
   children: string
 }) {
+  let wrappingClasses = `${spaceMono.className} text-[10px] leading-4
+      md:leading-6 md:text-base my-4 md:my-8`
+  if (inline) {
+    wrappingClasses = `${spaceMono.className} text-sm md:text-base
+      my-4 md:my-8 inline`
+  }
   let codeBlock: JSX.Element
   if (isSupportedLanguage(language)) {
-    codeBlock = getFormattedCode(language, children)
+    codeBlock = getFormattedCode(language, children, wrappingClasses)
   } else {
     codeBlock = (
-      <pre>
+      <pre className={wrappingClasses}>
         <code>
           {children}
         </code>
@@ -40,12 +50,14 @@ export default function CodeBlock({
   return codeBlock
 }
 
-function getFormattedCode(language: keyof typeof languageMap, children: string) {
+function getFormattedCode(
+  language: keyof typeof languageMap,
+  children: string,
+  classes: string,
+) {
   SyntaxHighlighter.registerLanguage(language, languageMap[language])
   return (
-    <div className={`${spaceMono.className} text-[10px] leading-4
-      md:leading-6 md:text-base my-4 md:my-8
-    `}>
+    <div className={classes}>
       <SyntaxHighlighter language={language} wrapLines wrapLongLines
         codeTagProps={{
           'className': 'hljs',

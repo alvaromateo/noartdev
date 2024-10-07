@@ -21,7 +21,8 @@ export default function RecentLinks() {
         recentLinks.map(link => {
           return (
             <li key={link.link}>
-              <Link className='text-link text-sm md:text-base' href={{ pathname: link.link }}>
+              <Link className='text-link hover:text-hover-link text-sm md:text-base' 
+                href={{ pathname: link.link }}>
                   <span><KeyboardArrowRightOutlinedIcon fontSize='inherit'/></span>
                   {link.title}
               </Link>

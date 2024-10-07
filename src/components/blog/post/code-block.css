@@ -6,6 +6,11 @@
   color: rgb(var(--color-text));
 }
 
+.inline .hljs {
+  display: inline;
+  padding: 0 0.25rem;
+}
+
 @media (min-width: 768px) {
   .hljs {
     padding: 1rem 2rem;

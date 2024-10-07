@@ -1,7 +1,7 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 import { findPosts, findPost } from '@/src/components/blog/post-loader'
-import { routing } from '@/src/i18n/routing'
+import { Link, routing } from '@/src/i18n/routing'
 import { useMDXComponents } from '@/src/mdx-components'
 
 import { compile, Jsx, run } from '@mdx-js/mdx'
@@ -69,6 +69,15 @@ export default async function Blog({
           },
           Tags(props: {list: string[]}) {
             return <Tags list={props.list}/>
+          },
+          Link(props: {
+            children: string,
+            href: string,
+          }) {
+            return <Link className='text-link hover:text-hover-link text-sm md:text-base' 
+              href={{ pathname: props.href }}>
+                {props.children}
+            </Link>
           }
         }
       )}/>
@@ -109,19 +118,37 @@ export async function generateMetadata(
   if (!post) {
     throw Error(`Could not retrieve post [${params.slug}]`)
   }
+  const description = removeLinks(post.description)
 
   return {
     metadataBase: parentMetadata.metadataBase,
     title: post.title,
-    description: post.description,
+    description: description,
     keywords: [...keywords, ...post.tags],
     authors: parentMetadata.authors,
     generator: parentMetadata.generator,
     openGraph: {
       ...openGraph,
       title: post.title,
-      description: post.description,
+      description: description,
       url: `https://noart.dev/blog/${params.slug}`,
     }
   };
+}
+
+function removeLinks(content: string) : string {
+  // substitute all line breaks to have one single line string/paragraph
+  let contentCopy = content.replaceAll(/[\r\n|\r|\n]/g, ' ')
+  // substitute multiple spaces for one just space to remove the start of line tabs
+  contentCopy = contentCopy.replaceAll(/[ \t]{2,}/g, ' ')
+
+  const regex = /\<Link[^\>]*\>([\w\-\s]*)\<\/Link\>/g
+  let matches = regex.exec(contentCopy)
+  let result = contentCopy
+
+  while (matches) {
+    result = result.replace(matches[0], matches[1])
+    matches = regex.exec(contentCopy)
+  }
+  return result.replaceAll(/[ \t]{2,}/g, ' ').trim()
 }

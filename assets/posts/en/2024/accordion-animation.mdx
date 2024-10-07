@@ -1,0 +1,152 @@
+<div>
+    <section id='post-intro'>
+        # Accordion height animation
+        <PublishDate year={2024} month={10} day={7}/>
+        <Tags list={['development', 'nextjs', 'react', 'css-animation', 'accordion', 'useLayoutEffect']}/>
+        <Summary>
+            In this post I will explain my journey to create an accordion or dropdown (un)folding
+            animation that makes the contents grow in height. The framework used is NextJs with Typescript 
+            and for the animations I used <Link href='http://reactcommunity.org/react-transition-group/css-transition'>
+            CSSTransition from react-transition-group</Link>. 
+            Let's dive straight in!
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+        ## Wrong: height auto transition
+
+        My first approach was to try the simplest way I could think of: 
+        just set a transition for the height from <CodeBlock inline language='css'>height: 0px</CodeBlock> 
+        to <CodeBlock inline language='css'>height: auto</CodeBlock> and let the browser handle all the rest.
+
+        Unluckily for me, this doesn't work. The browser is not that smart (yet) 
+        and can't animate a height transition without specific values. 
+        Makes sense, but still: it was worth a try.
+
+        This got me thinking: how can I calculate dynamically the height of the accordion/dropdown content
+        so that I can set it and create a transition that renders the animation I want?
+
+        ## Wrong: render the content hidden
+
+        The second idea I got was a bit better than the first, but not perfect. If I want to get the height of
+        a content I just need to render that content somewhere on the DOM setting 
+        <CodeBlock inline language='css'>visibility: hidden</CodeBlock>, then I can get the height of it and 
+        add the real element setting its height.
+
+        <CodeBlock language='typescript'>
+{`
+'use client'
+
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
+
+export default function Accordion({
+    children,
+    accordionDisplayed,
+    timeout,
+} : {
+    children: React.ReactNode,
+    accordionDisplayed: boolean,
+    timeout?: number,
+}) {
+    timeout = timeout || 1500
+    const nodeRef = useRef<HTMLDivElement>(null)
+    const accordionDisplayedRef = useRef<boolean>(accordionDisplayed)
+    const [contentHeight, setContentHeight] = useState<number | null>(null)
+    const [animationPlaying, setAnimationPlaying] = useState<boolean>(false)
+
+    if (accordionDisplayedRef.current !== accordionDisplayed) {
+        setAnimationPlaying(true)
+        accordionDisplayedRef.current = accordionDisplayed
+    }
+
+    useEffect(() => {
+        if (!animationPlaying) return
+        const timeoutId = setTimeout(() => {
+            setAnimationPlaying(false)
+        }, timeout)
+        return () => clearTimeout(timeoutId)
+    }, [animationPlaying, timeout])
+
+    const onRefChange = useCallback((node: HTMLDivElement | null) => {
+        if (node) {
+            const childNodes = node.getElementsByTagName('div')
+            if (childNodes.length > 0) {
+                console.log(childNodes[0].clientHeight)
+                setContentHeight(childNodes[0].clientHeight)
+            }
+        }
+    }, [])
+
+    let displayClasses = ''
+    if (!accordionDisplayed) {
+        if (!animationPlaying) {
+            displayClasses = 'hidden'
+        }
+        if (!contentHeight) {
+            displayClasses = 'absolute invisible'
+        }
+    }
+
+    return (
+        <CSSTransition
+        nodeRef={nodeRef}
+        in={accordionDisplayed}
+        timeout={timeout}
+        classNames='accordion'
+        onEnter={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = '0px'
+            }
+        }}
+        onEntering={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = \`${contentHeight}px\`
+                nodeRef.current.style.transition = \`height ${timeout}ms ease-out\`
+            }
+        }}
+        onEntered={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = \`${contentHeight}px\`
+            }
+        }}
+        onExit={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = \`${contentHeight}px\`
+            }
+        }}
+        onExiting={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = '0px'
+                nodeRef.current.style.transition = \`height ${timeout}ms ease-out\`
+            }
+        }}
+        onExited={() => {
+            if (nodeRef.current) {
+                nodeRef.current.style.height = '0px'
+            }
+        }}
+        >
+        <div className='relative' aria-hidden={!accordionDisplayed} ref={onRefChange}>
+            <div className={\`${displayClasses} overflow-hidden\`} ref={nodeRef}>
+                {children}
+            </div>
+        </div>
+        </CSSTransition>
+    )
+}
+`}
+    </CodeBlock>
+
+    ### Subtitle 2
+
+    Even more text...
+
+    ## To import some code fragment
+
+    <CodeBlock language='javascript'>
+      import 'code'
+      ...
+    </CodeBlock>
+  </section>
+</div>
