@@ -54,8 +54,8 @@ export default async function Blog({
           ContentTable() {
             return <ContentTable post={post.content}/>
           },
-          CodeBlock(props: {language: string, children: string}) {
-            return <CodeBlock language={props.language}>
+          CodeBlock(props: {language: string, inline?: boolean, children: string}) {
+            return <CodeBlock inline={props.inline} language={props.language}>
               {props.children}
             </CodeBlock>
           },

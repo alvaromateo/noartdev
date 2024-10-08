@@ -24,9 +24,8 @@ export default function Tags({
   switch (type) {
     case TagsType.Centered:
       ulClasses = `${ulClasses} flex-col items-center justify-center
-        text-xs mb-4
-        md:flex-row md:text-base md:mb-8`
-      liClasses = 'mb-2 md:mb-0 px-4 rounded-full bg-info text-crust hover:bg-hover-link mx-4'
+        text-xs mb-4 md:flex-row md:flex-wrap md:text-base md:mb-8`
+      liClasses = 'mb-2 md:mb-3 px-4 rounded-full bg-info text-crust hover:bg-hover-link mx-4'
       break
     case TagsType.Wrapped:
       ulClasses = `${ulClasses} flex-row flex-wrap`

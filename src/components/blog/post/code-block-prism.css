@@ -1,0 +1,123 @@
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: rgb(var(--color-comment));
+}
+
+.token.tag,
+.token.boolean,
+.token.number,
+.token.selector,
+.token.deleted {
+	color: rgb(var(--color-number));
+}
+
+.token.keyword {
+  color: rgb(var(--color-keyword));
+  font-weight: bold;
+}
+
+.token.punctuation,
+.token.symbol,
+.token.builtin {
+	color: rgb(var(--color-lavender));
+}
+
+.token.property,
+.token.constant {
+  color: rgb(var(--color-constant));
+}
+
+.token.parameter,
+.token.attr-name,
+.token.attr-value {
+  color: rgb(var(--color-parameter));
+}
+
+.token.string,
+.token.char {
+  color: rgb(var(--color-string));
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: rgb(var(--color-link));
+}
+
+.language-css .token.string,
+.style .token.string,
+.token.variable,
+.token.inserted {
+	color: rgb(var(--color-delimiter));
+}
+
+.token.function {
+	color: rgb(var(--color-function));
+}
+
+.token.atrule,
+.token.regex,
+.token.important {
+	color: rgb(var(--color-regex));
+}
+
+/*
+Styles for the <pre> and <code> tags
+*/
+
+code,
+pre[class*='language-'] {
+	color: rgb(var(--color-text));
+	background: rgb(var(--color-snippet-bg));
+	text-align: left;
+	tab-size: 2;
+  border-radius: 0.5rem;
+}
+
+pre[class*='language-'] {
+	border: 1px solid rgb(var(--color-crust));
+	padding: 0.5rem 1rem;
+}
+
+@media (min-width: 768px) {
+  pre[class*='language-'] {
+    padding: 1rem 2rem;
+  }
+}
+
+pre[class*='language-']::selection,
+pre[class*='language-'] ::selection,
+code[class*='language-']::selection,
+code[class*='language-'] ::selection {
+	text-shadow: none;
+	background: rgb(var(--color-selection-bg));
+  color: rgb(var(--color-selection-text));
+}
+
+/* Inline code */
+:not(pre) > code {
+  word-break: break-word;
+	padding: 0 0.25rem;
+	white-space: normal;
+  background: rgb(var(--color-surface-1));
+}
+
+@media (min-width: 768px) {
+  :not(pre) > code {
+    padding: 0 0.5rem;
+  }
+}

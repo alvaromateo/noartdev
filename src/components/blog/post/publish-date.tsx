@@ -39,7 +39,8 @@ export default function PublishDate({
   const formattedDate = formatter.format(date)
 
   return ( navigatorAPI &&
-    <p className={ className ? className : 'text-xs md:text-base text-comment text-center mb-4' }>
+    <p className={ className ? className
+      : 'text-xs md:text-base text-comment text-center mb-4 md:mb-8' }>
       {formattedDate}
     </p>
   )

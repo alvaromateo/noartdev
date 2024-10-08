@@ -99,7 +99,7 @@ export default function BottomDrawer() {
   const placeholder = <div className='w-8 h-8 md:w-16 md:h-16'/>
 
   return (
-    <div>
+    <div className='mt-4 md:mt-8'>
       <ReadMark blogPageScroll={currentScroll}
         calculateScrollPercentage={calculateScrollPercentage}
         updatePageScroll={updatePageScroll}/>
