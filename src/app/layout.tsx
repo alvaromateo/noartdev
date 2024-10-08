@@ -1,5 +1,5 @@
-import type { Metadata } from 'next'
 import { unstable_setRequestLocale } from 'next-intl/server'
+import { Analytics } from '@vercel/analytics/react'
 
 import Header from '@/src/components/header/header'
 import Footer from '@/src/components/footer/footer'
@@ -33,6 +33,7 @@ export default async function RootLayout({
             {children}
           </div>
           <Footer />
+          <Analytics />
         </div>
       </Html>
     </Providers>
