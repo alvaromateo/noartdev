@@ -31,6 +31,18 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       <p className='text-sm md:text-base mb-2 md:mb-4'>
         {children}
       </p>,
+    strong: ({ children }) =>
+      <strong className='text-sm md:text-base font-bold text-keyword'>
+        {children}
+      </strong>,
+    li: ({ children }) =>
+      <li className='text-sm md:text-base list-disc list-inside'>
+        {children}
+      </li>,
+    ul: ({ children }) =>
+      <ul className='mb-2 md:mb-4'>
+        {children}
+      </ul>,
     ...components,
   }
 }
