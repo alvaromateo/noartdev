@@ -1,0 +1,55 @@
+<div>
+    <section id='post-intro'>
+        # Deploy your NextJS app to GCP
+        <PublishDate year={2024} month={9} day={20}/>
+        <Tags list={['development', 'next', 'gcp', 'deploy', 'docker', 'compose', 'cloud-run']}/>
+        <Summary>
+            In this post I explain how do I deploy my <Link href='https://nextjs.org/'>NextJS</Link> 
+            website to <Link href='https://cloud.google.com'>Google Cloud Platform (GCP)</Link>.
+            To do so I use <Link href='https://docs.docker.com/'>Docker and Docker Compose</Link>, 
+            but I won't dive into these technologies in this post, so a bit of familiarity is recommended. 
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+
+        You might be asking yourself: why is this idiot deploying a Next App to GCP instead of Vercel 
+        which is more straightforward to do?
+
+        To be honest, the first version of the website I deployed it to Vercel. But at some point I 
+        realized that it didn't satisfy all the requirements I needed for future features. For instance, 
+        Vercel doesn't allow me to deploy Docker containers and I want to add one with a 
+        <Link href='https://solr.apache.org/'>Solr</Link> instance to add search functionalities.
+
+        I could have left the application on Vercel and deployed the container on GCP, but I want the 
+        BE to be isolated from the FE and have as unique entrypoint the NextJS exposed API routes. 
+        Thus, the connection between the Solr instance and the NextJS BE should be as fast as possible, 
+        which I can get by having the 2 containers deployed on the same Google Datacenter. 
+        This also gives me room in the future to add other BE services (i.e. a database).
+
+        So now that you know the *why* of this adventure, if you are in a similar situation (or maybe 
+        you're just a curious nerd like me), carry on reading...
+
+        ## Development environment
+
+        First I focused on setting up the development environment. I do this for fun, so I don't want 
+        to have to struggle everytime I want to code something. It has to be smooth and simple to run, 
+        still giving me access to all the benefits of Next development process (mainly HMR - Hot Module 
+        Replacement).
+
+        I decided to go with <Link href=''>Docker Compose</Link> cause it's a technology I had already 
+        used in the past a bit, and I know that I can get all the environment up and running by just 
+        typing:
+
+        <CodeBlock language='bash'>
+{`docker compose up`}
+        </CodeBlock>
+        
+        ## Conclusion
+
+        TODO...
+
+        Until next time!
+
+    </section>
+</div>

@@ -44,7 +44,7 @@ export async function generateMetadata() : Promise<Metadata> {
       url: 'https://noart.dev',
       description: webpageDescription,
       siteName: 'noArt.dev',
-      images: ['/images/photo-linkedin.jpg'],
+      images: ['/images/og-photo.jpg'],
     },
   }
 }
