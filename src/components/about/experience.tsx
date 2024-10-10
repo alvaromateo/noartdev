@@ -25,9 +25,9 @@ export default function Experience({
         col-start-1 flex flex-row md:flex-col items-center
         justify-between text-comment text-sm
       `}>
-        <p className='mr-8 md:mr-0'>{data.dateStart}</p>
+        <p className='mr-8 md:mr-0'>{data.dateEnd}</p>
         <p className='hidden md:block'> - </p>
-        <p>{data.dateEnd}</p>
+        <p>{data.dateStart}</p>
       </div>
       <div className={`
         md:col-span-3 mt-4 md:mt-0

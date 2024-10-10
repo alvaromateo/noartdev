@@ -1,0 +1,130 @@
+<div>
+    <section id='post-intro'>
+        # Solr for search
+        <PublishDate year={2024} month={9} day={20}/>
+        <Tags list={['development', 'solr', 'search']}/>
+        <Summary>
+            In this post I will explore what is <Link href='https://solr.apache.org/'>Solr</Link> 
+            and how does it work. This is the first post in a series in which I will explain how to 
+            integrate Solr with your own web application in order to power its search functionalities.
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+
+        Apache Solr is an open source search server built on top of Apache Lucene, a Java information 
+        retrieval library. Queries are sent to Solr via HTTP requests and the response is usually a list 
+        of document descriptors (JSON being the default response format). 
+        I say usually because Solr is highly customizable.
+
+        All the information in this page has been extracted from the official 
+        <Link href='https://solr.apache.org/guide/solr/latest/index.html'>Solr documentation</Link>, so 
+        you can head there if you want to read more about any of the topics here. This will try to be a 
+        quicker introduction. 
+
+        ## Concepts
+
+        Before starting to integrate Solr there is some concepts and terminology to be learnt.
+
+        ### Documents and fields
+
+        Solr works by getting all the information that you feed it - called *indexing or updating* - and 
+        then you can ask it questions - queries - to get the information you want.
+
+        Solr basic unit of information is the *document* - in the case of a blog for example, a post. 
+        Documents are composed of *fields*, which contains different type of data (dates, numbers, text, 
+        etc.) - in the case of a post these might be the date, the tags, the (sub-)titles, the text...
+        The *field type* tells Solr how to interpret the each field and how it can be queried.
+
+        When you add a document to Solr it takes the information in the fields and adds that information 
+        to an index (the indexing part mentioned above). When you query for data Solr can quickly check
+        the index and give back the matching documents.
+
+        ### Field analysis
+
+        *Field analysis* tells Solr what to do with the incoming data in order to build the index. For 
+        example, in a post Solr would need to index all the words of the post text so that it can 
+        quickly find those posts that have to do with React, Accordion, CSS transitions, or anything in 
+        general. In order to build a proper index, you can tell Solr to transform to lower case all the 
+        words (so that it doesn't matter if the user queries with a capitalized word or not) and to 
+        omit words like 'a', 'the', 'to', etc.
+
+        ### Schema file
+
+        Solr stores the details of the fields it expects in an *schema file*. This file can be handled 
+        programmatically or by hand editing. Changing the shcema doesn't have any impact in the data 
+        already stored in the index, so you need to reindex all the data every time you do. It is then 
+        important to plan well the index (mainly if you have a lot of data, as for a small blog like this 
+        one reindexing won't be a huge problem).
+
+        ## Indexing
+
+        Adding content to the index makes it searchable by Solr. There are several ways of adding content: 
+        - Indexing with <Link href='https://solr.apache.org/guide/solr/latest/indexing-guide/indexing-with-tika.html'>Solr Cell and Apache Tika</Link>
+        - Uploading XML files with HTTP requests.
+        - Writing a custom Java application.
+
+        Independently of the chosen method, all of them send to Solr a *document* containing multiple 
+        *fields* each with *name* and *content*.
+
+        ## Searching
+
+        When a search is run in Solr the query is processed by a *request handler* - a plug-in that defines 
+        the logic to process the request. To process a query the request handler calls a *query parser*, 
+        which interprets the terms/parameters of the query.
+
+        Solr's default query parser is called the 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html'>Standard Query Parser</Link>, 
+        which allows for great precision in searches. In addition, there's also the 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html'>DisMax Query Parser</Link>, 
+        which is much more tolerant of errors (similar to Google searches).
+
+        The input of a query can include:
+        - The terms to search for in the index.
+        - Parameters for fine tunning the query by increasing the importance of determined fields.
+        - Parameters for controlling the presentation of the query response.
+
+        The *response writer* takes care of the presentation of the query response. Solr includes response writers 
+        for XML and JSON, among others.
+
+        ### Faceting
+
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/faceting.html'>Faceting</Link> 
+        consists in arraging the search results in categories (based on indexed terms). Faceting could make it 
+        easy for the users of the blog to explore search results on all 'development' posts by classifying them 
+        by tags (for example, all posts about Solr or about React, etc.).
+
+        Faceting makes use of the fields defined when the search application is indexed.
+
+        ## Relevance
+
+        *Relevance* is the degree a response satisfies a query. When configuring Solr you must weigh 
+        *comprehensiveness* against other factors such as timeliness and ease-of-use. In the case of a blog 
+        I believe comprehensiveness is not very important and instead the search should give more importance to 
+        being fast and easy to use.
+
+        *Precision* is the percentage of documents in the response that are relevant.
+
+        *Recall* is the percentage of relevant results out of all relevant results in the system. 
+        To obtain perfect recall one could simply return every document in the collection for every query, but 
+        returning too many results in a casual context like a blog can overwhelm the user. In this case, 
+        returning fewer results that have a higher likelihood of relevance is more important.
+
+        It is common to focus on precision and recall at a specific number of results, the most common and useful 
+        being 10 results. The configuration of a Solr application should take into account: 
+        - The needs of the application users.
+        - The categories that are meaningful to users in their various contexts.
+        - The relevance of documents.
+        - Wether or not the age of the documents matters.
+
+        ## Conclusion
+
+        In this post I've summarized what is Solr and what can you get out of it for your website. 
+        I've also explored basic concepts and definitions that are needed to make a proper Solr implementation. 
+        In future posts I'll continue to explore how to use Solr to add search functionalities to your 
+        own website.
+
+        Until next time!
+
+    </section>
+</div>
