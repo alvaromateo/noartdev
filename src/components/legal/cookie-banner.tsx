@@ -6,21 +6,26 @@ import { useEffect, useState } from 'react'
 import MessageParagraph from '@/src/components/utils/message-paragraph'
 
 export default function CookieBanner() {
-  const [cookiesAccepted, setCookiesAccepted] = useState<boolean>()
+  const [cookiesAccepted, setCookiesAccepted] = useState<boolean>(false)
+  const [localStorageRead, setLocalStorageRead] = useState<boolean>(false)
   const t = useTranslations('Common')
   const messages = useMessages()
 
   useEffect(() => {
     const data = localStorage.getItem(LocalStorageProperties.cookiesAcceptedProperty)
     if (data) {
-      setCookiesAccepted(data === 'true')
+      const storedCookiesValue = data === 'true'
+      if (storedCookiesValue !== cookiesAccepted) {
+        setCookiesAccepted(storedCookiesValue)
+      }
     }
     if (cookiesAccepted) {
       localStorage.setItem(LocalStorageProperties.cookiesAcceptedProperty, 'true')
     }
+    setLocalStorageRead(true)
   }, [cookiesAccepted])
 
-  return cookiesAccepted !== undefined &&  !cookiesAccepted && (
+  return localStorageRead && !cookiesAccepted && (
     <div className={`
       fixed bottom-6 md:bottom-14 mx-[10%] w-4/5 p-4 bg-overlay-0 shadow-xl
       rounded-lg md:rounded-2xl z-40

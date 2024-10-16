@@ -1,0 +1,60 @@
+<div>
+    <section id='post-intro'>
+        # Installing and configuring Solr
+        <PublishDate year={2024} month={10} day={11}/>
+        <Tags list={['development', 'solr', 'search']}/>
+        <Summary>
+            In this post I will show how to install and configure 
+            <Link href='https://solr.apache.org/'>Solr</Link> to use it as search engine for a blog
+            website.
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+
+        <Link href='https://solr.apache.org/'>Solr</Link> has a couple installation possibilities. 
+        There's the classic manual installation and also the possibility to run it in a Docker 
+        container. I believe going through with the Docker installation is better in the long term, 
+        as it leaves more options open to choose a Cloud provider - I could choose a VPS or run it 
+        directly in a containerized Cloud environment. In addition, once done the setup if I need 
+        to deploy it to different environments I won't need to repeat all the manual installation 
+        work.
+
+        ## Docker
+
+        First I focused on setting up the development environment. I do this for fun, so I don't want 
+        to have to struggle everytime I try to code something. It has to be smooth and simple to run, 
+        still giving me access to all the benefits of Next development process (mainly HMR - Hot Module 
+        Replacement).
+
+        To do the set up of the environment (both for development and for production) I decided to go 
+        with <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> 
+        because it's a technology I had already used in the past a bit, and I know that I can get all the 
+        environment up and running by just typing:
+
+        <CodeBlock language='bash'>
+{`docker compose up`}
+        </CodeBlock>
+
+        ### Set up
+
+        The setup is very simple. I just followed the instructions on how to deploy using Docker available 
+        in the NextJS 
+        <Link href='https://nextjs.org/docs/app/building-your-application/deploying#docker-image'>docs</Link>. 
+        I used the multi environment example provided to set up 2 environments:
+        - A development environment to use in my laptop.
+        - A production environment that is the one I will use when I want to do the deployment to GCP.
+
+        I modified the exmaple 
+
+        ## Conclusion
+
+        In this post I've summarized what is Solr and what can you get out of it for your website. 
+        I've also explored basic concepts and definitions that are needed to make a proper Solr implementation. 
+        In future posts I'll continue to explore how to use Solr to add search functionalities to your 
+        own website.
+
+        Until next time!
+
+    </section>
+</div>

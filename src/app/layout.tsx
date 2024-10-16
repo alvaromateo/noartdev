@@ -39,3 +39,5 @@ export default async function RootLayout({
     </Providers>
   )
 }
+
+// TODO: add sitemap and robots files

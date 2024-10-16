@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search'
 export default function Search() {
   const t = useTranslations('Common')
   return (
-    <div className='relative'>
+    <div className='relative text-base md:text-2xl'>
       <input type='text' placeholder={t('search')}
         className={`
           text-xs md:text-base
@@ -15,7 +15,6 @@ export default function Search() {
           active:outline active:outline-2 active:outline-title
         `}/>
       <SearchIcon className={`
-          text-base md:text-2xl
           text-overlay-2 absolute right-[5%] top-2
         `} fontSize='inherit'/>
     </div>
