@@ -85,15 +85,22 @@ async function getFormattedCode(
   className: string,
   inline: boolean,
 ) {
-  SyntaxHighlighter.registerLanguage(language, languageMap[language])
   if (inline) {
+    if (!Prism?.languages[language]) {
+      languageMap[language](Prism)
+    }
     return (
       <code className={className} dangerouslySetInnerHTML={{
-        __html: Prism.highlight(children, Prism.languages[language], language)
+        __html: Prism.highlight(
+          children,
+          Prism.languages[language],
+          language
+        )
       }}/>
     )
   }
 
+  SyntaxHighlighter.registerLanguage(language, languageMap[language])
   return (
     <div className='max-w-[84vw]'>
       <SyntaxHighlighter language={language}
