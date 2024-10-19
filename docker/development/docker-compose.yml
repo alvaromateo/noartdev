@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  next:
+    build:
+      context: ../../
+      dockerfile: docker/development/next/Dockerfile
+    image: noart/next
+    ports:
+      - "80:3000"
+      - "443:3000"
+    networks:
+      - frontend
+      - backend
+  solr:
+    image: noart/solr
+    build:
+      context: ../../
+      dockerfile: docker/development/solr/Dockerfile
+    ports:
+      - "8983:8983"
+    volumes:
+      - data:/var/solr
+    networks:
+      - backend
+
+volumes:
+  data:
+
+networks:
+  frontend: {}
+  backend: {}

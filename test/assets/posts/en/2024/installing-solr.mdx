@@ -1,0 +1,144 @@
+<div>
+    <section id='post-intro'>
+        # Installing Solr
+        <PublishDate year={2024} month={10} day={19}/>
+        <Tags list={['development', 'solr', 'search']}/>
+        <Summary>
+            In this post I will show how to install 
+            <Link href='https://solr.apache.org/'>Solr</Link> to use it as search engine for a blog
+            website.
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+
+        <Link href='https://solr.apache.org/'>Solr</Link> has a couple installation possibilities. 
+        There's the classic manual installation and also the possibility to run it in a Docker 
+        container. I believe going through with the Docker installation is better in the long term, 
+        as it leaves more options open to choose a Cloud provider - I could choose a VPS or run it 
+        directly in a containerized Cloud environment. In addition, once done the setup if I need 
+        to deploy it to different environments I won't need to repeat all the manual installation 
+        work.
+
+        ## Docker
+
+        First I focused on setting up the development environment. I do this for fun, so I don't want 
+        to have to struggle everytime I try to code something. It has to be smooth and simple to run, 
+        still giving me access to all the benefits of Next development process (mainly HMR - Hot Module 
+        Replacement).
+
+        To do the set up of the environment (both for development and for production) I decided to go 
+        with <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> 
+        because it's a technology I had already used in the past a bit, and I know that I can get all the 
+        environment up and running by just typing:
+
+        <CodeBlock language='bash'>
+{`docker compose up`}
+        </CodeBlock>
+
+        ### Set up
+
+        The setup is very simple. I just followed the instructions on how to deploy using Docker available 
+        in the NextJS 
+        <Link href='https://nextjs.org/docs/app/building-your-application/deploying#docker-image'>docs</Link>. 
+        I used the multi environment example provided to set up 2 environments:
+        - A development environment to use in my laptop.
+        - A production environment that is the one I will use when I want to do the deployment to GCP.
+
+        To be able to use the Dockerfile provided I had to modify my *next.config.js* file to add 
+        <CodeBlock language='json' inline>\{ "output": "standalone" \}</CodeBlock> to the 
+        *module.exports* of the file.
+
+        In this post I'm focusing only on the development environment. I'll later publish another article for 
+        how to deploy the whole application to production. I modified the example provided to add a network 
+        separation between the FE and the BE and the container where solar will run. This is the result:
+
+        <CodeBlock language='yaml'>
+{`version: '2'
+
+services:
+    next:
+        build:
+            context: ../../
+            dockerfile: docker/development/next/Dockerfile
+        image: noart/next
+        ports:
+            - "80:3000"
+            - "443:3000"
+        networks:
+            - frontend
+            - backend
+    solr:
+        build:
+            context: ../../
+            dockerfile: docker/development/solr/Dockerfile
+        image: noart/solr
+        ports:
+            - "8983:8983"
+        volumes:
+            - data:/var/solr
+        networks:
+            - backend
+
+volumes:
+    data:
+
+networks:
+    frontend: {}
+    backend: {}
+`}
+        </CodeBlock>
+
+        Logically, the context and dockerfile paths are relative to the project root directory and 
+        where the *docker-compose.yml* file is located. The structure of the project is available 
+        in my <Link href='https://github.com/alvaromateo/noartdev'>GitHub</Link> (notice that if 
+        you read this some time after its publication I may have added or changed  some things).
+
+        ## Installation
+
+        After the *docker-compose.yml* file is done, the next step is to build the container image 
+        for Solr. To do this, I am going to use the 
+        <Link href='https://hub.docker.com/_/solr?tab=tags'>official base image </Link> 
+        provided by the Solr project.
+
+        Solr has a feature called *configsets* by which it can load predefined configurations for a 
+        given core. These sets go in the Solr home folder by default and can be used to let different 
+        cores share configuration. For now, I'll just copy the default files from Solr (so I can later 
+        modify them) and put them inside a folder next to the Dockerfile called *config*, following 
+        the structure specified in the <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/config-sets.html'>Configsets Documentation</Link>.
+
+        The default configuration files can be found in Solr's GitHub. Just the following two are 
+        needed to understand how Solr works:
+        - <Link href='https://github.com/apache/solr/blob/main/solr/server/solr/configsets/_default/conf/solrconfig.xml'>solrconfig.xml</Link>
+        - <Link href='https://github.com/apache/solr/blob/main/solr/server/solr/configsets/_default/conf/managed-schema.xml'>managed-schema.xml</Link>
+
+        Once this is done, I can write the *Dockerfile* and copy the just added files to the image. 
+        I also take the opportunity to specify the necessary command to start solr and create a core.
+        The Solr command is defined in the *ENTRYPOINT*, so with the *CMD* instruction I can define the 
+        parameters to be passed - <Link href='https://docs.docker.com/reference/dockerfile/#cmd'>Docker reference</Link>.
+
+        <CodeBlock language='docker'>
+{`FROM solr:slim
+
+WORKDIR /var/solr/data
+RUN mkdir -p configsets/blog-configset/conf
+COPY docker/development/solr/config/ ./configsets/blog-configset/conf
+
+# add as last parameter "configsets/blog-configset" when the custom configuration is ready
+CMD ["solr-precreate", "posts"]
+`}
+        </CodeBlock>
+
+        ## Conclusion
+
+        And like this I have a running NextJS container and another one with Solr. Even with 
+        the default configuration, Solr will work well for most use cases.
+
+        This article has been short, but it sets everything ready to start tweaking the configuration 
+        of Solr and understanding how this search engine works, which I'll write about in the 
+        future (hopefully not a far away one).
+
+        Until next time!
+
+    </section>
+</div>

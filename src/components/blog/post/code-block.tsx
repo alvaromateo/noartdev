@@ -7,15 +7,24 @@ import Prism from 'prismjs'
 import js from 'react-syntax-highlighter/dist/esm/languages/prism/javascript'
 import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript'
 import css from 'react-syntax-highlighter/dist/esm/languages/prism/css'
+import yaml from 'react-syntax-highlighter/dist/esm/languages/prism/yaml'
+import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash'
+import xml from 'react-syntax-highlighter/dist/esm/languages/prism/xml-doc'
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json'
+import docker from 'react-syntax-highlighter/dist/esm/languages/prism/docker'
 
 // style
 import './code-block-prism.css'
-import { ComponentType } from 'react';
 
 const languageMap = {
   'javascript': js,
   'typescript': ts,
   'css': css,
+  'yaml': yaml,
+  'bash': bash,
+  'xml': xml,
+  'json': json,
+  'docker': docker,
 }
 
 const isSupportedLanguage =
@@ -41,10 +50,33 @@ export default async function CodeBlock({
   if (isSupportedLanguage(language)) {
     codeBlock = await getFormattedCode(language, children, wrappingClasses, inline)
   } else {
-    throw Error('Unsupported language!')
+    codeBlock = await getUnformattedBlock(children, wrappingClasses, inline)
   }
 
   return codeBlock
+}
+
+async function getUnformattedBlock(
+  children: string,
+  className: string,
+  inline: boolean,
+) {
+  if (inline) {
+    return (
+      <code className={className} dangerouslySetInnerHTML={{
+        __html: children
+      }}/>
+    )
+  }
+
+  return (
+    <div className='max-w-[84vw]'>
+      <SyntaxHighlighter
+        className={className} useInlineStyles={false}>
+        {children}
+      </SyntaxHighlighter>
+    </div>
+  )
 }
 
 async function getFormattedCode(
@@ -54,10 +86,16 @@ async function getFormattedCode(
   inline: boolean,
 ) {
   if (inline) {
-    await import(`prismjs/components/prism-${language}`)
+    if (!Prism?.languages[language]) {
+      languageMap[language](Prism)
+    }
     return (
       <code className={className} dangerouslySetInnerHTML={{
-        __html: Prism.highlight(children, Prism.languages[language], language)
+        __html: Prism.highlight(
+          children,
+          Prism.languages[language],
+          language
+        )
       }}/>
     )
   }

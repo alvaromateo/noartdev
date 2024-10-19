@@ -32,9 +32,13 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         {children}
       </p>,
     strong: ({ children }) =>
-      <strong className='text-sm md:text-base font-bold text-keyword'>
+      <strong className='text-sm md:text-base font-bold text-comment'>
         {children}
       </strong>,
+    em: ({ children }) =>
+      <em className='text-sm md:text-base italic text-comment'>
+        {children}
+      </em>,
     li: ({ children }) =>
       <li className='text-sm md:text-base list-disc list-inside'>
         {children}
