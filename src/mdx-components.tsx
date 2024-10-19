@@ -35,6 +35,10 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       <strong className='text-sm md:text-base font-bold text-keyword'>
         {children}
       </strong>,
+    em: ({ children }) =>
+      <em className='text-sm md:text-base italic text-keyword'>
+        {children}
+      </em>,
     li: ({ children }) =>
       <li className='text-sm md:text-base list-disc list-inside'>
         {children}

@@ -1,10 +1,10 @@
 <div>
     <section id='post-intro'>
-        # Installing and configuring Solr
+        # Configuring Solr
         <PublishDate year={2024} month={10} day={11}/>
         <Tags list={['development', 'solr', 'search']}/>
         <Summary>
-            In this post I will show how to install and configure 
+            In this post I will show how to configure 
             <Link href='https://solr.apache.org/'>Solr</Link> to use it as search engine for a blog
             website.
         </Summary>
@@ -12,47 +12,131 @@
     </section>
     <section id='post-content'>
 
-        <Link href='https://solr.apache.org/'>Solr</Link> has a couple installation possibilities. 
-        There's the classic manual installation and also the possibility to run it in a Docker 
-        container. I believe going through with the Docker installation is better in the long term, 
-        as it leaves more options open to choose a Cloud provider - I could choose a VPS or run it 
-        directly in a containerized Cloud environment. In addition, once done the setup if I need 
-        to deploy it to different environments I won't need to repeat all the manual installation 
-        work.
+        In this previous<Link href='/blog/installing-solr'>article</Link> I explained how to install 
+        <Link href='https://solr.apache.org/'>Solr</Link> using 
+        <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> to be 
+        able to use it as search engine for a blog website. Now I'm going to explain how I 
+        configured it to power the search of <Link href='/home'>this website</Link>.
 
-        ## Docker
+        TODO: desired functionality of the search
 
-        First I focused on setting up the development environment. I do this for fun, so I don't want 
-        to have to struggle everytime I try to code something. It has to be smooth and simple to run, 
-        still giving me access to all the benefits of Next development process (mainly HMR - Hot Module 
-        Replacement).
+        Solr has several files that are used to configure its functionality. They are located 
+        inside the Solr home directory, which inside the Docker instance is located at 
+        */var/solr/data* and has the following structure.
 
-        To do the set up of the environment (both for development and for production) I decided to go 
-        with <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> 
-        because it's a technology I had already used in the past a bit, and I know that I can get all the 
-        environment up and running by just typing:
-
-        <CodeBlock language='bash'>
-{`docker compose up`}
+        <CodeBlock language='text'>
+{`/var/solr/data/
+    solr.xml
+    core_name/
+        core.properties
+        conf/
+            solrconfig.xml
+            managed-schema.xml
+        data/
+`}
         </CodeBlock>
 
-        ### Set up
+        ## solr.xml
 
-        The setup is very simple. I just followed the instructions on how to deploy using Docker available 
-        in the NextJS 
-        <Link href='https://nextjs.org/docs/app/building-your-application/deploying#docker-image'>docs</Link>. 
-        I used the multi environment example provided to set up 2 environments:
-        - A development environment to use in my laptop.
-        - A production environment that is the one I will use when I want to do the deployment to GCP.
+        This file goes directly inside the Solr home directory and specifies the configuration 
+        for the server instance. I have no need for this file as all the defaults are 
+        enough (for now at least).
 
-        I modified the exmaple 
+        ## Core configuration
+
+        A core in Solr is the same as an index. It contains all the necessary index files stored 
+        by Solr, a transaction log, and the configuration for the index. One can configure different 
+        cores to create indeces that search through different types of documents or over the same 
+        documents but in different ways.
+        
+        I only need a core/index for searching through all the blog posts. 
+        The core has three different configuration files, located in the structure specified above.
+
+        ### core.properties
+
+        The core.properties file is used to configure simple core properties. It is going to be 
+        simple, as Solr defaults are good for a blog search feature. 
+        The only things needed are the name of the blog and the configuration set that 
+        I will use for the index of the core.
+
+        <CodeBlock language='yaml'>
+{`name=posts
+configSet=blog-configset
+`}
+        </CodeBlock>
+
+        ### solrconfig.xml
+
+        To configure the *solrconfig.xml* I took the default configuration file provided by Solr.
+        Inside the docker container of Solr it can be found at */opt/solr/server/solr/configsets/_default*. 
+        The file is very well documented, so it's easy to read and understand what each part does. 
+        Most of the default configuration can be left as is. I will mention here the parts that I decided 
+        to change.
+
+        The <CodeBlock language='xml' inline>\<updateHandler\></CodeBlock> manages how the index updates are 
+        done and it may affect performance. When I add a document to Solr, it is not searchable until it 
+        is commited. While Solr makes its writes it can slow down, which might affect performance. Too 
+        many commits and it will be slower, but too few and it might not find the latest data. In the case 
+        of this blog, the searchable data are the posts - these are known and published at build time, so 
+        I don't have to worry about commiting too often.
+        
+        Another distinction is that between *hard commit* and *soft commit*. A hard commit makes sure that 
+        the index files have been flushed to stable storage and opens a new transaction log (rolling window 
+        of updates since the last hard commit that help with data recovery if there is any crash and updates 
+        that have not been commited). A soft commit is faster because it only makes the index changes visible 
+        without writing any file. In the case of just a commit after a blog post has been publish I can deal 
+        with only hard commits.
+        
+        To takes care of these use cases, I deleted the 
+        <CodeBlock language='xml' inline>\<autoSoftCommit\></CodeBlock> configuration and left the following 
+        options for committing automatically:
+
+        <CodeBlock language='xml'>
+{`<autoCommit>
+    <maxTime>\${solr.autoCommit.maxTime:15000}</maxTime>
+    <openSearcher>false</openSearcher>
+</autoCommit>
+`}
+        </CodeBlock>
+
+        Solr uses caches to improve performance. These are cleared after a commit and they need to be 
+        repopulated before being useful. To do this, caches can be "warmed" by populating the cache with 
+        values from a previous cache. All settings related to caching can be controlled in the 
+        <CodeBlock language='xml' inline>\<query\></CodeBlock> section. I left it as is by default, as the 
+        caches size is set to 512 documents, which is far larger than the posts I have (for now...).
+
+        #### Request handlers
+
+        The next sections are the request handlers that respond to the queries/updates sent to Solr and 
+        the *search components*. The request handlers can use the defined search components to perform extra 
+        actions like spell checking. In this section I removed the spell checking component and the example 
+        request handler that were set just as a demo/example. I also removed the highlighting component.
+
+        #### Update Request Processors
+
+        Last but not least there are the *Update Request Processors (URP)* - the search components equivalent 
+        but for update requests. Every update runs through a chain of URPs.
+
+        TODO: configure update request processors, request handlers and search components
+
+        ### managed-schema.xml
+
+        This file declares all the document fields and how they are analyzed. I decided to declare the 
+        following types for each post/document that I will send to Solr to index.
+        - url
+        - title
+        - date
+        - tags
+        - summary
+        - sections (for the subtitles)
+        - text
+        - code
+
+        todo
 
         ## Conclusion
 
-        In this post I've summarized what is Solr and what can you get out of it for your website. 
-        I've also explored basic concepts and definitions that are needed to make a proper Solr implementation. 
-        In future posts I'll continue to explore how to use Solr to add search functionalities to your 
-        own website.
+        TODO
 
         Until next time!
 

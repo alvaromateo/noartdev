@@ -5,7 +5,7 @@ services:
     build:
       context: ../../
       dockerfile: docker/production/Dockerfile
-    image: next/prod
+    image: noart/next:prod
     ports:
       - "80:3000"
       - "443:3000"
@@ -13,7 +13,7 @@ services:
       - frontend
       - backend
   solr:
-    image: solr:slim
+    image: noart/solr:prod
     networks:
       - backend
 
