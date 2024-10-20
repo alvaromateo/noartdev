@@ -50,20 +50,12 @@
         documents but in different ways.
         
         I only need a core/index for searching through all the blog posts. 
-        The core has three different configuration files, located in the structure specified above.
+        The core has 2 main configuration files, located in the structure specified above.
 
         ### core.properties
 
-        The core.properties file is used to configure simple core properties. It is going to be 
-        simple, as Solr defaults are good for a blog search feature. 
-        The only things needed are the name of the blog and the configuration set that 
-        I will use for the index of the core.
-
-        <CodeBlock language='yaml'>
-{`name=posts
-configSet=blog-configset
-`}
-        </CodeBlock>
+        The core.properties file is used to configure simple core properties. It is created automatically 
+        during Solr's <Link href='/blog/installing-solr'>installation</Link>.
 
         ### solrconfig.xml
 
