@@ -1,7 +1,7 @@
 <div>
     <section id='post-intro'>
         # Configuring Solr
-        <PublishDate year={2024} month={10} day={11}/>
+        <PublishDate year={2024} month={10} day={26}/>
         <Tags list={['development', 'solr', 'search']}/>
         <Summary>
             In this post I will show how to configure 
@@ -12,13 +12,13 @@
     </section>
     <section id='post-content'>
 
-        In this previous<Link href='/blog/installing-solr'>article</Link> I explained how to install 
+        In this previous <Link href='/blog/installing-solr'>article</Link> I explained how to install 
         <Link href='https://solr.apache.org/'>Solr</Link> using 
         <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> to be 
-        able to use it as search engine for a blog website. Now I'm going to explain how I 
-        configured it to power the search of <Link href='/home'>this website</Link>.
-
-        TODO: desired functionality of the search
+        able to use it as search engine for a blog website. Then I explained which features I wanted 
+        for the search and I decided on a <Link href='/blog/planning-search'>general plan</Link> to get 
+        there. Now I'm going to explain how I configured Solr to power the search of 
+        <Link href='/home'>this website</Link>.
 
         Solr has several files that are used to configure its functionality. They are located 
         inside the Solr home directory, which inside the Docker instance is located at 
@@ -36,6 +36,9 @@
 `}
         </CodeBlock>
 
+        If you followed the article I did on <Link href='/blog/installing-solr'>how to install Solr</Link> 
+        you should already have the *conf/* files ready to be edited, so let's dive in!
+
         ## solr.xml
 
         This file goes directly inside the Solr home directory and specifies the configuration 
@@ -44,9 +47,9 @@
 
         ## Core configuration
 
-        A core in Solr is the same as an index. It contains all the necessary index files stored 
-        by Solr, a transaction log, and the configuration for the index. One can configure different 
-        cores to create indeces that search through different types of documents or over the same 
+        A core in Solr is the same as an index. It contains all the necessary files for indexing the collection, 
+        a transaction log, and the configuration for the index. One can configure different 
+        cores to create indexes that search through different types of documents or over the same 
         documents but in different ways.
         
         I only need a core/index for searching through all the blog posts. 
@@ -91,18 +94,24 @@
 `}
         </CodeBlock>
 
+        #### Cache warming
+
         Solr uses caches to improve performance. These are cleared after a commit and they need to be 
         repopulated before being useful. To do this, caches can be "warmed" by populating the cache with 
         values from a previous cache. All settings related to caching can be controlled in the 
         <CodeBlock language='xml' inline>\<query\></CodeBlock> section. I left it as is by default, as the 
         caches size is set to 512 documents, which is far larger than the posts I have (for now...).
 
+        TODO: set up the queries to warm up the cache
+
         #### Request handlers
 
         The next sections are the request handlers that respond to the queries/updates sent to Solr and 
-        the *search components*. The request handlers can use the defined search components to perform extra 
-        actions like spell checking. In this section I removed the spell checking component and the example 
-        request handler that were set just as a demo/example. I also removed the highlighting component.
+        the *search components*. The request handlers can use defined search components to perform extra 
+        actions like spell checking. I removed all the request handlers and search components to start with 
+        a blank slate.
+
+        
 
         #### Update Request Processors
 

@@ -44,5 +44,11 @@ export default async function RootLayout({
 // TODO: add admin page
 // TODO: add login with OAuth for admin page
 // https://nextjs.org/docs/pages/building-your-application/authentication
+/*
+Possibility to do it manually too via an admin page:
+- get indexed posts
+- delete indexed post(s)
+- index post(s)
+*/
 // TODO: configure admin security of Solr 
 // https://solr.apache.org/guide/solr/latest/deployment-guide/authentication-and-authorization-plugins.html#using-security-json-with-solr
