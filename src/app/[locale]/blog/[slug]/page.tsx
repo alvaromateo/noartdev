@@ -1,6 +1,6 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
-import { findPosts, findPost } from '@/src/components/blog/post-loader'
+import { findPosts, findPost } from '@/src/loaders/post-loader'
 import { Link, routing } from '@/src/i18n/routing'
 import { useMDXComponents } from '@/src/mdx-components'
 

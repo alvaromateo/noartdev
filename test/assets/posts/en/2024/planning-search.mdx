@@ -39,19 +39,19 @@
         is important to plan how the document will be before configuring Solr - it will give me a 
         list of all the fields I need to set up in the configuration.
 
-        Based on the features that I just mentioned, I will define the post document to be send to Solr 
+        Based on the features that I just mentioned, I will define the post document to be sent to Solr 
         like this:
 
         <CodeBlock language='typescript'>
 {`interface PostDocument {
-  url: string,
-  title: string,
-  date: Date,
-  tags: string[],
-  summary: string,
-  sections: string[],
-  text: string[],
-  code: string[]
+    url: string,
+    title: string,
+    date: Date,
+    tags: string[],
+    summary: string,
+    sections: string[],
+    text: string[],
+    code: string[]
 }
 `}
         </CodeBlock>
@@ -69,7 +69,7 @@
 
         To serve the different functionalities there will be various endpoints:
         - update: it is one of the default handlers and will be used to handle the indexing of documents.
-        - suggest: it will be the handler for the requests send along as the user types to get suggestions.
+        - suggest: it will be the handler for the requests sent along as the user types to get suggestions.
         - query: this handler will take care of a request sent by the user.
 
         ## Conclusion

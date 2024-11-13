@@ -43,7 +43,7 @@
 
         This file goes directly inside the Solr home directory and specifies the configuration 
         for the server instance. I have no need for this file as all the defaults are 
-        enough (for now at least).
+        enough (for now at least). The file will be created automatically by Solr.
 
         ## Core configuration
 
@@ -102,16 +102,110 @@
         <CodeBlock language='xml' inline>\<query\></CodeBlock> section. I left it as is by default, as the 
         caches size is set to 512 documents, which is far larger than the posts I have (for now...).
 
-        TODO: set up the queries to warm up the cache
+        There is the possibility to define queries that are run when new Index Searchers are created. 
+        These are the algorithms in charge of doing the actual search through an index whenever a query is 
+        received. Running these queries means that the caches of each Index Searcher will be pre-populated 
+        so that the response time of the first user queries hopefully gets a hit in the cache and is faster.
 
         #### Request handlers
 
-        The next sections are the request handlers that respond to the queries/updates sent to Solr and 
-        the *search components*. The request handlers can use defined search components to perform extra 
+        The next sections are the request handlers that respond to the queries/updates sent to Solr. 
+        The request handlers can use defined <Link href='#search_components'>search components</Link> to perform extra 
         actions like spell checking. I removed all the request handlers and search components to start with 
         a blank slate.
 
-        
+        I will define 2 request handlers to take care of the *query* and *suggest* endpoints. The *update* 
+        endpoint doesn't need to be defined as there's already an 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/implicit-requesthandlers.html#update-handlers'>implicit handler</Link> 
+        provided by Solr that takes care of JSON updates.
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/query" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">lucene</str>
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+    </lst>
+</requestHandler>
+`}
+        </CodeBlock>
+
+        This is the *query* request handler. Basically, you just need to give a name to the handler, specify
+        the *SearchHandler* class and then you can define the optional 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/requesthandlers-searchcomponents.html#defaults-appends-and-invariants'>defaults, appends and invariants</Link> 
+        lists of properties. In my case I want to always echo the parameters passed to a query in the response, 
+        and I want the response to be in JSON and indented.
+
+        The first property - *defType* - tells Solr which query parser to use when processing the queries it receives. 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html'>eDisMax</Link> 
+        processes simple phrases and searches for individual terms accross the document fields, weighing each 
+        field differently depending on its significance (of course, all this is to be configured first). It's 
+        a similar type of search than the one you can see using <Link href='https://www.google.com/'>Google</Link>.
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/suggest" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">edismax</str>
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+        <int name="rows">5</int>
+    </lst>
+</requestHandler>
+`}
+        </CodeBlock>
+
+        For the *suggest* request handler I use exactly the same defaults as for the *query* handler, but I add 
+        also as default that the response should only contain 5 rows of results and I change the query parser type. 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html'>Lucene</Link> 
+        is Solr's *Standard Query Parser*. It is less tolerant of syntax error, but to find exact matches of 
+        pages that contain a word in any (sub)title it is what I want. If the user has made some syntax mistake, 
+        finishes typing and sends the search request, it will be handled by the *query* endpoint which 
+        uses *eDisMax*, so the results will be tolerant of the mistake and display in the results what the user 
+        probably meant to type.
+
+        As you can see, there is some repetition in the 2 query handlers. There's a tag called *initParams* that 
+        is useful for situations like this one. 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/initparams.html'>InitParams</Link> 
+        allows to define request handler parameters outside of the handler and then they can be shared by the 
+        specified handlers. My configuration using *initParams* would end up as:
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/suggest" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">lucene</str>
+        <int name="rows">5</int>
+    </lst>
+</requestHandler>
+
+<requestHandler name="/query" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">edismax</str>
+    </lst>
+</requestHandler>
+
+<initParams path="/query,/suggest">
+    <lst name="defaults">
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+        <str name="fl">url,title,date,tags</str>
+    </lst>
+</initParams>
+`}
+        </CodeBlock>
+
+        I added another default for both request handlers. The field *fl* sets which fields from the document 
+        are returned in the response (they need to be marked as *stored* or as *docValues*, which I will explain 
+        later in the <Link href='#managed-schema.xml'>managed-schema.xml</Link> section).
+
+        #### Search components
+
+        *Search components* consist of search features (i.e. highlighting or faceting). 
+
+        maybe spell check for the /query endpoint (?) -> probably not needed and one less problem
+        highlighting and faceting for the /query endpoint
 
         #### Update Request Processors
 

@@ -4,7 +4,7 @@ import { spaceMono } from '@/src/global/fonts'
 
 import portrait from '/public/images/watercolor_portrait.png'
 import RecentLinks from '@/src/components/home/recent-links'
-import Search from '@/src/components/utils/search'
+import Search from '@/src/components/search/search'
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 import { Props } from '@/src/global/types/custom'
 import { Metadata, ResolvingMetadata } from 'next'
