@@ -23,4 +23,5 @@ stop-production: ## Stop the production docker container.
 	docker compose -f docker/production/docker-compose.yml down
 
 .PHONY: clean
-	docker compose rm -v
+clean: ## clean the volumes used by the containers.
+	docker volume rm development_data

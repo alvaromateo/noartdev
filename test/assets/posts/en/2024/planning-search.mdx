@@ -1,0 +1,84 @@
+<div>
+    <section id='post-intro'>
+        # Planning the blog search feature
+        <PublishDate year={2024} month={10} day={22}/>
+        <Tags list={['design', 'solr', 'search']}/>
+        <Summary>
+            In this post I will go over my thought process in designing and planning the 
+            search functionality of the website.
+        </Summary>
+        <ContentTable/>
+    </section>
+    <section id='post-content'>
+
+        Before starting to <Link href='/blog/configuring-solr'>configure Solr</Link> 
+        I think it's important to do a bit of thinking about what features do you want the 
+        search to have and plan the endpoints that will be used, how the documents will be 
+        indexed and when/how they will be indexed.
+
+        ## Features
+
+        For my webpage I'm thinking about having the following functionality:
+        - When users start typing they should get suggestions based on all the posts titles 
+        and subtitles so they can go directly to the page they are most interested in.
+        - I want to have <Link href='https://solr.apache.org/guide/solr/latest/query-guide/faceting.html'>faceting</Link> 
+        (arrange the results in categories) so that the users can see the results of their search by tags and/or date.
+        - Finally, if the user types a word or sentence and wants to see relevant results, 
+        the search should look over all the text and code in the post.
+
+        For the relevance of the results, I want the priority of the search to be *title > 
+        subtitles > summary > text > code*. In addition, in the results page I would like to display 
+        the title of the page and the piece of text where the relevant result appears, same 
+        as when I search something in Google (this in Solr is called 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/highlighting.html'>Highlighting</Link>).
+
+        ## Solr document structure
+
+        To index each article, it is needed to send a *document* (JSON) to Solr which will be 
+        analyzed and parsed based on the field types defined and configured. This is why it 
+        is important to plan how the document will be before configuring Solr - it will give me a 
+        list of all the fields I need to set up in the configuration.
+
+        Based on the features that I just mentioned, I will define the post document to be sent to Solr 
+        like this:
+
+        <CodeBlock language='typescript'>
+{`interface PostDocument {
+    url: string,
+    title: string,
+    date: Date,
+    tags: string[],
+    summary: string,
+    sections: string[],
+    text: string[],
+    code: string[]
+}
+`}
+        </CodeBlock>
+
+        The *url* field is needed because that is the result that the users will want from the search 
+        (the page they are looking for). The *title* and *sections* will serve to power the suggestions 
+        functionality. The *date* and *tags* will be used for the faceting. Finally, the *summary*, 
+        *text* and *code* are to be analyzed to provide results for any kind of text search.
+
+        For now I decided to split every field, as I have no idea yet how to give more importance to 
+        some fields and I thought that it might be needed this way, but of course it's subject to change 
+        based on what I discover when I move on to the implementation of the feature.
+
+        ## Solr endpoints
+
+        To serve the different functionalities there will be various endpoints:
+        - update: it is one of the default handlers and will be used to handle the indexing of documents.
+        - suggest: it will be the handler for the requests sent along as the user types to get suggestions.
+        - query: this handler will take care of a request sent by the user.
+
+        ## Conclusion
+
+        Now that I have an idea of how the search will work and how the documents will be indexed 
+        I can move on and start configuring Solr (and later the fun part of programming everything).
+
+        Until next time!
+
+
+    </section>
+</div>

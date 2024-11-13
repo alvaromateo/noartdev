@@ -1,7 +1,7 @@
 <div>
     <section id='post-intro'>
         # Configuring Solr
-        <PublishDate year={2024} month={10} day={11}/>
+        <PublishDate year={2024} month={10} day={26}/>
         <Tags list={['development', 'solr', 'search']}/>
         <Summary>
             In this post I will show how to configure 
@@ -12,13 +12,13 @@
     </section>
     <section id='post-content'>
 
-        In this previous<Link href='/blog/installing-solr'>article</Link> I explained how to install 
+        In this previous <Link href='/blog/installing-solr'>article</Link> I explained how to install 
         <Link href='https://solr.apache.org/'>Solr</Link> using 
         <Link href='https://docs.docker.com/compose/gettingstarted/'>Docker Compose</Link> to be 
-        able to use it as search engine for a blog website. Now I'm going to explain how I 
-        configured it to power the search of <Link href='/home'>this website</Link>.
-
-        TODO: desired functionality of the search
+        able to use it as search engine for a blog website. Then I explained which features I wanted 
+        for the search and I decided on a <Link href='/blog/planning-search'>general plan</Link> to get 
+        there. Now I'm going to explain how I configured Solr to power the search of 
+        <Link href='/home'>this website</Link>.
 
         Solr has several files that are used to configure its functionality. They are located 
         inside the Solr home directory, which inside the Docker instance is located at 
@@ -36,34 +36,29 @@
 `}
         </CodeBlock>
 
+        If you followed the article I did on <Link href='/blog/installing-solr'>how to install Solr</Link> 
+        you should already have the *conf/* files ready to be edited, so let's dive in!
+
         ## solr.xml
 
         This file goes directly inside the Solr home directory and specifies the configuration 
         for the server instance. I have no need for this file as all the defaults are 
-        enough (for now at least).
+        enough (for now at least). The file will be created automatically by Solr.
 
         ## Core configuration
 
-        A core in Solr is the same as an index. It contains all the necessary index files stored 
-        by Solr, a transaction log, and the configuration for the index. One can configure different 
-        cores to create indeces that search through different types of documents or over the same 
+        A core in Solr is the same as an index. It contains all the necessary files for indexing the collection, 
+        a transaction log, and the configuration for the index. One can configure different 
+        cores to create indexes that search through different types of documents or over the same 
         documents but in different ways.
         
         I only need a core/index for searching through all the blog posts. 
-        The core has three different configuration files, located in the structure specified above.
+        The core has 2 main configuration files, located in the structure specified above.
 
         ### core.properties
 
-        The core.properties file is used to configure simple core properties. It is going to be 
-        simple, as Solr defaults are good for a blog search feature. 
-        The only things needed are the name of the blog and the configuration set that 
-        I will use for the index of the core.
-
-        <CodeBlock language='yaml'>
-{`name=posts
-configSet=blog-configset
-`}
-        </CodeBlock>
+        The core.properties file is used to configure simple core properties. It is created automatically 
+        during Solr's <Link href='/blog/installing-solr'>installation</Link>.
 
         ### solrconfig.xml
 
@@ -99,44 +94,251 @@ configSet=blog-configset
 `}
         </CodeBlock>
 
+        #### Cache warming
+
         Solr uses caches to improve performance. These are cleared after a commit and they need to be 
         repopulated before being useful. To do this, caches can be "warmed" by populating the cache with 
         values from a previous cache. All settings related to caching can be controlled in the 
         <CodeBlock language='xml' inline>\<query\></CodeBlock> section. I left it as is by default, as the 
         caches size is set to 512 documents, which is far larger than the posts I have (for now...).
 
+        There is the possibility to define queries that are run when new Index Searchers are created. 
+        These are the algorithms in charge of doing the actual search through an index whenever a query is 
+        received. Running these queries means that the caches of each Index Searcher will be pre-populated 
+        so that the response time of the first user queries hopefully gets a hit in the cache and is faster.
+
         #### Request handlers
 
-        The next sections are the request handlers that respond to the queries/updates sent to Solr and 
-        the *search components*. The request handlers can use the defined search components to perform extra 
-        actions like spell checking. In this section I removed the spell checking component and the example 
-        request handler that were set just as a demo/example. I also removed the highlighting component.
+        The next sections are the request handlers that respond to the queries/updates sent to Solr. 
+        The request handlers can use defined <Link href='#search_components'>search components</Link> to perform extra 
+        actions like spell checking. I removed all the request handlers and search components to start with 
+        a blank slate.
+
+        I will define 2 request handlers to take care of the *query* and *suggest* endpoints. The *update* 
+        endpoint doesn't need to be defined as there's already an 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/implicit-requesthandlers.html#update-handlers'>implicit handler</Link> 
+        provided by Solr that takes care of JSON updates.
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/query" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">lucene</str>
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+    </lst>
+</requestHandler>
+`}
+        </CodeBlock>
+
+        This is the *query* request handler. Basically, you just need to give a name to the handler, specify
+        the *SearchHandler* class and then you can define the optional 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/requesthandlers-searchcomponents.html#defaults-appends-and-invariants'>defaults, appends and invariants</Link> 
+        lists of properties. In my case I want to always echo the parameters passed to a query in the response, 
+        and I want the response to be in JSON and indented.
+
+        The first property - *defType* - tells Solr which query parser to use when processing the queries it receives. 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html'>eDisMax</Link> 
+        processes simple phrases and searches for individual terms accross the document fields, weighing each 
+        field differently depending on its significance (of course, all this is to be configured first). It's 
+        a similar type of search than the one you can see using <Link href='https://www.google.com/'>Google</Link>.
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/suggest" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">edismax</str>
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+        <int name="rows">5</int>
+    </lst>
+</requestHandler>
+`}
+        </CodeBlock>
+
+        For the *suggest* request handler I use exactly the same defaults as for the *query* handler, but I add 
+        also as default that the response should only contain 5 rows of results and I change the query parser type. 
+        <Link href='https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html'>Lucene</Link> 
+        is Solr's *Standard Query Parser*. It is less tolerant of syntax error, but to find exact matches of 
+        pages that contain a word in any (sub)title it is what I want. If the user has made some syntax mistake, 
+        finishes typing and sends the search request, it will be handled by the *query* endpoint which 
+        uses *eDisMax*, so the results will be tolerant of the mistake and display in the results what the user 
+        probably meant to type.
+
+        As you can see, there is some repetition in the 2 query handlers. There's a tag called *initParams* that 
+        is useful for situations like this one. 
+        <Link href='https://solr.apache.org/guide/solr/latest/configuration-guide/initparams.html'>InitParams</Link> 
+        allows to define request handler parameters outside of the handler and then they can be shared by the 
+        specified handlers. My configuration using *initParams* would end up as:
+
+        <CodeBlock language='xml'>
+{`<requestHandler name="/suggest" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">lucene</str>
+        <int name="rows">5</int>
+    </lst>
+</requestHandler>
+
+<requestHandler name="/query" class="solr.SearchHandler">
+    <lst name="defaults">
+        <str name="defType">edismax</str>
+    </lst>
+</requestHandler>
+
+<initParams path="/query,/suggest">
+    <lst name="defaults">
+        <str name="echoParams">explicit</str>
+        <str name="wt">json</str>
+        <str name="indent">true</str>
+        <str name="fl">url,title,date,tags</str>
+    </lst>
+</initParams>
+`}
+        </CodeBlock>
+
+        I added another default for both request handlers. The field *fl* sets which fields from the document 
+        are returned in the response (they need to be marked as *stored* or as *docValues*, which I will explain 
+        later in the <Link href='#managed-schema.xml'>managed-schema.xml</Link> section).
+
+        #### Search components
+
+        *Search components* consist of search features (i.e. highlighting or faceting). For now I've left 
+        the default Solr Highlighter configuration and removed all the rest. The search components affect 
+        the results that you get from Solr, so I'll go back to these later when everything is working and 
+        I can improve the search results by trial and error.
 
         #### Update Request Processors
 
         Last but not least there are the *Update Request Processors (URP)* - the search components equivalent 
-        but for update requests. Every update runs through a chain of URPs.
+        but for update requests. Every update that is sent to Solr runs through a chain of URPs.
 
-        TODO: configure update request processors, request handlers and search components
+        The only thing that I want to do with updates is to parse the fields to get the proper types stored 
+        in the Solr indexes.
+
+        <CodeBlock language='xml'>
+{`<updateProcessor class="solr.ParseBooleanFieldUpdateProcessorFactory" name="parse-boolean"/>
+<updateProcessor class="solr.ParseLongFieldUpdateProcessorFactory" name="parse-long"/>
+<updateProcessor class="solr.ParseDoubleFieldUpdateProcessorFactory" name="parse-double"/>
+<updateProcessor class="solr.ParseDateFieldUpdateProcessorFactory" name="parse-date">
+    <arr name="format">
+        <str>yyyy-MM-dd['T'[HH:mm[:ss[.SSS]][z</str>
+        <str>yyyy-MM-dd['T'[HH:mm[:ss[,SSS]][z</str>
+        <str>yyyy-MM-dd HH:mm[:ss[.SSS]][z</str>
+        <str>yyyy-MM-dd HH:mm[:ss[,SSS]][z</str>
+        <str>[EEE, ]dd MMM yyyy HH:mm[:ss] z</str>
+        <str>EEEE, dd-MMM-yy HH:mm:ss z</str>
+        <str>EEE MMM ppd HH:mm:ss [z ]yyyy</str>
+    </arr>
+</updateProcessor>
+
+<updateRequestProcessorChain name="sign-and-parse"
+        processor="parse-boolean,parse-long,parse-double,parse-date">
+    <processor class="solr.LogUpdateProcessorFactory"/>
+    <processor class="solr.DistributedUpdateProcessorFactory"/>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+</updateRequestProcessorChain>
+`}
+        </CodeBlock>
+
+        With the above configuration I create a parser for booleans, for longs, for doubles and for dates.
+        And finally I define a chain of URPs where I put in all these processors. The 3 processors inside 
+        the chain tag are required by Solr and my own processors are specified in the *processor* attribute. 
 
         ### managed-schema.xml
 
-        This file declares all the document fields and how they are analyzed. I decided to declare the 
-        following types for each post/document that I will send to Solr to index.
-        - url
-        - title
-        - date
-        - tags
-        - summary
-        - sections (for the subtitles)
-        - text
-        - code
+        This file declares all the document fields and how they are analyzed. Here is how I configured it:
 
-        todo
+        <CodeBlock language='xml'>
+{`<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="post-config" version="1.7">
+    <field name="url" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+    <uniqueKey>url</uniqueKey>
+
+    <field name="date" type="pdate" indexed="true" stored="true" docValues="true"/>
+    <field name="tags" type="strings" indexed="true" stored="true" docValues="true"/>
+
+    <field name="title" type="text_en" indexed="true" stored="true"/>
+    <field name="summary" type="text_en" indexed="true" stored="true"/>
+    <field name="sections" type="text_en" indexed="true" stored="true" multiValued="true"/>
+    <field name="paragraphs" type="text_en" indexed="true" stored="true" multiValued="true"/>
+    <field name="snippets" type="text_en" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="content" type="text_en" indexed="true" stored="false" multiValued="true"/>
+    <copyField source="title" dest="content"/>
+    <copyField source="summary" dest="content"/>
+    <copyField source="sections" dest="content"/>
+    <copyField source="paragraphs" dest="content"/>
+    <copyField source="snippets" dest="content"/>
+
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+    <fieldType name="strings" class="solr.StrField" sortMissingLast="true" multiValued="true" />
+
+    <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
+    The trailing "Z" designates UTC time and is mandatory.
+    Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z -->
+    <fieldType name="pdate" class="solr.DatePointField"/>
+
+    <!-- A text field with defaults appropriate for English: it tokenizes with StandardTokenizer,
+        removes English stop words (lang/stopwords_en.txt), down cases, protects words from protwords.txt, and
+        finally applies Porter's stemming.  The query time analyzer also applies synonyms from synonyms.txt. -->
+    <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
+        <analyzer type="index">
+            <tokenizer name="standard"/>
+            <!-- Case insensitive stop word removal -->
+            <filter name="stop"
+                    ignoreCase="true"
+                    words="lang/stopwords_en.txt"/>
+            <filter name="lowercase"/>
+            <filter name="englishPossessive"/>
+            <filter name="keywordMarker" protected="protwords.txt"/>
+            <filter name="porterStem"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer name="standard"/>
+            <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+            <filter name="stop"
+                    ignoreCase="true"
+                    words="lang/stopwords_en.txt"/>
+            <filter name="lowercase"/>
+            <filter name="englishPossessive"/>
+            <filter name="keywordMarker" protected="protwords.txt"/>
+            <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
+            <filter name="englishMinimalStem"/> -->
+            <filter name="porterStem"/>
+        </analyzer>
+    </fieldType>
+</schema>
+`}
+        </CodeBlock>
+
+        It is fairly understandable. There's the definition of the types *string*, *pdate* and *text_en*,
+        which are then used to define the fields of the document that I planned: url (which is the primary 
+        key of the index), date, tags, title, summary, sections, paragraphs (I called it text in the 
+        previous post) and snippets.
+
+        The section that maybe needs a bit of explanation is the field *content* and all the 
+        <CodeBlock language='xml' inline>{'<copyField>'}</CodeBlock> tags. What I'm doing there is defining 
+        an extra field not present in the document, into which I copy all the text from all the fields. So 
+        it contains ALL the text of the post. It can then be used by Solr to search for anything.
+
+        The analyzer for the *text_en* field type is also quite complex and I haven't dived in myself. 
+        It's one of the default analyzers that are defined in the examples provided by Solr. It takes care 
+        of processing text to separate each word and be able to add it into an index, but in an advanced 
+        way in which it takes care of english possessives and many other things (i.e. the lower case filter 
+        transforms all the text when indexing and querying to lower case so that words are found independently 
+        of their capitalization).
 
         ## Conclusion
 
-        TODO
+        I read a lot of Solr documentation to be able to create this configuration. What I've seen is that 
+        you have a lot of options to fine tune all the different parts of the search, but it's quite 
+        complex to understand.
+
+        Luckily, most of the defaults given by Solr configuration or in the Solr examples work straight 
+        out of the box and you can dive in specific details as you go along to fine tune the search results.
+        At least this is the path I've decided to take, otherwise it will take me too long to get any search 
+        result at all...
 
         Until next time!
 
