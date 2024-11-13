@@ -202,36 +202,143 @@
 
         #### Search components
 
-        *Search components* consist of search features (i.e. highlighting or faceting). 
-
-        maybe spell check for the /query endpoint (?) -> probably not needed and one less problem
-        highlighting and faceting for the /query endpoint
+        *Search components* consist of search features (i.e. highlighting or faceting). For now I've left 
+        the default Solr Highlighter configuration and removed all the rest. The search components affect 
+        the results that you get from Solr, so I'll go back to these later when everything is working and 
+        I can improve the search results by trial and error.
 
         #### Update Request Processors
 
         Last but not least there are the *Update Request Processors (URP)* - the search components equivalent 
-        but for update requests. Every update runs through a chain of URPs.
+        but for update requests. Every update that is sent to Solr runs through a chain of URPs.
 
-        TODO: configure update request processors, request handlers and search components
+        The only thing that I want to do with updates is to parse the fields to get the proper types stored 
+        in the Solr indexes.
+
+        <CodeBlock language='xml'>
+{`<updateProcessor class="solr.ParseBooleanFieldUpdateProcessorFactory" name="parse-boolean"/>
+<updateProcessor class="solr.ParseLongFieldUpdateProcessorFactory" name="parse-long"/>
+<updateProcessor class="solr.ParseDoubleFieldUpdateProcessorFactory" name="parse-double"/>
+<updateProcessor class="solr.ParseDateFieldUpdateProcessorFactory" name="parse-date">
+    <arr name="format">
+        <str>yyyy-MM-dd['T'[HH:mm[:ss[.SSS]][z</str>
+        <str>yyyy-MM-dd['T'[HH:mm[:ss[,SSS]][z</str>
+        <str>yyyy-MM-dd HH:mm[:ss[.SSS]][z</str>
+        <str>yyyy-MM-dd HH:mm[:ss[,SSS]][z</str>
+        <str>[EEE, ]dd MMM yyyy HH:mm[:ss] z</str>
+        <str>EEEE, dd-MMM-yy HH:mm:ss z</str>
+        <str>EEE MMM ppd HH:mm:ss [z ]yyyy</str>
+    </arr>
+</updateProcessor>
+
+<updateRequestProcessorChain name="sign-and-parse"
+        processor="parse-boolean,parse-long,parse-double,parse-date">
+    <processor class="solr.LogUpdateProcessorFactory"/>
+    <processor class="solr.DistributedUpdateProcessorFactory"/>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+</updateRequestProcessorChain>
+`}
+        </CodeBlock>
+
+        With the above configuration I create a parser for booleans, for longs, for doubles and for dates.
+        And finally I define a chain of URPs where I put in all these processors. The 3 processors inside 
+        the chain tag are required by Solr and my own processors are specified in the *processor* attribute. 
 
         ### managed-schema.xml
 
-        This file declares all the document fields and how they are analyzed. I decided to declare the 
-        following types for each post/document that I will send to Solr to index.
-        - url
-        - title
-        - date
-        - tags
-        - summary
-        - sections (for the subtitles)
-        - text
-        - code
+        This file declares all the document fields and how they are analyzed. Here is how I configured it:
 
-        todo
+        <CodeBlock language='xml'>
+{`<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="post-config" version="1.7">
+    <field name="url" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+    <uniqueKey>url</uniqueKey>
+
+    <field name="date" type="pdate" indexed="true" stored="true" docValues="true"/>
+    <field name="tags" type="strings" indexed="true" stored="true" docValues="true"/>
+
+    <field name="title" type="text_en" indexed="true" stored="true"/>
+    <field name="summary" type="text_en" indexed="true" stored="true"/>
+    <field name="sections" type="text_en" indexed="true" stored="true" multiValued="true"/>
+    <field name="paragraphs" type="text_en" indexed="true" stored="true" multiValued="true"/>
+    <field name="snippets" type="text_en" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="content" type="text_en" indexed="true" stored="false" multiValued="true"/>
+    <copyField source="title" dest="content"/>
+    <copyField source="summary" dest="content"/>
+    <copyField source="sections" dest="content"/>
+    <copyField source="paragraphs" dest="content"/>
+    <copyField source="snippets" dest="content"/>
+
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+    <fieldType name="strings" class="solr.StrField" sortMissingLast="true" multiValued="true" />
+
+    <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
+    The trailing "Z" designates UTC time and is mandatory.
+    Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z -->
+    <fieldType name="pdate" class="solr.DatePointField"/>
+
+    <!-- A text field with defaults appropriate for English: it tokenizes with StandardTokenizer,
+        removes English stop words (lang/stopwords_en.txt), down cases, protects words from protwords.txt, and
+        finally applies Porter's stemming.  The query time analyzer also applies synonyms from synonyms.txt. -->
+    <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
+        <analyzer type="index">
+            <tokenizer name="standard"/>
+            <!-- Case insensitive stop word removal -->
+            <filter name="stop"
+                    ignoreCase="true"
+                    words="lang/stopwords_en.txt"/>
+            <filter name="lowercase"/>
+            <filter name="englishPossessive"/>
+            <filter name="keywordMarker" protected="protwords.txt"/>
+            <filter name="porterStem"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer name="standard"/>
+            <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+            <filter name="stop"
+                    ignoreCase="true"
+                    words="lang/stopwords_en.txt"/>
+            <filter name="lowercase"/>
+            <filter name="englishPossessive"/>
+            <filter name="keywordMarker" protected="protwords.txt"/>
+            <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
+            <filter name="englishMinimalStem"/> -->
+            <filter name="porterStem"/>
+        </analyzer>
+    </fieldType>
+</schema>
+`}
+        </CodeBlock>
+
+        It is fairly understandable. There's the definition of the types *string*, *pdate* and *text_en*,
+        which are then used to define the fields of the document that I planned: url (which is the primary 
+        key of the index), date, tags, title, summary, sections, paragraphs (I called it text in the 
+        previous post) and snippets.
+
+        The section that maybe needs a bit of explanation is the field *content* and all the 
+        <CodeBlock language='xml' inline>{'<copyField>'}</CodeBlock> tags. What I'm doing there is defining 
+        an extra field not present in the document, into which I copy all the text from all the fields. So 
+        it contains ALL the text of the post. It can then be used by Solr to search for anything.
+
+        The analyzer for the *text_en* field type is also quite complex and I haven't dived in myself. 
+        It's one of the default analyzers that are defined in the examples provided by Solr. It takes care 
+        of processing text to separate each word and be able to add it into an index, but in an advanced 
+        way in which it takes care of english possessives and many other things (i.e. the lower case filter 
+        transforms all the text when indexing and querying to lower case so that words are found independently 
+        of their capitalization).
 
         ## Conclusion
 
-        TODO
+        I read a lot of Solr documentation to be able to create this configuration. What I've seen is that 
+        you have a lot of options to fine tune all the different parts of the search, but it's quite 
+        complex to understand.
+
+        Luckily, most of the defaults given by Solr configuration or in the Solr examples work straight 
+        out of the box and you can dive in specific details as you go along to fine tune the search results.
+        At least this is the path I've decided to take, otherwise it will take me too long to get any search 
+        result at all...
 
         Until next time!
 

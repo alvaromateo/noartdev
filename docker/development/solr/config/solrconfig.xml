@@ -103,7 +103,7 @@
     </lst>
   </initParams>
 
-  <!-- Highlighter default configuration (could be removed) -->
+  <!-- Highlighter default configuration -->
   <searchComponent class="solr.HighlightComponent" name="highlight">
     <!-- note: the hl.method=unified highlighter is not configured here; it's completely configured
 via parameters.  The below configuration supports hl.method=original and fastVector. -->
@@ -201,14 +201,6 @@ via parameters.  The below configuration supports hl.method=original and fastVec
   </searchComponent>
 
   <!-- Update Request Processors -->
-
-  <updateProcessor class="solr.processor.SignatureUpdateProcessorFactory" name="signature">
-    <bool name="enabled">true</bool>
-    <str name="signatureField">id</str>
-    <bool name="overwriteDupes">true</bool>
-    <str name="fields">url,title,date</str>
-    <str name="signatureClass">solr.processor.Lookup3Signature</str>
-  </updateProcessor>
   <updateProcessor class="solr.ParseBooleanFieldUpdateProcessorFactory" name="parse-boolean"/>
   <updateProcessor class="solr.ParseLongFieldUpdateProcessorFactory" name="parse-long"/>
   <updateProcessor class="solr.ParseDoubleFieldUpdateProcessorFactory" name="parse-double"/>
@@ -224,9 +216,8 @@ via parameters.  The below configuration supports hl.method=original and fastVec
     </arr>
   </updateProcessor>
 
-  <!-- The update.autoCreateFields property can be turned to false to disable schemaless mode -->
   <updateRequestProcessorChain name="sign-and-parse"
-           processor="signature,parse-boolean,parse-long,parse-double,parse-date">
+           processor="parse-boolean,parse-long,parse-double,parse-date">
     <processor class="solr.LogUpdateProcessorFactory"/>
     <processor class="solr.DistributedUpdateProcessorFactory"/>
     <processor class="solr.RunUpdateProcessorFactory"/>

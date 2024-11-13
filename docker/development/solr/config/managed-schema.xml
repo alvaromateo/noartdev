@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schema name="post-config" version="1.7">
 
-  <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-  <uniqueKey>id</uniqueKey>
+  <field name="url" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+  <uniqueKey>url</uniqueKey>
 
-  <field name="url" type="string" indexed="false" stored="true"/>
   <field name="date" type="pdate" indexed="true" stored="true" docValues="true"/>
   <field name="tags" type="strings" indexed="true" stored="true" docValues="true"/>
 
   <field name="title" type="text_en" indexed="true" stored="true"/>
   <field name="summary" type="text_en" indexed="true" stored="true"/>
   <field name="sections" type="text_en" indexed="true" stored="true" multiValued="true"/>
-  <field name="text" type="text_en" indexed="true" stored="true" multiValued="true"/>
+  <field name="paragraphs" type="text_en" indexed="true" stored="true" multiValued="true"/>
   <field name="snippets" type="text_en" indexed="true" stored="true" multiValued="true"/>
 
   <field name="content" type="text_en" indexed="true" stored="false" multiValued="true"/>
   <copyField source="title" dest="content"/>
   <copyField source="summary" dest="content"/>
   <copyField source="sections" dest="content"/>
-  <copyField source="text" dest="content"/>
+  <copyField source="paragraphs" dest="content"/>
   <copyField source="snippets" dest="content"/>
 
   <!-- The StrField type is not analyzed, but indexed/stored verbatim -->
